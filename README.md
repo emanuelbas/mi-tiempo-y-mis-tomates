@@ -1,7 +1,7 @@
 ## Requerimientos
 PHP 7.1+
 
-## InstalaciÃ³n
+## Instalación para Linux
 
 ### PHP 7.2 para Debian/Ubuntu
 ```
@@ -17,3 +17,12 @@ sudo apt-get install php7.2-curl
 sudo apt-get install php7.2-mbstring
 sudo apt-get install php7.2-zip
 ```
+
+## Levantar la aplicación 
+Posicionarse en la carpeta del proyecto y ejecutar el comando
+```
+ php -S 127.0.0.1:8000 -t public 
+ ```
+ 
+Luego para acceder a la aplicación 
+http://localhost:8000
