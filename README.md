@@ -12,3 +12,14 @@ sudo apt-get install php7.2-curl
 sudo apt-get install php7.2-mbstring
 sudo apt-get install php7.2-zip
 
+Instalar YARN
+Instalar NodeJS
+Instalar MySQL
+Configurar usuario y contraseña de MySQL en el archivo ".env"
+
+Adentro del proyecto ejecutar los comandos
+yarn install
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+
+
