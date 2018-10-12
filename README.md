@@ -1,5 +1,6 @@
 ## Requerimientos
 PHP 7.1+
+Composer
 
 ## Instalación para Linux
 
@@ -16,6 +17,13 @@ sudo apt-get install php7.2-xml
 sudo apt-get install php7.2-curl
 sudo apt-get install php7.2-mbstring
 sudo apt-get install php7.2-zip
+```
+
+## Dependencias de Symfony 
+Posicionarse en la carpeta del proyecto y ejecutar el comando
+
+```
+composer install
 ```
 
 ## Levantar la aplicación 
