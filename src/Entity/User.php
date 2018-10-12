@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Security\Core\User\UserInterface
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -17,24 +17,24 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $first_name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $last_name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
      */
     private $password;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $name;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $lastname;
 
     public function getId(): ?int
     {
@@ -53,6 +53,30 @@ class User
         return $this;
     }
 
+    public function getFirstName(): ?string
+    {
+        return $this->first_name;
+    }
+
+    public function setFirstName(string $first_name): self
+    {
+        $this->first_name = $first_name;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->last_name;
+    }
+
+    public function setLastName(string $last_name): self
+    {
+        $this->last_name = $last_name;
+
+        return $this;
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;
@@ -65,27 +89,37 @@ class User
         return $this;
     }
 
-    public function getName(): ?string
+    public function getRoles()
     {
-        return $this->name;
+        return [
+            'ROLE_USER'
+        ];
     }
 
-    public function setName(string $name): self
-    {
-        $this->name = $name;
+    public function getSalt() {}
 
-        return $this;
+    public function eraseCredentials() {}
+
+    public function serialize()
+    {
+        return serialize([
+            $this->$id,
+            $this->$email,
+            $this->$first_name,
+            $this->$last_name,
+            $this->$password
+        ])
     }
 
-    public function getLastname(): ?string
+    public function unserialize($string)
     {
-        return $this->lastname;
-    }
+      list(
+                $this->$id,
+                $this->$email,
+                $this->$first_name,
+                $this->$last_name,
+                $this->$password
+            ) = unserialize($string, ['allowed_classes' => false])
 
-    public function setLastname(string $lastname): self
-    {
-        $this->lastname = $lastname;
-
-        return $this;
     }
 }
