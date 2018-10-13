@@ -75,14 +75,15 @@ Posicionarse en la carpeta del proyecto y ejecutar los comandos
 ```
 yarn install
 composer install
-php bin/console doctrine:database:create
-php bin/console doctrine:migrations:migrate
+php bin/console doctrine:database:create (crea la base de datos, DEBE estar configurado el archivo ".env" para que funcione)
+php bin/console doctrine:migrations:migrate (crea las tablas de la base de datos en base a los modelos)
 ```
 
 ## Levantar la aplicaci�n
 Posicionarse en la carpeta del proyecto y ejecutar el comando
 ```
- php -S 127.0.0.1:8000 -t public
+yarn dev --watch (esto crea un proceso para que se actualice el "paquete" de la aplicación de archivos JS y CSS mientras se van cambiando, NO se debe cerrar el proceso)
+ php -S 127.0.0.1:8000 -t public (para "servir" la aplicación
  ```
 
 Luego para acceder a la aplicación
