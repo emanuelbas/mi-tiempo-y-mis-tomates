@@ -14,6 +14,17 @@ sudo apt-get update
 sudo apt-get install -y php7.2
 ```
 
+### Composer 
+```
+sudo apt update
+sudo apt install curl php-cli php-mbstring git unzip
+cd ~
+curl -sS https://getcomposer.org/installer -o composer-setup.php
+php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+```
+
 ### Extensiones necesarias de PHP 7.2 para Symfony 4.1
 ```
 sudo apt-get install php7.2-xml
@@ -35,6 +46,13 @@ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 sudo apt update
 sudo apt install --no-install-recommends yarn
+```
+
+### MySQL
+https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04
+```
+sudo apt update
+sudo apt install mysql-server
 ```
 
 ## Instalación para Windows
