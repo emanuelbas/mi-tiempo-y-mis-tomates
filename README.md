@@ -29,15 +29,19 @@ Posicionarse en la carpeta del proyecto y ejecutar el comando
 composer install
 ```
 Instalar YARN
+
 Instalar NodeJS
+
 Instalar MySQL
+
 Configurar usuario y contraseña de MySQL en el archivo ".env"
 
 Adentro del proyecto ejecutar los comandos
+```
 yarn install
 php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
-
+```
 ## Levantar la aplicaci�n
 Posicionarse en la carpeta del proyecto y ejecutar el comando
 ```
