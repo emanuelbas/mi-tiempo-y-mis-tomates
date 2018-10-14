@@ -1,0 +1,18 @@
+@import './navigation.scss';
+.login-form-container {
+  width: 100%;
+  height: calc(100% - #{$navigation-height});
+}
+
+.login-box {
+  height: 390px;
+}
+
+.login-form {
+  position: relative;
+  top: 25px;
+}
+
+.login-submit-btn {
+  margin-top: 15px;
+}
