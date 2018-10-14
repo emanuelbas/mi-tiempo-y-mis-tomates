@@ -14,7 +14,7 @@ sudo apt-get update
 sudo apt-get install -y php7.2
 ```
 
-### Composer 
+### Composer
 ```
 sudo apt update
 sudo apt install curl php-cli php-mbstring git unzip
@@ -59,7 +59,7 @@ sudo apt install mysql-server
 
 ### PHP 7.2
 https://windows.php.net/downloads/releases/php-7.2.11-Win32-VC15-x64.zip
-### Composer 
+### Composer
 https://getcomposer.org/Composer-Setup.exe
 ### NodeJS
 https://nodejs.org/dist/v8.12.0/node-v8.12.0-x86.msi
