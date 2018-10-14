@@ -2,39 +2,35 @@
 
 {% block body %}
     <div class="login-form-container d-flex justify-content-center align-items-center">
-        {#{% form_theme form 'bootstrap_4_layout.html.twig' %}#}
         <div class="row">
             <div class="login-box shadow p-3 mb-5 bg-white rounded border-top">
-                <h2 class="text-center text-primary"> Iniciar sesión </h2>
+                <h2 class="text-center text-primary text-soft"> Iniciar sesión </h2>
 
                 <form action="{{ path('login') }}" method="POST"
-                      class="login-form">
-                    <div class="col-md-8 mx-auto">
+                      class="login-form position-relative">
+                    <div class="col-md-9 mx-auto position-relative">
                         <div class="form-group">
-                            <label for="email" class="text-primary">Email</label>
-                            <input type="email" class="form-control" id="email" name="_username"
-                                   value="{{ last_username }}" required>
+                            <label for="email" class="text-soft">Email</label>
+                            <input type="text" class="form-control" id="email" name="_username"
+                                   value="{{ last_username }}">
                         </div>
                         <div class="form-group">
-                            <label for="password" class="text-primary">Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="_password" required>
+                            <label for="password" class="text-soft">Contraseña</label>
+                            <input type="password" class="form-control" id="password" name="_password">
                         </div>
+
+                        {% if error %}
+                            <div class="text-center text-danger position-absolute login-error-message">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+                        <button type="submit" class="btn btn-primary btn-block login-submit-btn">INGRESAR</button>
                     </div>
-                    {% if error %}
-                        <div class="text-center text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary login-submit-btn">Ingresar</button>
-                    </div>
-                    <div class="text-center mt-4">Si olvidaste tu contraseña haz click <a href="#" class="text-dark"><u>aquí</u></a>
+                    <div class="text-center mt-4 text-secondary text-soft">Si olvidaste tu contraseña haz click <a href="#"
+                                                                                                    class="text-dark"><u>aquí</u></a>
                         para recuperarla.
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    {#{{ form_start(form) }}#}
-    {#{{ form_widget(form) }}#}
-    {#{{ form_end(form) }}#}
 {% endblock %}
 

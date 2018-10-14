@@ -1,6 +1,10 @@
 @import "~bootstrap/scss/bootstrap";
 
-body {
-  height: 100%;
+body, html {
   font-family: 'Roboto', sans-serif;
+  height: 100%;
+}
+
+.text-soft {
+  font-weight: 300;
 }
