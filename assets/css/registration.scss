@@ -1,0 +1,49 @@
+@import './navigation.scss';
+.registration-form-container {
+  width: 100%;
+  height: calc(100% - #{$navigation-height});
+}
+
+.registration-box {
+  height: 650px;
+  width: 700px;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.registration-form {
+  top: 25px;
+}
+
+.registration-form-group {
+  margin-bottom: 17px;
+}
+
+.registration-submit-btn {
+  margin-top: 30px;
+}
+
+.registration-error-message {
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.registration-input-error {
+  top: 75px;
+}
+
+.registration-input {
+  margin-bottom: 5px;
+  width: 220px;
+}
+
+.registration-input-help {
+
+
+}
+
+.parsley-errors-list {
+  position: absolute;
+  top: 71px;
+}

@@ -13,12 +13,12 @@ class Client implements UserInterface, \Serializable
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", unique=true)
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
@@ -49,7 +49,7 @@ class Client implements UserInterface, \Serializable
 
     public function setUsername(string $email): self
     {
-        $this->email = email;
+        $this->email = $email;
 
         return $this;
     }

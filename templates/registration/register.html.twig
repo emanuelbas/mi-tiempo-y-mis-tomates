@@ -1,17 +1,63 @@
 {% extends "base.html.twig" %}
 
-
 {% block body %}
+    <div class="registration-form-container d-flex justify-content-center align-items-center">
+        <div class="row">
+            <div class="position-relative shadow mb-5 bg-white border-top col-md-12 registration-box">
+                <h2 class="text-center text-primary font-weight-light"> Crear cuenta </h2>
+                <div class="col-md-10 mx-auto position-relative">
+                    {#  {% if error %}
+                          <div class="text-danger position-absolute text-center registration-error-message">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                      {% endif %}#}
+                    {{ form_start(form, {'attr':{
+                        'class': 'registration-form position-relative',
+                        'data-parsley-focus': 'first',
+                        'data-parsley-validate': 'true'}}) }}
+                    <div class="form-group position-relative registration-form-group">
+                        {{ form_label(form.first_name, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.first_name, {'attr': {'class': 'd-inline-block registration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted">
+                            {{ form.first_name.vars.help }}
+                        </span>
+                    </div>
 
-    
-{{ form_start(form) }}
-    {{ form_row(form.first_name) }}
-    {{ form_row(form.last_name) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.password.first) }}
-    {{ form_row(form.password.second) }}
+                    <div class="form-group position-relative registration-form-group">
+                        {{ form_label(form.last_name, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.last_name, {'attr': {'class': 'd-inline-block registration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted">
+                            {{ form.last_name.vars.help }}
+                        </span>
+                    </div>
 
-    <button type="submit">Register!</button>
-{{ form_end(form) }}
+                    <div class="form-group position-relative registration-form-group">
+                        {{ form_label(form.email, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'd-inline-block registration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted">
+                            {{ form.email.vars.help }}
+                        </span>
+                    </div>
+
+                    <div class="form-group position-relative registration-form-group">
+                        {{ form_label(form.password.first, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.password.first, {'attr': {'class': 'd-inline-block registration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted">
+                            {{ form.password.first.vars.help }}
+                        </span>
+                    </div>
+
+                    <div class="form-group position-relative registration-form-group">
+                        {{ form_label(form.password.second, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.password.second, {'attr': {'class': 'd-inline-block registration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted">
+                            {{ form.password.second.vars.help }}
+                        </span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block registration-submit-btn">CREAR</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
