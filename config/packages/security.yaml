@@ -22,7 +22,7 @@ security:
             path:   /logout
             target: /
     encoders:
-      App\Entity\Client:
+      App\Entity\Client: 
         algorithm: plaintext
 
   # Easy way to control access for large sections of your site
