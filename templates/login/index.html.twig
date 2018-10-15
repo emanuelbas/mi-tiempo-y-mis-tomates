@@ -3,29 +3,44 @@
 {% block body %}
     <div class="login-form-container d-flex justify-content-center align-items-center">
         <div class="row">
-            <div class="login-box shadow p-3 mb-5 bg-white border-top">
-                <h2 class="text-center text-primary text-soft"> Iniciar sesión </h2>
-
-                <form action="{{ path('login') }}" method="POST"
-                      class="login-form position-relative">
+            <div class="position-relative shadow p-3 mb-5 bg-white border-top login-box">
+                <h2 class="text-center text-primary font-weight-light"> Iniciar sesión </h2>
+                {% if error %}
+                    <div class="text-danger position-absolute text-center login-error-message">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <form action="{{ path('login') }}"
+                      method="POST"
+                      class="login-form position-relative"
+                      data-parsley-focus="first"
+                      data-parsley-validate="">
                     <div class="col-md-9 mx-auto position-relative">
-                        <div class="form-group">
-                            <label for="email" class="text-soft">Email</label>
-                            <input type="email" class="form-control" id="email" name="_username"
-                                   value="{{ last_username }}" required>
+                        <div class="form-group mb-4 position-relative">
+                            <label for="email" class="font-weight-light">Email</label>
+                            <input type="email"
+                                   class="form-control"
+                                   id="email"
+                                   name="_username"
+                                   value="{{ last_username }}"
+                                   required
+                                   data-parsley-trigger="focusout"
+                                   data-parsley-group="block1">
                         </div>
-                        <div class="form-group">
-                            <label for="password" class="text-soft">Contraseña</label>
-                            <input type="password" class="form-control" id="password" name="_password" required>
+                        <div class="form-group position-relative">
+                            <label for="password" class="font-weight-light">Contraseña</label>
+                            <input type="password"
+                                   class="form-control"
+                                   id="password"
+                                   name="_password"
+                                   required
+                                   data-parsley-trigger="focusout"
+                                   data-parsley-group="block2">
                         </div>
 
-                        {% if error %}
-                            <div class="text-center text-danger position-absolute login-error-message">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                        {% endif %}
                         <button type="submit" class="btn btn-primary btn-block login-submit-btn">INGRESAR</button>
                     </div>
-                    <div class="text-center mt-4 text-secondary text-soft">Si olvidaste tu contraseña haz click <a href="#"
-                                                                                                    class="text-dark"><u>aquí</u></a>
+                    <div class="text-center mt-4 text-secondary font-weight-light">Si olvidaste tu contraseña haz click
+                        <a href="#"
+                           class="text-dark"><u>aquí</u></a>
                         para recuperarla.
                     </div>
                 </form>

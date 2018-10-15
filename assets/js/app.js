@@ -9,6 +9,9 @@
 require('../css/app.scss');
 require('../css/navigation.scss');
 require('../css/login.scss');
+require('../css/plugins/parsley.css');
+require('../js/plugins/parsley.min.js');
+require('../js/plugins/parsley-es.js');
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 var $ = require('jquery');

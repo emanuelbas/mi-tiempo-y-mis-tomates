@@ -18,6 +18,16 @@
 }
 
 .login-error-message {
-  bottom: 45px;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
 
+.login-input-error {
+  top: 75px;
+}
+
+.parsley-errors-list {
+  position: absolute;
+  top: 71px;
 }
