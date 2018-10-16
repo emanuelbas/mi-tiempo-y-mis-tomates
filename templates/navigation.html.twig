@@ -1,40 +1,45 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-    <a class="navbar-brand text-white" href="{{ path('home') }}">Mi tiempo y mis tomates</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="container">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link text-white" href="{{ path('home') }}"> Inicio <span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a class="navbar-brand text-white" href="{{ path('home') }}">Mi tiempo y mis tomates</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link text-white" href="{{ path('login') }}"> Iniciar Sesión <span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="{{ path('home') }}"> Inicio <span
+                                class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link text-white" href="{{ path('user_registration') }}"> Registrarse <span class="sr-only">(current)</span></a>
-                </li>
-            {% endif %}
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{{ path('login') }}"> Iniciar Sesión <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="{{ path('user_registration') }}"> Registrarse <span
+                                    class="sr-only">(current)</span></a>
+                    </li>
+                {% endif %}
 
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li class="nav-item dropdown mr-4">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ app.user.firstName }} {{ app.user.lastName }}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="nav-item dropdown mr-4">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ app.user.firstName }} {{ app.user.lastName }}
 
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Configuración</a>
-                        <a class="dropdown-item" href="{{ path('logout') }}">Cerrar sesión</a>
-                    </div>
-                </li>
-            {% endif %}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Configuración</a>
+                            <a class="dropdown-item" href="{{ path('logout') }}">Cerrar sesión</a>
+                        </div>
+                    </li>
+                {% endif %}
 
-        </ul>
+            </ul>
+        </div>
     </div>
 </nav>
