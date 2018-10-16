@@ -7,7 +7,7 @@
 .registration-box {
   height: 650px;
   width: 700px;
-  padding: 30px;
+  padding: 25px;
   border-radius: 10px;
 }
 
@@ -38,12 +38,7 @@
   width: 220px;
 }
 
-.registration-input-help {
-
-
-}
-
-.parsley-errors-list {
-  position: absolute;
-  top: 71px;
+.registration-already-has-account-message {
+  position: relative;
+  top: 20px;
 }

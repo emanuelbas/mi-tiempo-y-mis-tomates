@@ -19,12 +19,15 @@ class ClientType extends AbstractType
             ->add('email', EmailType::class, array(
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
-                    'group' => 'block1'),
+                    'group' => 'block1',
+                    'data-parsley-errors-container' => '#email-input-errors',
+                ),
                 'help' => 'Ejemplo: jorgelopez@gmail.com'))
             ->add('first_name', TextType::class, array(
                 'label' => 'Nombre',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
+                    'data-parsley-errors-container' => '#first-name-input-errors',
                     'group' => 'block1',
                     'autofocus' => ''),
                 'help' => 'Ejemplo: Jorge'))
@@ -32,16 +35,19 @@ class ClientType extends AbstractType
                 'label' => 'Apellido',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
-                    'group' => 'block1'),
+                    'group' => 'block1',
+                    'data-parsley-errors-container' => '#last-name-input-errors',
+                ),
                 'help' => 'Ejemplo: Lopez'))
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options' => array(
                     'label' => 'Contraseña',
-                    'help' => 'Debe tener entre 4 y 24 caracteres',
+                    'help' => 'Debe tener entre 4 y 24 caracteres alfanumericos',
                     'attr' => array(
                         'data-parsley-trigger' => "focusout",
                         'group' => 'block1',
+                        'data-parsley-errors-container' => '#first-password-input-errors',
                         'data-parsley-length' => '[4, 24]')),
                 'second_options' => array(
                     'label' => 'Repita la contraseña',
@@ -49,6 +55,7 @@ class ClientType extends AbstractType
                     'attr' => array(
                         'data-parsley-trigger' => "focusout",
                         'group' => 'block1',
+                        'data-parsley-errors-container' => '#second-password-input-errors',
                         'data-parsley-length' => '[4, 24]',
                         'data-parsley-equalto' => "#client_password_first",
                         'data-parsley-equalto-message' => 'La contraseña debe concidir.')),
