@@ -6,7 +6,7 @@
 
 .registration-box {
   height: 650px;
-  width: 700px;
+  width: 620px;
   padding: 25px;
   border-radius: 10px;
 }
@@ -41,4 +41,8 @@
 .registration-already-has-account-message {
   position: relative;
   top: 20px;
+}
+
+.registration-input-help {
+  font-size: 14px;
 }
