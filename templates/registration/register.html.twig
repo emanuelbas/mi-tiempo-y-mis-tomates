@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div class="registration-form-container d-flex justify-content-center align-items-center">
+    <div class="container registration-form-container d-flex justify-content-center align-items-center">
         <div class="row">
             <div class="position-relative shadow mb-5 bg-white border-top col-md-12 registration-box">
                 <h2 class="text-center text-primary font-weight-light"> Crear cuenta </h2>
@@ -42,7 +42,7 @@
 
                     </div>
 
-                    <div class="form-group position-relative registration-form-group">
+                    <div class="form-group position-relative registration-form-group text-nowrap">
                         {{ form_label(form.password.first, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
                         {{ form_widget(form.password.first, {'attr': {'class': 'd-inline-block registration-input'}}) }}
                         <div class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
@@ -62,7 +62,8 @@
 
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block mx-auto registration-submit-btn">CREAR</button>
+                    <button type="submit" class="btn btn-primary btn-block mx-auto registration-submit-btn">CREAR
+                    </button>
                     {{ form_end(form) }}
                     <div class="text-center mt-3 text-secondary font-weight-light registration-already-has-account-message">
                         Si ya posees una cuenta, haz click
