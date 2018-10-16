@@ -48,6 +48,10 @@ class RegistrationController extends AbstractController
                         'error' => $errorMessage)
                 );
             } else {
+                $this->addFlash(
+                    'success',
+                    'Tu cuenta ha sido creada exitosamente.'
+                );
                 return $this->redirectToRoute('login');
             }
         }

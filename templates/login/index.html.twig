@@ -8,6 +8,7 @@
                 {% if error %}
                     <div class="text-danger position-absolute text-center login-error-message">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
+                  
                 <form action="{{ path('login') }}"
                       method="POST"
                       class="login-form position-relative"

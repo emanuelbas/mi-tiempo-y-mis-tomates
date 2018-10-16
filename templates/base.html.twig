@@ -13,9 +13,12 @@
 
 {% include 'navigation.html.twig' %}
 <script src="{{ asset('build/app.js') }}"></script>
+</div>
 {% for label, messages in app.flashes %}
     {% for message in messages %}
-        {{ message }}
+        <div class="text-center alert alert-{{ label }}">
+            <strong>{{ message }}</strong>
+        </div>
     {% endfor %}
 {% endfor %}
 {% block body %}
