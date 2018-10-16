@@ -2,6 +2,10 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
+            <trans-unit id="3">
+                <source>Authentication request could not be processed due to a system problem.</source>
+                <target>Se produjo un error al validar las credenciales.</target>
+            </trans-unit>
             <trans-unit id="4">
                 <source>Invalid credentials.</source>
                 <target>Las credenciales ingresadas son inválidas.</target>

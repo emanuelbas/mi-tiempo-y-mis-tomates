@@ -19,28 +19,44 @@ class RegistrationController extends AbstractController
         // 1) build the form
         $client = new Client();
         $form = $this->createForm(ClientType::class, $client);
+        $error = false;
+        $errorMessage = '';
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // 3) Encode the password (you could also do this via Doctrine listener)
-            $password = $passwordEncoder->encodePassword($client, $client->getPassword());
-            $client->setPassword($password);
+            try {
+                // 3) Encode the password (you could also do this via Doctrine listener)
+                $password = $passwordEncoder->encodePassword($client, $client->getPassword());
+                $client->setPassword($password);
 
-            // 4) save the User!
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($client);
-            $entityManager->flush();
+                // 4) save the User!
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($client);
+                $entityManager->flush();
 
-            // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the user
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                $error = true;
+                $errorMessage = 'Se produjo un error con el servidor al intentar crear la cuenta.';
+            }
 
-            return $this->redirectToRoute('home');
+            if ($error) {
+                return $this->render(
+                    'registration/register.html.twig',
+                    array(
+                        'form' => $form->createView(),
+                        'error' => $errorMessage)
+                );
+            } else {
+                return $this->redirectToRoute('login');
+            }
         }
 
         return $this->render(
             'registration/register.html.twig',
-            array('form' => $form->createView())
+            array(
+                'form' => $form->createView(),
+                'error' => $errorMessage)
         );
     }
 }

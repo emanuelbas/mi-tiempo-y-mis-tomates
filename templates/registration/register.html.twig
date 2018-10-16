@@ -6,9 +6,9 @@
             <div class="position-relative shadow mb-5 bg-white border-top col-md-12 registration-box">
                 <h2 class="text-center text-primary font-weight-light"> Crear cuenta </h2>
                 <div class="col-md-10 mx-auto position-relative">
-                    {#  {% if error %}
-                          <div class="text-danger position-absolute text-center registration-error-message">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                      {% endif %}#}
+                      {% if error %}
+                          <div class="text-danger position-absolute text-center registration-error-message">{{ error }}</div>
+                      {% endif %}
                     {{ form_start(form, {'attr':{
                         'class': 'registration-form position-relative',
                         'data-parsley-focus': 'first',
@@ -40,7 +40,7 @@
                     <div class="form-group position-relative registration-form-group">
                         {{ form_label(form.password.first, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
                         {{ form_widget(form.password.first, {'attr': {'class': 'd-inline-block registration-input'}}) }}
-                        <span class="d-inline-block ml-3 font-weight-light text-muted">
+                        <span class="d-inline-block ml-3 font-weight-light text-muted text-nowrap">
                             {{ form.password.first.vars.help }}
                         </span>
                     </div>
