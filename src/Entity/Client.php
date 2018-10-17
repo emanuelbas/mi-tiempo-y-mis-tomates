@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -18,7 +20,7 @@ class Client implements UserInterface, \Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=180)
      */
     private $email;
 
@@ -36,6 +38,42 @@ class Client implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=255)
      */
     private $last_name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $secret_answer = 'default_value';
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SecretQuestion", inversedBy="clients")
+     */
+    private $secret_question;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ReportFrequency", inversedBy="clients")
+     */
+    private $report_frequency;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\PomodorosConfiguration", cascade={"persist", "remove"})
+     */
+    private $pomodoros_configuration;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="client")
+     */
+    private $tasks;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClientUsesApplication", mappedBy="client")
+     */
+    private $clientUsesApplications;
+
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+        $this->clientUsesApplications = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -140,6 +178,116 @@ class Client implements UserInterface, \Serializable
             $this->first_name,
             $this->last_name,
         ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    public function getSecretAnswer(): ?string
+    {
+        return $this->secret_answer;
+    }
+
+    public function setSecretAnswer(string $secret_answer): self
+    {
+        $this->secret_answer = $secret_answer;
+
+        return $this;
+    }
+
+    public function getSecretQuestion(): ?SecretQuestion
+    {
+        return $this->secret_question;
+    }
+
+    public function setSecretQuestion(?SecretQuestion $secret_question): self
+    {
+        $this->secret_question = $secret_question;
+
+        return $this;
+    }
+
+    public function getReportFrequency(): ?ReportFrequency
+    {
+        return $this->report_frequency;
+    }
+
+    public function setReportFrequency(?ReportFrequency $report_frequency): self
+    {
+        $this->report_frequency = $report_frequency;
+
+        return $this;
+    }
+
+    public function getPomodorosConfiguration(): ?PomodorosConfiguration
+    {
+        return $this->pomodoros_configuration;
+    }
+
+    public function setPomodorosConfiguration(?PomodorosConfiguration $pomodoros_configuration): self
+    {
+        $this->pomodoros_configuration = $pomodoros_configuration;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Task[]
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+            $task->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): self
+    {
+        if ($this->tasks->contains($task)) {
+            $this->tasks->removeElement($task);
+            // set the owning side to null (unless already changed)
+            if ($task->getClient() === $this) {
+                $task->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ClientUsesApplication[]
+     */
+    public function getClientUsesApplications(): Collection
+    {
+        return $this->clientUsesApplications;
+    }
+
+    public function addClientUsesApplication(ClientUsesApplication $clientUsesApplication): self
+    {
+        if (!$this->clientUsesApplications->contains($clientUsesApplication)) {
+            $this->clientUsesApplications[] = $clientUsesApplication;
+            $clientUsesApplication->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClientUsesApplication(ClientUsesApplication $clientUsesApplication): self
+    {
+        if ($this->clientUsesApplications->contains($clientUsesApplication)) {
+            $this->clientUsesApplications->removeElement($clientUsesApplication);
+            // set the owning side to null (unless already changed)
+            if ($clientUsesApplication->getClient() === $this) {
+                $clientUsesApplication->setClient(null);
+            }
+        }
+
+        return $this;
     }
 
 }
