@@ -9,7 +9,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
+ * @ORM\AttributeOverrides({
+ *      @ORM\AttributeOverride(name="email",
+ *          column=@ORM\Column(
+ *              name     = "email",
+ *              length   = 191,
+ *              unique   = true
+ *          )
+ *      )
+ * })
  */
+ 
 class Client implements UserInterface, \Serializable
 {
     /**
@@ -20,7 +30,7 @@ class Client implements UserInterface, \Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
 
