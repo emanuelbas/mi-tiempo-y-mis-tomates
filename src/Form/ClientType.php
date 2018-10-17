@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Client;
+use App\Entity\SecretQuestion;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,13 +23,19 @@ class ClientType extends AbstractType
                     'data-parsley-trigger' => "focusout",
                     'group' => 'block1',
                     'data-parsley-errors-container' => '#email-input-errors',
+                    'maxlength'=>'50',
                 ),
-                'help' => 'Ejemplo: jorgelopez@gmail.com'))
+                'help' => 'Ejemplo: jorgelopez@gmail.com',
+                'error_bubbling' => true,
+            ))
+
             ->add('first_name', TextType::class, array(
                 'label' => 'Nombre',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'data-parsley-errors-container' => '#first-name-input-errors',
+                    'data-parsley-length' => '[2, 24]',
+                    'maxlength'=>'24',
                     'group' => 'block1',
                     'autofocus' => ''),
                 'help' => 'Ejemplo: Jorge'))
@@ -37,8 +45,28 @@ class ClientType extends AbstractType
                     'data-parsley-trigger' => "focusout",
                     'group' => 'block1',
                     'data-parsley-errors-container' => '#last-name-input-errors',
+                    'data-parsley-length' => '[2, 24]',
+                    'maxlength'=>'24',
                 ),
                 'help' => 'Ejemplo: Lopez'))
+            ->add('secret_question', EntityType::class, array(
+                'label' => 'Pregunta secreta',
+                'class' => SecretQuestion::class,
+                'attr' => array(
+                    'data-parsley-trigger' => "focusout",
+                    'group' => 'block1',
+                )))
+            ->add('secret_answer', TextType::class, array(
+                'label' => 'Respuesta secreta',
+                'attr' => array(
+                    'data-parsley-trigger' => "focusout",
+                    'group' => 'block1',
+                    'data-parsley-errors-container' => '#secret-answer-input-errors',
+                    'data-parsley-length' => '[2, 24]',
+                    'maxlength'=>'24',
+                ),
+                'help' => 'Ejemplo: Buenos Aires'))
+
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options' => array(
@@ -48,7 +76,9 @@ class ClientType extends AbstractType
                         'data-parsley-trigger' => "focusout",
                         'group' => 'block1',
                         'data-parsley-errors-container' => '#first-password-input-errors',
-                        'data-parsley-length' => '[4, 24]')),
+                        'data-parsley-length' => '[4, 24]',
+                        'maxlength'=>'24',
+                    )),
                 'second_options' => array(
                     'label' => 'Repita la contraseña',
                     'help' => 'Debe coincidir con la contraseña',
@@ -57,6 +87,7 @@ class ClientType extends AbstractType
                         'group' => 'block1',
                         'data-parsley-errors-container' => '#second-password-input-errors',
                         'data-parsley-length' => '[4, 24]',
+                        'maxlength'=>'24',
                         'data-parsley-equalto' => "#client_password_first",
                         'data-parsley-equalto-message' => 'La contraseña debe concidir.')),
                 'attr' => array(

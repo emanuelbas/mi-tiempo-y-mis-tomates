@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
@@ -18,8 +19,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *          )
  *      )
  * })
+ * @UniqueEntity(fields={"email"}, message="Ya existe un usuario con ese email.")
  */
- 
+
 class Client implements UserInterface, \Serializable
 {
     /**
@@ -52,7 +54,7 @@ class Client implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $secret_answer = 'default_value';
+    private $secret_answer;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SecretQuestion", inversedBy="clients")

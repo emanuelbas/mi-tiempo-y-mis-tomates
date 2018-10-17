@@ -3,12 +3,20 @@
 {% block body %}
     <div class="container registration-form-container d-flex justify-content-center align-items-center">
         <div class="row">
-            <div class="position-relative shadow mb-5 bg-white border-top col-md-12 registration-box">
+            <div class="position-relative shadow bg-white border-top col-md-12 registration-box">
                 <h2 class="text-center text-primary font-weight-light"> Crear cuenta </h2>
+                {% if not form.vars.valid %}
+                    {% for error in form.vars.errors %}
+                        <div class="text-danger position-absolute text-center registration-error-message">{{ error.message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if error %}
+                    <div class="text-danger position-absolute text-center registration-error-message">{{ error }}</div>
+                {% endif %}
+
                 <div class="col-md-12 mx-auto position-relative">
-                    {% if error %}
-                        <div class="text-danger position-absolute text-center registration-error-message">{{ error }}</div>
-                    {% endif %}
+                    {#{{ form_errors(form.email) }}#}
                     {{ form_start(form, {'attr':{
                         'class': 'registration-form position-relative',
                         'data-parsley-focus': 'first',
@@ -40,6 +48,24 @@
                         </span>
                         <div id="email-input-errors"></div>
 
+                    </div>
+
+                    <div class="form-group position-relative registration-form-group">
+                        {{ form_label(form.secret_question, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.secret_question, {'attr': {'class': 'd-inline-block registration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
+                            {{ form.secret_question.vars.help }}
+                        </span>
+
+                    </div>
+
+                    <div class="form-group position-relative registration-form-group">
+                        {{ form_label(form.secret_answer, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.secret_answer, {'attr': {'class': 'd-inline-block registration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
+                            {{ form.secret_answer.vars.help }}
+                        </span>
+                        <div id="secret-answer-input-errors"></div>
                     </div>
 
                     <div class="form-group position-relative registration-form-group text-nowrap">

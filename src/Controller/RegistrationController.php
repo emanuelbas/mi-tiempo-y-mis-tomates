@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\DBAL\DBALException;
+
 
 class RegistrationController extends AbstractController
 {
@@ -35,9 +38,12 @@ class RegistrationController extends AbstractController
                 $entityManager->persist($client);
                 $entityManager->flush();
 
-            } catch (\Doctrine\DBAL\DBALException $e) {
+            } catch (UniqueConstraintViolationException $e) {
                 $error = true;
-                $errorMessage = 'Se produjo un error con el servidor al intentar crear la cuenta.';
+                $errorMessage = $e->getMessage();
+            } catch (DBALException $e) {
+                $error = true;
+                $errorMessage = 'Se produjo un error al intentar crear la cuenta.';
             }
 
             if ($error) {
