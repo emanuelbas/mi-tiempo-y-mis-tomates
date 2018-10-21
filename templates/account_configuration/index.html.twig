@@ -1,0 +1,96 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container registration-form-container d-flex justify-content-center align-items-center">
+        <div class="row">
+            <div class="position-relative shadow bg-white border-top col-md-12 registration-box">
+                <h2 class="text-center text-primary font-weight-light"> Configurar cuenta </h2>
+                {% if not form.vars.valid %}
+                    {% for error in form.vars.errors %}
+                        <div class="text-danger position-absolute text-center registration-error-message">{{ error.message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if error %}
+                    <div class="text-danger position-absolute text-center registration-error-message">{{ error }}</div>
+                {% endif %}
+
+                <div class="col-md-12 mx-auto position-relative">
+                    {#{{ form_errors(form.email) }}#}
+                    {{ form_start(form, {'attr':{
+                        'class': 'registration-form position-relative',
+                        'data-parsley-focus': 'first',
+                        'data-parsley-validate': 'true'}}) }}
+                    
+
+                    <div class="form-group position-relative registration-form-group">
+                        {{ form_label(form.first_name, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.first_name, {'attr': {'class': 'd-inline-block registration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
+                            {{ form.first_name.vars.help }}
+                        </span>
+                        <div id="first-name-input-errors"></div>
+                    </div>
+
+
+
+                    <div class="form-group position-relative registration-form-group">
+                        {{ form_label(form.last_name, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.last_name, {'attr': {'class': 'd-inline-block registration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
+                            {{ form.last_name.vars.help }}
+                        </span>
+                        <div id="last-name-input-errors"></div>
+
+                    </div>
+
+
+
+                    <div class="form-group position-relative registration-form-group">
+                        {{ form_label(form.email, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'd-inline-block registration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
+                            {{ form.email.vars.help }}
+                        </span>
+                        <div id="email-input-errors"></div>
+
+                    </div>
+
+{# DE MOMENTO EL USUARIO NO PUEDE CAMBIAR LA PASS
+
+                    <div class="form-group position-relative registration-form-group text-nowrap">
+                        {{ form_label(form.password.first, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.password.first, {'attr': {'class': 'd-inline-block registration-input'}}) }}
+                        <div class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
+                            {{ form.password.first.vars.help }}
+                        </div>
+                        <div id="first-password-input-errors"></div>
+
+                    </div>
+
+
+
+                    <div class="form-group position-relative registration-form-group">
+                        {{ form_label(form.password.second, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.password.second, {'attr': {'class': 'd-inline-block registration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
+                            {{ form.password.second.vars.help }}
+                        </span>
+                        <div id="second-password-input-errors"></div>
+
+                    </div>
+
+#}
+
+                    <button type="submit" class="btn btn-primary btn-block mx-auto registration-submit-btn">Guardar cambios
+                    </button>
+                    {{ form_end(form) }}
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
