@@ -1,0 +1,66 @@
+@import './navigation.scss';
+.my-tasks-form-container {
+  height: calc(100% - #{$navigation-height});
+}
+
+.my-tasks-box {
+  width: 750px;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+.my-tasks-form {
+  top: 25px;
+}
+
+.my-tasks-form-group {
+  margin-bottom: 17px;
+}
+
+.my-tasks-submit-btn {
+  margin-top: 25px;
+  width: 220px;
+}
+
+.my-tasks-error-message {
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.my-tasks-input-error {
+  top: 75px;
+}
+
+.my-tasks-input {
+  margin-bottom: 5px;
+  width: 220px;
+}
+
+.my-tasks-already-has-account-message {
+  position: relative;
+  top: 20px;
+}
+
+.my-tasks-input-help {
+  font-size: 14px;
+}
+
+.my-tasks-filter-bar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.my-tasks-filter {
+  &.active {
+    border-bottom: 2px solid var(--blue);
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.my-tasks-select-sort {
+  width: 210px;
+}

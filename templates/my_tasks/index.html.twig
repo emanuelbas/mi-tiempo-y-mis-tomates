@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+    <style>
+        .task-container {
+            /* display: flex;*/
+        }
+
+        .task {
+
+        }
+    </style>
+    <div class="container my-tasks-form-container d-flex justify-content-center align-items-center">
+        <div class="row">
+            <div class="position-relative shadow bg-white border-top col-md-12 my-tasks-box">
+                <h2 class="text-center text-primary font-weight-light"> Mis Tareas </h2>
+                <div class="my-tasks-filter-bar">
+                    {% set state = app.request.attributes.get('state') %}
+
+                    <a href="{{ path('my_tasks') }}" class="my-tasks-filter {% if state == '0' %} active {% endif %}">Todas</a>
+                    <a href="{{ path('my_tasks', {'state':"1"}) }}" class="my-tasks-filter {% if state == '1' %} active {% endif %}">Pendientes</a>
+                    <a href="{{ path('my_tasks', {'state':"2"}) }}" class="my-tasks-filter {% if state == '2' %} active {% endif %}">Finalizadas</a>
+                    <select class="custom-select my-tasks-select-sort">
+                        <option> Nombre</option>
+                        <option> Fecha de creación</option>
+                        <option> Cantidad de pomodoros</option>
+                    </select>
+                </div>
+                {% if tasks is defined %}
+                    <ul class="task-container">
+                        {% for task in tasks %}
+                            <li>{{ task.taskname }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -10,6 +10,8 @@ require('../css/app.scss');
 require('../css/navigation.scss');
 require('../css/login.scss');
 require('../css/registration.scss');
+require('../css/task-creation.scss');
+require('../css/my-tasks.scss');
 require('../css/plugins/parsley.css');
 require('../js/plugins/parsley.min.js');
 require('../js/plugins/parsley-es.js');

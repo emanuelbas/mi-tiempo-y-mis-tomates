@@ -23,7 +23,7 @@
                     <div class="form-group position-relative task-form-group">
                         {{ form_label(form.task_name, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
                         {{ form_widget(form.task_name, {'attr': {'class': 'd-inline-block task-input'}}) }}
-                        <span class="d-inline-block ml-3 font-weight-light text-muted task-input-help">
+                        <span class="d-inline-block ml-3 font-weight-light text-muted task-creation-input-help">
                             {{ form.task_name.vars.help }}
                         </span>
                         <div id="task_name-input-errors"></div>
@@ -35,7 +35,6 @@
                         <div id="stimated_pomodoros-input-errors"></div>
 
                     </div>
-
 
                     <button type="submit" class="btn btn-primary btn-block mx-auto task-submit-btn">CREAR
                     </button>

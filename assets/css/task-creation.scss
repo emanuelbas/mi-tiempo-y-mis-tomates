@@ -1,0 +1,47 @@
+@import './navigation.scss';
+.task-creation-form-container {
+  height: calc(100% - #{$navigation-height});
+}
+
+.task-creation-box {
+  width: 620px;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+.task-creation-form {
+  top: 25px;
+}
+
+.task-creation-form-group {
+  margin-bottom: 17px;
+}
+
+.task-creation-submit-btn {
+  margin-top: 25px;
+  width: 220px;
+}
+
+.task-creation-error-message {
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.task-creation-input-error {
+  top: 75px;
+}
+
+.task-creation-input {
+  margin-bottom: 5px;
+  width: 220px;
+}
+
+.task-creation-already-has-account-message {
+  position: relative;
+  top: 20px;
+}
+
+.task-creation-input-help {
+  font-size: 14px;
+}
