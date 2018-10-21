@@ -47,4 +47,13 @@ class TaskStateRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findStateByName($value): ?TaskState
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.state = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }
