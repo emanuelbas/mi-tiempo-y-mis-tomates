@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Client;
-use App\Entity\SecretQuestion;
+use App\Entity\ReportFrequency;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,6 +38,16 @@ class AccountConfigurationType extends AbstractType
                     'group' => 'block1',
                     'autofocus' => '')
             ) )
+
+            ->add('report_frequency', EntityType::class, array(
+                'label' => 'Frecuencia de reporte',
+                'class' => ReportFrequency::class,
+                'attr' => array(
+                    'data-parsley-trigger' => "focusout",
+                    'group' => 'block1',
+                )))
+
+
             ->add('last_name', TextType::class, array(
                 'label' => 'Apellido',
                 'attr' => array(

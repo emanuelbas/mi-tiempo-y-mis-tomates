@@ -80,4 +80,9 @@ class ReportFrequency
 
         return $this;
     }
+
+    public function __toString() {
+        return $this->frequency_name;
+    }
+
 }

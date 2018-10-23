@@ -5,6 +5,7 @@ use App\Entity\SecretQuestion;
 use App\Entity\Application;
 use App\Entity\Client;
 use App\Entity\Pomodoro;
+use App\Entity\ReportFrequency;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -45,6 +46,17 @@ class AppFixtures extends Fixture
 			$instance->setEndingDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-09 16:16"));
             $manager->persist($instance);
         }
+
+        // Frecuencias de reporte disponibles
+        $frecuencia = new ReportFrequency();
+        $frecuencia ->setFrequencyName('Diaria');
+        $manager->persist($frecuencia);
+        $frecuencia = new ReportFrequency();
+        $frecuencia ->setFrequencyName('Mensual');
+        $manager->persist($frecuencia);
+        $frecuencia = new ReportFrequency();
+        $frecuencia ->setFrequencyName('Anual');
+        $manager->persist($frecuencia);
 		
 
         $manager->flush();
