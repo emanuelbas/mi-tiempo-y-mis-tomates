@@ -28,14 +28,21 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-
-                $entityManager = $this->getDoctrine()->getManager();
-                $task->setActive(false);
-                $task->setClient( $this->getUser());
-                //$task->setTaskState( $entityManager->getRepository('TaskStateRepository:TaskState')->findStateByName('Sin iniciar'));
-                $entityManager->persist($task);
-                $entityManager->flush();
-
+                if($task->getStimatedPomodoros()>0){
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $task->setActive(false);
+                    $task->setClient( $this->getUser());
+                    $asd="Sin iniciar";
+                    $state=$entityManager->getRepository("App\Entity\TaskState")->findBy(['state' => $asd]);
+                    $task->setTaskState( current($state));
+                    $dateC = date_create();
+                    $task->setCreationDate(date_timestamp_set($dateC, time()));
+                    $entityManager->persist($task);
+                    $entityManager->flush();
+                }else{
+                    $error = true;
+                    $errorMessage = 'Agrege un numero mayor a 0 de pomodoros';
+                }
             } catch (UniqueConstraintViolationException $e) {
                 $error = true;
                 $errorMessage = $e->getMessage();
@@ -56,7 +63,7 @@ class TaskController extends AbstractController
                     'success',
                     'Tu tarea ha sido creada exitosamente.'
                 );
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('my_tasks');
             }
         }
 
