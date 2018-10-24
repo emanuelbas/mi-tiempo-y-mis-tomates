@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MyTasksController extends AbstractController
 {
     /**
-     * @Route("/my-tasks/{page}/{state}/{sort}", name="my_tasks",defaults={"page"=1, "state"=0, "sort"=0})
+     * @Route("/my-tasks/{page}/{state}/{sort}", name="my_tasks",defaults={"page"=1, "state"="all", "sort"=0})
      */
     public function index(Request $request, $page, $state, $sort)
     {
@@ -24,8 +24,8 @@ class MyTasksController extends AbstractController
         $filters = array('client' => $clientId);
         $orderBy = array();
 
-        if ($state != 0) {
-            $filters['task_state'] = $state;
+        if ($state != "all") {
+            $filters['task_state'] = strtoupper($state);
         }
         switch ($sort) {
             case 0:

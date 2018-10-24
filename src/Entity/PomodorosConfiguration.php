@@ -111,7 +111,7 @@ class PomodorosConfiguration
         return $this;
     }
 
-        public function getClient(): ?Client
+    public function getClient(): ?Client
     {
         return $this->client;
     }

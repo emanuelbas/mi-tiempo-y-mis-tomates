@@ -32,8 +32,7 @@ class TaskController extends AbstractController
                     $entityManager = $this->getDoctrine()->getManager();
                     $task->setActive(false);
                     $task->setClient( $this->getUser());
-                    $asd="Sin iniciar";
-                    $state=$entityManager->getRepository("App\Entity\TaskState")->findBy(['state' => $asd]);
+                    $state=$entityManager->getRepository("App\Entity\TaskState")->findBy(['state' => 'PENDING']);
                     $task->setTaskState( current($state));
                     $dateC = date_create();
                     $task->setCreationDate(date_timestamp_set($dateC, time()));
