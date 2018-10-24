@@ -17,7 +17,7 @@ class PomodoroConfigurationType extends AbstractType
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'data-parsley-errors-container' => '#working_time-input-errors',
-                    'data-parsley-length' => '[2, 24]',
+                    'data-parsley-required' => 'true',
                     'maxlength'=>'24',
                     'group' => 'block1',
                     'autofocus' => ''),
@@ -27,10 +27,9 @@ class PomodoroConfigurationType extends AbstractType
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'data-parsley-errors-container' => '#break_time-input-errors',
-                    'data-parsley-length' => '[2, 24]',
+                    'data-parsley-required' => 'true',
                     'maxlength'=>'24',
-                    'group' => 'block1',
-                    'autofocus' => ''),
+                    'group' => 'block1'),
                 'help' => 'Ejemplo: 10 minutos'))
         ;
     }

@@ -72,7 +72,7 @@ class ClientType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options' => array(
                     'label' => 'Contraseña',
-                    'help' => 'Debe tener entre 4 y 24 caracteres alfanumericos',
+                    'help' => 'Entre 4 y 24 caracteres',
                     'attr' => array(
                         'data-parsley-trigger' => "focusout",
                         'group' => 'block1',
