@@ -77,6 +77,7 @@ yarn install
 composer install
 php bin/console doctrine:database:create (crea la base de datos, DEBE estar configurado el archivo ".env" para que funcione)
 php bin/console doctrine:migrations:migrate (crea las tablas de la base de datos en base a los modelos)
+php bin/console doctrine:fixtures:load (carga las tablas con datos mock)
 ```
 
 ## Levantar la aplicaci�n
