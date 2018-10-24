@@ -35,7 +35,7 @@
                                 <span class="my-tasks-task-name"
                                       title="{{ task.taskName }}">{{ task.taskName }}</span>
                                 <span class="my-tasks-pomodoros"
-                                      title="Pomodoros usados/estimados"> x/{{ task.stimatedPomodoros }} </span>
+                                      title="Pomodoros usados/estimados"> {{ random(task.stimatedPomodoros-1) }}/{{ task.stimatedPomodoros }} </span>
 
                                 {% if task.taskState.state == "PENDING" %}
                                     <span class="my-tasks-task-state" title="Estado de la tarea"> Pendiente </span>
@@ -49,18 +49,29 @@
                                 <span title="Fecha de creación"> {{ task.creationDate | date("m/d/Y") }} </span>
 
 
-                                <div class="my-tasks-action-buttons-container d-flex justify-content-around">
-                                    <a href="#" title="Iniciar la tarea"><img src="/build/assets/img/buttons/play.png"
-                                                                              class="my-tasks-action-button"></a>
+                                <div class="my-tasks-action-buttons-container d-flex justify-content-end">
+                                    {% if task.taskState.state == "PENDING" %}
+                                        <a href="#" title="Iniciar la tarea"><img
+                                                    src="/build/assets/img/buttons/play.svg"
+                                                    class="my-tasks-action-button mr-2"></a>
+                                    {% endif %}
+                                    {% if task.taskState.state == "ACTIVE" %}
+                                        <a href="#" title="Pausar la tarea"><img
+                                                    src="/build/assets/img/buttons/pause.svg"
+                                                    class="my-tasks-action-button mr-2"></a>
+                                        <a href="#" title="Finalizar la tarea"><img
+                                                    src="/build/assets/img/buttons/stop.png"
+                                                    class="my-tasks-action-button mr-2"></a>
+                                    {% endif %}
                                     <a href="#" title="Borrar la tarea"><img src="/build/assets/img/buttons/trash.png"
-                                                                             class="my-tasks-action-button"></a>
+                                                                             class="my-tasks-action-button mr-2"></a>
                                 </div>
                             </div>
                         {% else %}
                             {% if state == "PENDING" %}
-                            <div class="my-tasks-empty-message">Aún no has creado ninguna tarea. Haz click en "Crear
-                                Tarea" para comenzar.
-                            </div>
+                                <div class="my-tasks-empty-message">Aún no has creado ninguna tarea. Haz click en "Crear
+                                    Tarea" para comenzar.
+                                </div>
                             {% endif %}
                         {% endfor %}
                     </div>

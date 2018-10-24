@@ -72,7 +72,7 @@ class AppFixtures extends Fixture
         // - Pomodoros configuration
 
         $pconfig = new PomodorosConfiguration();
-        $pconfig->setBreakTime(25);
+        $pconfig->setBreakTime(5);
         $pconfig->setWorkingTime(25);
         $pconfig->setEndWorkAlarm(true);
         $pconfig->setEndBreakAlarm(true);
