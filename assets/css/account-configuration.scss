@@ -1,0 +1,31 @@
+@import './navigation.scss';
+.login-form-container {
+  height: calc(100% - #{$navigation-height});
+}
+
+.c-box {
+  border-radius: 10px;
+}
+
+.c-form {
+  top: 25px;
+}
+
+.c-submit-btn {
+  margin-top: 40px;
+}
+
+.c-error-message {
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.c-input-error {
+  top: 75px;
+}
+
+.parsley-errors-list {
+  position: absolute;
+  top: 71px;
+}

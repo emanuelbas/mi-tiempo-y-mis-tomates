@@ -1,9 +1,9 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div class="container registration-form-container d-flex justify-content-center align-items-center">
+    <div class="container login-form-container d-flex justify-content-center align-items-center">
         <div class="row">
-            <div class="position-relative shadow bg-white border-top col-md-12 registration-box">
+            <div class="position-relative shadow bg-white border-top col-md-12 c-box">
                 <h2 class="text-center text-primary font-weight-light"> Configurar cuenta </h2>
                 {% if not form.vars.valid %}
                     {% for error in form.vars.errors %}
@@ -103,7 +103,7 @@
 
 #}
 
-                    <button type="submit" class="btn btn-primary btn-block mx-auto registration-submit-btn">Guardar cambios
+                    <button type="submit" class="btn btn-primary btn-block mx-auto login-submit-btn">Guardar cambios
                     </button>
                     {{ form_end(form) }}
 

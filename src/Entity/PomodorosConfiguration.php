@@ -17,6 +17,11 @@ class PomodorosConfiguration
     private $id;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Client", mappedBy="pomodoros_configuration", cascade={"persist", "remove"})
+     */
+    private $client;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $break_time;
@@ -102,6 +107,24 @@ class PomodorosConfiguration
     public function setClockSound(bool $clock_sound): self
     {
         $this->clock_sound = $clock_sound;
+
+        return $this;
+    }
+
+        public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newPomodorosConfiguration = $client === null ? null : $this;
+        if ($newPomodorosConfiguration !== $client->getPomodorosConfiguration()) {
+            $cliente->setPomodorosConfiguracion($newPomodorosConfiguration);
+        }
 
         return $this;
     }
