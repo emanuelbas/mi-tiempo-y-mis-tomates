@@ -7,7 +7,7 @@
         <div class="row">
             <div class="position-relative shadow bg-white border-top col-md-12 my-tasks-box">
                 <h2 class="text-center text-primary font-weight-light"> Mis Tareas </h2>
-                <div class="my-tasks-filter-bar">
+                <div class="my-3 my-tasks-filter-bar">
                     {% set state = app.request.attributes.get('state') %}
                     {% set sort = app.request.attributes.get('sort') %}
                     {% set page = app.request.attributes.get('page') %}
@@ -22,6 +22,8 @@
                         <option value="{{ path('my_tasks', {'sort':"1"}) }}"> Fecha de creación</option>
                         <option value="{{ path('my_tasks', {'sort':"2"}) }}"> Cantidad de pomodoros</option>
                     </select>
+                    <a href="{{ path('task_creation') }}"><button type="button" class="btn btn-primary my-tasks-create-task-button">Crear tarea</button> </a>
+
                 </div>
                 {% if tasks is defined %}
                     <div class="my-tasks-task-section">
@@ -60,7 +62,6 @@
                            href="{{ path('my_tasks', {'sort':sort, 'page': currentPage+1, state: state}) }}">Siguiente</a>
                     </li>
                 </ul>
-                <a href="{{ path('task_creation') }}"><button type="button" class="btn btn-primary">Crear tarea</button> </a>
             </div>
         </div>
     </div>

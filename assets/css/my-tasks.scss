@@ -4,8 +4,8 @@
 }
 
 .my-tasks-box {
-  width: 650px;
-  padding: 25px;
+  width: 750px;
+  padding: 25px 25px 3px 25px;
   border-radius: 10px;
 }
 
@@ -53,7 +53,8 @@
 }
 
 .my-tasks-action-buttons-container {
-  width: 90px;
+  width: 70px;
+  flex-grow: 0.15;
 }
 
 .my-tasks-task-name {
