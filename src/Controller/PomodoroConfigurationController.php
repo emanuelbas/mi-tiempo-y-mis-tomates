@@ -19,9 +19,11 @@ class PomodoroConfigurationController extends AbstractController
      * @Route("/pomodoro_configuration", name="pomodoro_configuration")
      */
     public function pomodoro_configuration(Request $request)
-    {
-        $pomodoroConfiguration = new PomodorosConfiguration();
-        $form = $this->createForm(PomodoroConfigurationType::class, $pomodoroConfiguration);
+    {   
+
+        $client = $this->get('security.token_storage')->getToken()->getUser(); 
+        $pomodorosConfiguration = $client->getPomodorosConfiguration();
+        $form = $this->createForm(PomodoroConfigurationType::class, $pomodorosConfiguration);
         $error = false;
         $errorMessage = '';
 
@@ -29,7 +31,7 @@ class PomodoroConfigurationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($pomodoroConfiguration);
+                $entityManager->persist($pomodorosConfiguration);
                 $entityManager->flush();
             } catch (UniqueConstraintViolationException $e) {
                 $error = true;
@@ -54,16 +56,12 @@ class PomodoroConfigurationController extends AbstractController
                 return $this->redirectToRoute('my_tasks');
             }
         }
-        $client = $this->get('security.token_storage')->getToken()->getUser(); 
-        $entityManager = $this->getDoctrine()->getManager();
-        $array=$entityManager->getRepository("App\Entity\PomodorosConfiguration")->findBy(['client' => $client]);
-        $current=current($array);
         return $this->render(
             'pomodoro_configuration/index.html.twig',
             array(
                 'form' => $form->createView(),
-                'working_time' => $current->getWorkingTime(),
-                'break_time' => $current->getBreakTime(),
+                'working_time' => $pomodorosConfiguration->getWorkingTime(),
+                'break_time' => $pomodorosConfiguration->getBreakTime(),
                 'error' => $errorMessage)
         );
     }
