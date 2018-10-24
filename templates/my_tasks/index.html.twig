@@ -9,6 +9,8 @@
                 <h2 class="text-center text-primary font-weight-light"> Mis Tareas </h2>
                 <div class="my-tasks-filter-bar">
                     {% set state = app.request.attributes.get('state') %}
+                    {% set sort = app.request.attributes.get('sort') %}
+                    {% set page = app.request.attributes.get('page') %}
 
                     <a href="{{ path('my_tasks') }}" class="my-tasks-filter {% if state == '0' %} active {% endif %}">Todas</a>
                     <a href="{{ path('my_tasks', {'state':"1"}) }}"
@@ -22,21 +24,40 @@
                     </select>
                 </div>
                 {% if tasks is defined %}
-                    <ul class="task-container">
+                    <div class="my-tasks-task-section">
                         {% for task in tasks %}
-                            <li>{{ task.taskname }}</li>
+                            <div class="my-tasks-task-container my-3">
+                                <span class="my-tasks-task-name"
+                                      title="{{ task.taskName }}">{{ task.taskName }}</span>
+                                <span title="Pomodoros usados/estimados"> 5/10 </span>
+                                <span title="Fecha de creación"> {{ task.creationDate | date("m/d/Y") }} </span>
+                                <div class="my-tasks-action-buttons-container d-flex justify-content-around">
+                                    <a href="#" title="Iniciar la tarea"><img src="/build/assets/img/buttons/play.png"
+                                                                              class="my-tasks-action-button"></a>
+                                    <a href="#" title="Borrar la tarea"><img src="/build/assets/img/buttons/trash.png"
+                                                                             class="my-tasks-action-button"></a>
+                                </div>
+                            </div>
+
                         {% endfor %}
-                    </ul>
+                    </div>
                 {% endif %}
+                {#        {{ currentPage }}
+                        {{ totalPages }}#}
                 <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Anterior</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item">
-                        <a class="page-link" href="#">Siguiente</a>
+                        <a class="page-link"
+                           href="{{ path('my_tasks', {'sort':sort, 'page': currentPage-1, state: state}) }}">Anterior</a>
+                    </li>
+                    {% for i in 1..totalPages %}
+                        <li class="page-item {% if currentPage == i %} active {% endif %}">
+                            <a class="page-link"
+                               href="{{ path('my_tasks', {'sort':sort, 'page': i, state: state}) }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{ path('my_tasks', {'sort':sort, 'page': currentPage+1, state: state}) }}">Siguiente</a>
                     </li>
                 </ul>
             </div>
