@@ -7,8 +7,10 @@
         <div class="row">
             <div class="position-relative shadow bg-white border-top col-md-12 my-tasks-box">
                 <h2 class="text-center text-primary font-weight-light"> Mis Tareas </h2>
-                <div class="my-tasks-filter-bar">
+                <div class="my-3 my-tasks-filter-bar">
                     {% set state = app.request.attributes.get('state') %}
+                    {% set sort = app.request.attributes.get('sort') %}
+                    {% set page = app.request.attributes.get('page') %}
 
                     <a href="{{ path('my_tasks') }}" class="my-tasks-filter {% if state == '0' %} active {% endif %}">Todas</a>
                     <a href="{{ path('my_tasks', {'state':"1"}) }}"
@@ -20,28 +22,52 @@
                         <option value="{{ path('my_tasks', {'sort':"1"}) }}"> Fecha de creación</option>
                         <option value="{{ path('my_tasks', {'sort':"2"}) }}"> Cantidad de pomodoros</option>
                     </select>
+                    <a href="{{ path('task_creation') }}">
+                        <button type="button" class="btn btn-primary my-tasks-create-task-button">Crear tarea</button>
+                    </a>
+
                 </div>
                 {% if tasks is defined %}
-                    <ul class="task-container">
+                    <div class="my-tasks-task-section">
                         {% for task in tasks %}
-                            <li>{{ task.taskname }}</li>
+                            <div class="my-tasks-task-container my-3">
+                                <span class="my-tasks-task-name"
+                                      title="{{ task.taskName }}">{{ task.taskName }}</span>
+                                <span class="my-tasks-pomodoros" title="Pomodoros usados/estimados"> x/{{ task.stimatedPomodoros }} </span>
+                                <span title="Fecha de creación"> {{ task.creationDate | date("m/d/Y") }} </span>
+                                <div class="my-tasks-action-buttons-container d-flex justify-content-around">
+                                    <a href="#" title="Iniciar la tarea"><img src="/build/assets/img/buttons/play.png"
+                                                                              class="my-tasks-action-button"></a>
+                                    <a href="#" title="Borrar la tarea"><img src="/build/assets/img/buttons/trash.png"
+                                                                             class="my-tasks-action-button"></a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="my-tasks-empty-message">Aún no has creado ninguna tarea. Haz click en "Crear Tarea" para comenzar.</div>
                         {% endfor %}
-                    </ul>
+                    </div>
                 {% endif %}
+
+                {% if totalPages > 0 %}
                 <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                    <li class="page-item {% if currentPage == 1 %} disabled {% endif %}">
+                        <a class="page-link"
+                           href="{{ path('my_tasks', {'sort':sort, 'page': currentPage-1, state: state}) }}">Anterior</a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Siguiente</a>
+                    {% for i in 1..totalPages %}
+                        <li class="page-item {% if currentPage == i %} active {% endif %}">
+                            <a class="page-link"
+                               href="{{ path('my_tasks', {'sort':sort, 'page': i, state: state}) }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                    <li class="page-item  {% if currentPage == totalPages %} disabled {% endif %}">
+                        <a class="page-link"
+                           href="{{ path('my_tasks', {'sort':sort, 'page': currentPage+1, state: state}) }}">Siguiente</a>
                     </li>
                 </ul>
+                {% endif %}
             </div>
         </div>
-
     </div>
 {% endblock %}
 {% block javascripts %}

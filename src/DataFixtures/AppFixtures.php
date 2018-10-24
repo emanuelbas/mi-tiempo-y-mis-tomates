@@ -76,6 +76,7 @@ class AppFixtures extends Fixture
         $pconfig->setEndBreakAlarm(true);
         $pconfig->setClockSound(true);
         $pconfig->setClient($user);
+        $user->setPomodorosConfiguration($pconfig);
         $manager->persist($pconfig);
         $manager->persist($user);
 
@@ -83,7 +84,7 @@ class AppFixtures extends Fixture
 
         $task1 = new Task();
         $task1->setTaskName('Lavar la ropa');
-        $task1->setCreationDate('Y-m-d H:i', "2018-09-09 15:16");
+        $task1->setCreationDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-09 15:16"));
         $task1->setStimatedPomodoros(10);
         $task1->setActive(true);
         $task1->setClient($user);
@@ -117,7 +118,6 @@ class AppFixtures extends Fixture
         }
 
 
-
         // Creando 10 aplicaciones
         for ($i = 0; $i < 10; $i++) {
             $application = new Application();
@@ -125,7 +125,7 @@ class AppFixtures extends Fixture
             $application->setAppId($i);
             $manager->persist($application);
         }
-        		
+
 
         $manager->flush();
     }

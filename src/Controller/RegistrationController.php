@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\ClientType;
 use App\Entity\Client;
+use App\Entity\PomodorosConfiguration;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,9 +34,18 @@ class RegistrationController extends AbstractController
                 $password = $passwordEncoder->encodePassword($client, $client->getPassword());
                 $client->setPassword($password);
 
-                // 4) save the User!
+                // 4) Add the default configuration for the pomodoros
+                $pomodorosConfiguration = new PomodorosConfiguration();
+                $pomodorosConfiguration->setBreakTime(10);
+                $pomodorosConfiguration->setWorkingTime(30);
+                $pomodorosConfiguration->setEndBreakAlarm(FALSE);
+                $pomodorosConfiguration->setEndWorkAlarm(FALSE);
+                $pomodorosConfiguration->setClockSound(TRUE);
+                $pomodorosConfiguration->setClient($client);              
+                
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($client);
+                $entityManager->persist($pomodorosConfiguration);
                 $entityManager->flush();
 
             } catch (UniqueConstraintViolationException $e) {

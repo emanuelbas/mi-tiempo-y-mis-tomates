@@ -1,27 +1,28 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div class="container task-form-container d-flex justify-content-center align-items-center">
+    <div class="container task-creation-form-container d-flex justify-content-center align-items-center">
         <div class="row">
-            <div class="position-relative shadow bg-white border-top col-md-12 task-box">
+            <div class="position-relative shadow bg-white border-top col-md-12 task-creation-box">
                 <h2 class="text-center text-primary font-weight-light"> Crear Tarea </h2>
                 {% if not form.vars.valid %}
                     {% for error in form.vars.errors %}
-                        <div class="text-danger position-absolute text-center task-error-message">{{ error.message }}</div>
+                        <div class="text-danger position-absolute text-center task-creation-error-message">{{ error.message }}</div>
                     {% endfor %}
                 {% endif %}
 
                 {% if error %}
-                    <div class="text-danger position-absolute text-center task-error-message">{{ error }}</div>
+                    <div class="text-danger position-absolute text-center task-creation-error-message">{{ error }}</div>
                 {% endif %}
 
                 <div class="col-md-12 mx-auto position-relative">
                     {{ form_start(form, {'attr':{
-                        'class': 'task-form position-relative',
+                        'class': 'task-creation-form position-relative',
                         'data-parsley-focus': 'first',
                         'data-parsley-validate': 'true'}}) }}
-                    <div class="form-group position-relative task-form-group">
+                    <div class="form-group position-relative task-creation-form-group">
                         {{ form_label(form.task_name, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+
                         {{ form_widget(form.task_name, {'attr': {'class': 'd-inline-block task-input'}}) }}
                         <span class="d-inline-block ml-3 font-weight-light text-muted task-creation-input-help">
                             {{ form.task_name.vars.help }}
@@ -29,14 +30,14 @@
                         <div id="task_name-input-errors"></div>
                     </div>
 
-                    <div class="form-group position-relative task-form-group">
+                    <div class="form-group position-relative task-creation-form-group">
                         {{ form_label(form.stimated_pomodoros, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
-                        {{ form_widget(form.stimated_pomodoros, {'attr': {'class': 'd-inline-block task-input'}}) }}
+                        {{ form_widget(form.stimated_pomodoros, {'attr': {'class': 'd-inline-block task-creation-input'}}) }}
                         <div id="stimated_pomodoros-input-errors"></div>
 
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-block mx-auto task-submit-btn">CREAR
+                    <button type="submit" class="btn btn-primary btn-block mx-auto task-creation-submit-btn">CREAR
                     </button>
                     {{ form_end(form) }}
                 </div>
