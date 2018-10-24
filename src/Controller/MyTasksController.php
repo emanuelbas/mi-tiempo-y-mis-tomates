@@ -46,7 +46,7 @@ class MyTasksController extends AbstractController
 
         $tasks = $entityManager->getRepository("App\Entity\Task")->findBy($filters, $orderBy, $pageLimit, $page*$pageLimit);
 /*        var_dump($totalPages);*/
-        var_dump($taskCount);
+   /*     var_dump($taskCount);*/
         return $this->render('my_tasks/index.html.twig', [
             'controller_name' => 'MyTasksController',
             'tasks' => $tasks,

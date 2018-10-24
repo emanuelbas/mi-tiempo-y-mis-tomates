@@ -60,9 +60,9 @@
                            href="{{ path('my_tasks', {'sort':sort, 'page': currentPage+1, state: state}) }}">Siguiente</a>
                     </li>
                 </ul>
+                <a href="{{ path('task_creation') }}"><button type="button" class="btn btn-primary">Crear tarea</button> </a>
             </div>
         </div>
-
     </div>
 {% endblock %}
 {% block javascripts %}

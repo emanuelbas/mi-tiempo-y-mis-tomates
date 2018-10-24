@@ -57,7 +57,6 @@ class AppFixtures extends Fixture
         $frecuencia = new ReportFrequency();
         $frecuencia ->setFrequencyName('Anual');
         $manager->persist($frecuencia);
-		
 
         $manager->flush();
     }
