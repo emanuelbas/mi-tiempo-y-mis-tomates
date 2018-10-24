@@ -24,6 +24,7 @@ class ClientType extends AbstractType
                     'group' => 'block1',
                     'data-parsley-errors-container' => '#email-input-errors',
                     'maxlength'=>'50',
+                    'placeholder' => 'jorgelopez@gmail.com'
                 ),
                 'help' => 'Ejemplo: jorgelopez@gmail.com',
                 'error_bubbling' => true,

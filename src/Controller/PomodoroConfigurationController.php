@@ -51,7 +51,7 @@ class PomodoroConfigurationController extends AbstractController
             } else {
                 $this->addFlash(
                     'success',
-                    'Tus pomodoros han sido modificados exitosamente.'
+                    'La configuración de pomodoros ha sido modificada exitosamente.'
                 );
                 return $this->redirectToRoute('my_tasks');
             }

@@ -22,7 +22,7 @@
                         'data-parsley-focus': 'first',
                         'data-parsley-validate': 'true'}}) }}
                     <div class="form-group position-relative registration-form-group">
-                        {{ form_label(form.first_name, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_label(form.first_name, null, { 'label_attr': {'class': 'font-weight-light registration-label'} }) }}
                         {{ form_widget(form.first_name, {'attr': {'class': 'd-inline-block registration-input'}}) }}
                         <span class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
                             {{ form.first_name.vars.help }}
@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="form-group position-relative registration-form-group">
-                        {{ form_label(form.last_name, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_label(form.last_name, null, { 'label_attr': {'class': 'font-weight-light registration-label'} }) }}
                         {{ form_widget(form.last_name, {'attr': {'class': 'd-inline-block registration-input'}}) }}
                         <span class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
                             {{ form.last_name.vars.help }}
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="form-group position-relative registration-form-group">
-                        {{ form_label(form.email, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_label(form.email, null, { 'label_attr': {'class': 'font-weight-light registration-label'} }) }}
                         {{ form_widget(form.email, {'attr': {'class': 'd-inline-block registration-input'}}) }}
                         <span class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
                             {{ form.email.vars.help }}
@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="form-group position-relative registration-form-group">
-                        {{ form_label(form.secret_question, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_label(form.secret_question, null, { 'label_attr': {'class': 'font-weight-light registration-label'} }) }}
                         {{ form_widget(form.secret_question, {'attr': {'class': 'd-inline-block registration-input'}}) }}
                         <span class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
                             {{ form.secret_question.vars.help }}
@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="form-group position-relative registration-form-group">
-                        {{ form_label(form.secret_answer, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_label(form.secret_answer, null, { 'label_attr': {'class': 'font-weight-light registration-label'} }) }}
                         {{ form_widget(form.secret_answer, {'attr': {'class': 'd-inline-block registration-input'}}) }}
                         <span class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
                             {{ form.secret_answer.vars.help }}
@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="form-group position-relative registration-form-group text-nowrap">
-                        {{ form_label(form.password.first, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_label(form.password.first, null, { 'label_attr': {'class': 'font-weight-light registration-label'} }) }}
                         {{ form_widget(form.password.first, {'attr': {'class': 'd-inline-block registration-input'}}) }}
                         <div class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
                             {{ form.password.first.vars.help }}
@@ -79,7 +79,7 @@
                     </div>
 
                     <div class="form-group position-relative registration-form-group">
-                        {{ form_label(form.password.second, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_label(form.password.second, null, { 'label_attr': {'class': 'font-weight-light registration-label'} }) }}
                         {{ form_widget(form.password.second, {'attr': {'class': 'd-inline-block registration-input'}}) }}
                         <span class="d-inline-block ml-3 font-weight-light text-muted registration-input-help">
                             {{ form.password.second.vars.help }}

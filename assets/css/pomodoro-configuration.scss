@@ -1,0 +1,27 @@
+@import './navigation.scss';
+.pomodoro-configuration-form-container {
+  height: calc(100% - #{$navigation-height});
+}
+
+.pomodoro-configuration-box {
+  height: 345px;
+  border-radius: 10px;
+}
+
+.pomodoro-configuration-form {
+  top: 25px;
+}
+
+.pomodoro-configuration-submit-btn {
+  margin-top: 25px;
+}
+
+.pomodoro-configuration-error-message {
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.pomodoro-configuration-input-error {
+  top: 75px;
+}
