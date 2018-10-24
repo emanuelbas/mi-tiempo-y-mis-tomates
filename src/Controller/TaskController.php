@@ -28,21 +28,24 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                if ($task->getStimatedPomodoros() > 0) {
+                if($task->getStimatedPomodoros()>0){
                     $entityManager = $this->getDoctrine()->getManager();
                     $task->setActive(false);
-                    $task->setClient($this->getUser());
-                    $asd = "Sin iniciar";
-                    $state = $entityManager->getRepository("App\Entity\TaskState")->findBy(['state' => $asd]);
-                    $task->setTaskState(current($state));
+                    $task->setClient( $this->getUser());
+                    $asd="Sin iniciar";
+                    $state=$entityManager->getRepository("App\Entity\TaskState")->findBy(['state' => $asd]);
+                    $task->setTaskState( current($state));
                     $dateC = date_create();
                     $task->setCreationDate(date_timestamp_set($dateC, time()));
                     $entityManager->persist($task);
                     $entityManager->flush();
-                } else {
+                }else{
                     $error = true;
                     $errorMessage = 'Agrege un numero mayor a 0 de pomodoros';
                 }
+            } catch (UniqueConstraintViolationException $e) {
+                $error = true;
+                $errorMessage = $e->getMessage();
             } catch (DBALException $e) {
                 $error = true;
                 $errorMessage = 'Se produjo un error al intentar crear la tarea.';

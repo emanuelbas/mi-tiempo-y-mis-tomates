@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MyTasksController extends AbstractController
 {
     /**
-     * @Route("/my-tasks/{page}/{state}/{sort}", name="my_tasks",defaults={"page"=0, "state"=0, "sort"=0})
+     * @Route("/my-tasks/{page}/{state}/{sort}", name="my_tasks",defaults={"page"=1, "state"=0, "sort"=0})
      */
     public function index(Request $request, $page, $state, $sort)
     {
@@ -38,15 +38,16 @@ class MyTasksController extends AbstractController
                 $orderBy['stimated_pomodoros'] = "DESC";
                 break;
         }
-  /*      var_dump($filters);
-        var_dump($orderBy);*/
 
-        $taskCount = $entityManager->getRepository('App\Entity\Task')->count($state != 0 ? ['task_state' => $state] : []);
+        $countFilters = array('client' => $clientId);
+        if ($state != 0) {
+            $countFilters['task_state'] = $state;
+        }
+
+        $taskCount = $entityManager->getRepository('App\Entity\Task')->count($countFilters);
         $totalPages = ceil($taskCount / $pageLimit);
 
-        $tasks = $entityManager->getRepository("App\Entity\Task")->findBy($filters, $orderBy, $pageLimit, $page*$pageLimit);
-/*        var_dump($totalPages);*/
-   /*     var_dump($taskCount);*/
+        $tasks = $entityManager->getRepository("App\Entity\Task")->findBy($filters, $orderBy, $pageLimit, ($page-1) * $pageLimit);
         return $this->render('my_tasks/index.html.twig', [
             'controller_name' => 'MyTasksController',
             'tasks' => $tasks,

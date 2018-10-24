@@ -22,7 +22,9 @@
                         <option value="{{ path('my_tasks', {'sort':"1"}) }}"> Fecha de creación</option>
                         <option value="{{ path('my_tasks', {'sort':"2"}) }}"> Cantidad de pomodoros</option>
                     </select>
-                    <a href="{{ path('task_creation') }}"><button type="button" class="btn btn-primary my-tasks-create-task-button">Crear tarea</button> </a>
+                    <a href="{{ path('task_creation') }}">
+                        <button type="button" class="btn btn-primary my-tasks-create-task-button">Crear tarea</button>
+                    </a>
 
                 </div>
                 {% if tasks is defined %}
@@ -31,7 +33,7 @@
                             <div class="my-tasks-task-container my-3">
                                 <span class="my-tasks-task-name"
                                       title="{{ task.taskName }}">{{ task.taskName }}</span>
-                                <span title="Pomodoros usados/estimados"> 5/10 </span>
+                                <span title="Pomodoros usados/estimados"> x/{{ task.stimatedPomodoros }} </span>
                                 <span title="Fecha de creación"> {{ task.creationDate | date("m/d/Y") }} </span>
                                 <div class="my-tasks-action-buttons-container d-flex justify-content-around">
                                     <a href="#" title="Iniciar la tarea"><img src="/build/assets/img/buttons/play.png"
@@ -40,14 +42,15 @@
                                                                              class="my-tasks-action-button"></a>
                                 </div>
                             </div>
-
+                        {% else %}
+                            <div class="my-tasks-empty-message">Aún no has creado ninguna tarea. Haz click en "Crear Tarea" para comenzar.</div>
                         {% endfor %}
                     </div>
                 {% endif %}
-                {#        {{ currentPage }}
-                        {{ totalPages }}#}
+
+                {% if totalPages > 0 %}
                 <ul class="pagination justify-content-center">
-                    <li class="page-item">
+                    <li class="page-item {% if currentPage == 1 %} disabled {% endif %}">
                         <a class="page-link"
                            href="{{ path('my_tasks', {'sort':sort, 'page': currentPage-1, state: state}) }}">Anterior</a>
                     </li>
@@ -57,11 +60,12 @@
                                href="{{ path('my_tasks', {'sort':sort, 'page': i, state: state}) }}">{{ i }}</a>
                         </li>
                     {% endfor %}
-                    <li class="page-item">
+                    <li class="page-item  {% if currentPage == totalPages %} disabled {% endif %}">
                         <a class="page-link"
                            href="{{ path('my_tasks', {'sort':sort, 'page': currentPage+1, state: state}) }}">Siguiente</a>
                     </li>
                 </ul>
+                {% endif %}
             </div>
         </div>
     </div>
