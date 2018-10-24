@@ -54,16 +54,16 @@ class PomodoroConfigurationController extends AbstractController
                 return $this->redirectToRoute('my_tasks');
             }
         }
-
-        //$entityManager = $this->getDoctrine()->getManager();
-        //$array=$entityManager->getRepository("App\Entity\PomodorosConfiguration")->findBy(['client' => $client]);
-       // $current=current($array);
+        $client = $this->get('security.token_storage')->getToken()->getUser(); 
+        $entityManager = $this->getDoctrine()->getManager();
+        $array=$entityManager->getRepository("App\Entity\PomodorosConfiguration")->findBy(['client' => $client]);
+        $current=current($array);
         return $this->render(
             'pomodoro_configuration/index.html.twig',
             array(
                 'form' => $form->createView(),
-           //     'working_time' => $array.getWorkingTime(),
-         //       'break_time' => $array.getBreakTime(),
+                'working_time' => $current->getWorkingTime(),
+                'break_time' => $current->getBreakTime(),
                 'error' => $errorMessage)
         );
     }

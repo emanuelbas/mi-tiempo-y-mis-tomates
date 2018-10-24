@@ -14,7 +14,7 @@
                 {% if error %}
                     <div class="text-danger position-absolute text-center pomodoro_configuration-error-message">{{ error }}</div>
                 {% endif %}
-
+    
                 <div class="col-md-12 mx-auto position-relative">
                     {{ form_start(form, {'attr':{
                         'class': 'pomodoro_configuration-form position-relative',
@@ -23,6 +23,7 @@
                     <div class="form-group position-relative pomodoro_configuration-form-group">
                         {{ form_label(form.working_time, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
                         {{ form_widget(form.working_time, {'attr': {'class': 'd-inline-block pomodoro_configuration-input'}}) }}
+                        
                         <span class="d-inline-block ml-3 font-weight-light text-muted pomodoro_configuration-creation-input-help">
                             {{ form.working_time.vars.help }}
                         </span>

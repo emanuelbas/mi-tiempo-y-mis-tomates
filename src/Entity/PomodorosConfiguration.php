@@ -17,7 +17,7 @@ class PomodorosConfiguration
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Client", mappedBy="pomodoros_configuration", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Client", cascade={"persist", "remove"})
      */
     private $client;
 

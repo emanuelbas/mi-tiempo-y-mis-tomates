@@ -67,7 +67,7 @@ class Client implements UserInterface, \Serializable
     private $report_frequency;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\PomodorosConfiguration", inversedBy="client", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\PomodorosConfiguration", cascade={"persist", "remove"})
      */
     private $pomodoros_configuration;
 
