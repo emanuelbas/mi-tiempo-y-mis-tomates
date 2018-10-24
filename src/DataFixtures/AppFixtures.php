@@ -82,6 +82,7 @@ class AppFixtures extends Fixture
 
         // - Tareas del usuario
 
+        //Tarea lavar ropa
         $task1 = new Task();
         $task1->setTaskName('Lavar la ropa');
         $task1->setCreationDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-09 15:16"));
@@ -91,6 +92,63 @@ class AppFixtures extends Fixture
         $task1->setTaskState($ready);
         $manager->persist($user);
         $manager->persist($task1);
+
+        // - - La tarea tiene pomodoros
+        $pomodoro = new Pomodoro();
+        $pomodoro->setStartDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-09 15:16"));
+        $pomodoro->setEndingDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-09 15:36"));
+        $pomodoro->setTask($task1);
+        $task1->addPomodoro($pomodoro);
+        $manager->persist($pomodoro);
+        $manager->persist($task1);
+        //
+        $pomodoro = new Pomodoro();
+        $pomodoro->setStartDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-20 12:10"));
+        $pomodoro->setEndingDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-20 12:40"));
+        $pomodoro->setTask($task1);
+        $task1->addPomodoro($pomodoro);
+        $manager->persist($pomodoro);
+        $manager->persist($task1);
+        // FIN POMODOROS
+
+        //Tarea cocinar
+        $task1 = new Task();
+        $task1->setTaskName('Cocinar');
+        $task1->setCreationDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-10 10:16"));
+        $task1->setStimatedPomodoros(2);
+        $task1->setActive(true);
+        $task1->setClient($user);
+        $task1->setTaskState($ready);
+        $manager->persist($user);
+        $manager->persist($task1);
+
+        // - - La tarea tiene pomodoros
+        $pomodoro = new Pomodoro();
+        $pomodoro->setStartDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-10 15:16"));
+        $pomodoro->setEndingDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-10 15:36"));
+        $pomodoro->setTask($task1);
+        $task1->addPomodoro($pomodoro);
+        $manager->persist($pomodoro);
+        $manager->persist($task1);
+        //
+        $pomodoro = new Pomodoro();
+        $pomodoro->setStartDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-20 12:10"));
+        $pomodoro->setEndingDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-20 12:40"));
+        $pomodoro->setTask($task1);
+        $task1->addPomodoro($pomodoro);
+        $manager->persist($pomodoro);
+        $manager->persist($task1);
+        //
+        $pomodoro = new Pomodoro();
+        $pomodoro->setStartDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-22 12:10"));
+        $pomodoro->setEndingDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-22 12:40"));
+        $pomodoro->setTask($task1);
+        $task1->addPomodoro($pomodoro);
+        $manager->persist($pomodoro);
+        $manager->persist($task1);
+        // FIN POMODOROS
+
+
 
         $user = new Client();
         $user->setEmail('lucia@gmail.com');
@@ -108,14 +166,6 @@ class AppFixtures extends Fixture
         $user->setSecretAnswer('Rojo');        
         $manager->persist($user);
 
-
-		// Creando pomodoros
-		for ($i = 1; $i < 10; $i++) {
-            $instance = new Pomodoro();
-            $instance->setStartDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-09 15:16"));
-			$instance->setEndingDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-09 16:16"));
-            $manager->persist($instance);
-        }
 
 
         // Creando 10 aplicaciones
