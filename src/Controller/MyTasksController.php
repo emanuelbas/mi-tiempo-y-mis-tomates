@@ -24,8 +24,11 @@ class MyTasksController extends AbstractController
         $filters = array('client' => $clientId);
         $orderBy = array();
 
-        if ($state != "all") {
-            $filters['task_state'] = strtoupper($state);
+        $state = strtoupper($state);
+        if ($state != "ALL") {
+            $stateObj = $entityManager->getRepository("App\Entity\TaskState")->findOneBy(['state' => $state]);
+            $stateId = $stateObj->getId();
+            $filters['task_state'] = $stateId;
         }
         switch ($sort) {
             case 0:
@@ -40,14 +43,16 @@ class MyTasksController extends AbstractController
         }
 
         $countFilters = array('client' => $clientId);
-        if ($state != 0) {
-            $countFilters['task_state'] = $state;
+        if ($state != "ALL") {
+            $countFilters['task_state'] = $stateId;
         }
+        /* var_dump($countFilters);*/
+        /* var_dump($filters);*/
 
         $taskCount = $entityManager->getRepository('App\Entity\Task')->count($countFilters);
         $totalPages = ceil($taskCount / $pageLimit);
 
-        $tasks = $entityManager->getRepository("App\Entity\Task")->findBy($filters, $orderBy, $pageLimit, ($page-1) * $pageLimit);
+        $tasks = $entityManager->getRepository("App\Entity\Task")->findBy($filters, $orderBy, $pageLimit, ($page - 1) * $pageLimit);
         return $this->render('my_tasks/index.html.twig', [
             'controller_name' => 'MyTasksController',
             'tasks' => $tasks,

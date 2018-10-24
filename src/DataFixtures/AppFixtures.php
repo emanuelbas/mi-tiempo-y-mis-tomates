@@ -116,11 +116,50 @@ class AppFixtures extends Fixture
         //Tarea cocinar
         $task1 = new Task();
         $task1->setTaskName('Cocinar sushi para la noche');
-        $task1->setCreationDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-10 10:16"));
+        $task1->setCreationDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-4 10:16"));
         $task1->setStimatedPomodoros(2);
         $task1->setActive(true);
         $task1->setClient($user);
         $task1->setTaskState($active);
+        $manager->persist($user);
+        $manager->persist($task1);
+
+        // - - La tarea tiene pomodoros
+        $pomodoro = new Pomodoro();
+        $pomodoro->setStartDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-10 15:16"));
+        $pomodoro->setEndingDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-10 15:36"));
+        $pomodoro->setTask($task1);
+        $task1->addPomodoro($pomodoro);
+        $manager->persist($pomodoro);
+        $manager->persist($task1);
+        //
+        $pomodoro = new Pomodoro();
+        $pomodoro->setStartDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-20 12:10"));
+        $pomodoro->setEndingDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-20 12:40"));
+        $pomodoro->setTask($task1);
+        $task1->addPomodoro($pomodoro);
+        $manager->persist($pomodoro);
+        $manager->persist($task1);
+        //
+        $pomodoro = new Pomodoro();
+        $pomodoro->setStartDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-22 12:10"));
+        $pomodoro->setEndingDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-22 12:40"));
+        $pomodoro->setTask($task1);
+        $task1->addPomodoro($pomodoro);
+        $manager->persist($pomodoro);
+        $manager->persist($task1);
+        // FIN POMODOROS
+
+
+
+        //Tarea estudiar para el final de mañana
+        $task1 = new Task();
+        $task1->setTaskName('Estudiar para el final de mañana');
+        $task1->setCreationDate(\DateTime::createFromFormat('Y-m-d H:i', "2018-09-10 10:16"));
+        $task1->setStimatedPomodoros(15);
+        $task1->setActive(true);
+        $task1->setClient($user);
+        $task1->setTaskState($finished);
         $manager->persist($user);
         $manager->persist($task1);
 
