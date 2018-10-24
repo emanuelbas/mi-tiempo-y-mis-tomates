@@ -30,7 +30,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                // 3) Encode the password (you could also do this via Doctrine listener)
+                // 3) Encode the password (you could also do this via Doctrine listener)   
                 $password = $passwordEncoder->encodePassword($client, $client->getPassword());
                 $client->setPassword($password);
 
@@ -40,12 +40,13 @@ class RegistrationController extends AbstractController
                 $pomodorosConfiguration->setWorkingTime(30);
                 $pomodorosConfiguration->setEndBreakAlarm(FALSE);
                 $pomodorosConfiguration->setEndWorkAlarm(FALSE);
-                $pomodorosConfiguration->setClockSound(TRUE);
-                $pomodorosConfiguration->setClient($client);              
-                
+                $pomodorosConfiguration->setClockSound(TRUE); 
+                $pomodorosConfiguration->setClient($client);    
+                $client->setPomodorosConfiguration($pomodorosConfiguration);
+
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($client);
-                $entityManager->persist($pomodorosConfiguration);
+                $entityManager->persist($pomodorosConfiguration);  
                 $entityManager->flush();
 
             } catch (UniqueConstraintViolationException $e) {
