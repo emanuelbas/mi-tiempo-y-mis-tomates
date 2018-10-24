@@ -119,13 +119,6 @@ class PomodorosConfiguration
     public function setClient(?Client $client): self
     {
         $this->client = $client;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newPomodorosConfiguration = $client === null ? null : $this;
-        if ($newPomodorosConfiguration !== $client->getPomodorosConfiguration()) {
-            $cliente->setPomodorosConfiguracion($newPomodorosConfiguration);
-        }
-
         return $this;
     }
 }

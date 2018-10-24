@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container pomodoro_configuration-form-container d-flex justify-content-center align-items-center">
+        <div class="row">
+            <div class="position-relative shadow bg-white border-top col-md-12 pomodoro_configuration-box">
+                <h2 class="text-center text-primary font-weight-light"> Configurar pomodoros </h2>
+                {% if not form.vars.valid %}
+                    {% for error in form.vars.errors %}
+                        <div class="text-danger position-absolute text-center pomodoro_configuration-error-message">{{ error.message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if error %}
+                    <div class="text-danger position-absolute text-center pomodoro_configuration-error-message">{{ error }}</div>
+                {% endif %}
+
+                <div class="col-md-12 mx-auto position-relative">
+                    {{ form_start(form, {'attr':{
+                        'class': 'pomodoro_configuration-form position-relative',
+                        'data-parsley-focus': 'first',
+                        'data-parsley-validate': 'true'}}) }}
+                    <div class="form-group position-relative pomodoro_configuration-form-group">
+                        {{ form_label(form.working_time, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.working_time, {'attr': {'class': 'd-inline-block pomodoro_configuration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted pomodoro_configuration-creation-input-help">
+                            {{ form.working_time.vars.help }}
+                        </span>
+                        <div id="working_time-input-errors"></div>
+                    </div>
+
+                    <div class="form-group position-relative pomodoro_configuration-form-group">
+                        {{ form_label(form.break_time, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.break_time, {'attr': {'class': 'd-inline-block pomodoro_configuration-input'}}) }}
+                        <div id="break_time-input-errors"></div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block mx-auto pomodoro_configuration-submit-btn">Guardar cambios
+                    </button>
+                    {{ form_end(form) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
