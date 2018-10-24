@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container login-form-container d-flex justify-content-center align-items-center">
         <div class="row">
-            <div class="position-relative shadow bg-white border-top col-md-12 c-box">
+            <div class="position-relative shadow bg-white border-top col-md-12  pt-3 c-box">
                 <h2 class="text-center text-primary font-weight-light"> Configurar cuenta </h2>
                 {% if not form.vars.valid %}
                     {% for error in form.vars.errors %}
@@ -32,8 +32,6 @@
                         <div id="first-name-input-errors"></div>
                     </div>
 
-
-
                     <div class="form-group position-relative registration-form-group">
                         {{ form_label(form.last_name, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
                         {{ form_widget(form.last_name, {'attr': {'class': 'd-inline-block registration-input'}}) }}
@@ -44,8 +42,6 @@
 
                     </div>
 
-
-
                     <div class="form-group position-relative registration-form-group">
                         {{ form_label(form.email, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
                         {{ form_widget(form.email, {'attr': {'class': 'd-inline-block registration-input'}}) }}
@@ -55,7 +51,6 @@
                         <div id="email-input-errors"></div>
 
                     </div>
-
 
                     <div class="form-group position-relative registration-form-group">
                         {{ form_label(form.report_frequency, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
@@ -103,11 +98,9 @@
 
 #}
 
-                    <button type="submit" class="btn btn-primary btn-block mx-auto login-submit-btn">Guardar cambios
+                    <button type="submit" class="btn btn-primary btn-block mx-auto c-submit-btn">Guardar cambios
                     </button>
                     {{ form_end(form) }}
-
-
                 </div>
 
             </div>

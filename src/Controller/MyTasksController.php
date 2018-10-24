@@ -29,7 +29,7 @@ class MyTasksController extends AbstractController
         }
         switch ($sort) {
             case 0:
-                $orderBy['task_name'] = "DESC";
+                $orderBy['task_name'] = "ASC";
                 break;
             case 1:
                 $orderBy['creation_date'] = "DESC";

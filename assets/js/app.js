@@ -13,6 +13,7 @@ require('../css/login.scss');
 require('../css/registration.scss');
 require('../css/task-creation.scss');
 require('../css/my-tasks.scss');
+require('../css/account-configuration.scss');
 require('../css/plugins/parsley.css');
 
 // Javascript
