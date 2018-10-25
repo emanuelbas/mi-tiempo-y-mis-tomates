@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form;
 
 use App\Entity\Task;
@@ -17,15 +18,21 @@ class TaskType extends AbstractType
                 'label' => 'Nombre',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
-                    'data-parsley-errors-container' => '#task_name-input-errors',
+                    'data-parsley-errors-container' => '#task-name-input-errors',
                     'data-parsley-length' => '[2, 24]',
-                    'maxlength'=>'24',
+                    'maxlength' => '24',
                     'group' => 'block1',
                     'autofocus' => ''),
-                'help' => 'Ejemplo: Trabajo Practico'))
+                'help' => 'Ejemplo: Realizar trabajo practico'))
             ->add('stimated_pomodoros', IntegerType::class, array(
-                'label' => 'Pomodoros estimados'))
-        ;
+                'label' => 'Pomodoros estimados',
+                'attr' => array(
+                    'data-parsley-trigger' => "focusout",
+                    'data-parsley-errors-container' => '#task-pomodoro-input-errors',
+                    'data-parsley-required' => 'true',
+                    'maxlength' => '24',
+                    'group' => 'block1'),
+                'help' => 'Ejemplo: 5'));
     }
 
     public function configureOptions(OptionsResolver $resolver)

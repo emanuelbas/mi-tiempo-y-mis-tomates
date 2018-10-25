@@ -4,7 +4,8 @@
 }
 
 .pomodoro-configuration-box {
-  height: 345px;
+  height: 320px;
+  width: 550px;
   border-radius: 10px;
 }
 
@@ -13,7 +14,7 @@
 }
 
 .pomodoro-configuration-submit-btn {
-  margin-top: 25px;
+  margin-top: 28px;
 }
 
 .pomodoro-configuration-error-message {
@@ -25,3 +26,8 @@
 .pomodoro-configuration-input-error {
   top: 75px;
 }
+
+.pomodoro-configuration-input {
+  width: 230px;
+}
+

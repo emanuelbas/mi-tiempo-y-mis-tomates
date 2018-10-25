@@ -35,7 +35,7 @@ class ClientType extends AbstractType
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'data-parsley-errors-container' => '#first-name-input-errors',
-                    'data-parsley-length' => '[2, 24]',
+                    'data-parsley-required' => 'true',
                     'maxlength'=>'24',
                     'group' => 'block1',
                     'autofocus' => ''),
@@ -46,7 +46,7 @@ class ClientType extends AbstractType
                     'data-parsley-trigger' => "focusout",
                     'group' => 'block1',
                     'data-parsley-errors-container' => '#last-name-input-errors',
-                    'data-parsley-length' => '[2, 24]',
+                    'data-parsley-required' => 'true',
                     'maxlength'=>'24',
                 ),
                 'help' => 'Ejemplo: Lopez'))

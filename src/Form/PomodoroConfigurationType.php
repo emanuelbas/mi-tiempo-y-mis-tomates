@@ -13,7 +13,7 @@ class PomodoroConfigurationType extends AbstractType
     {
         $builder
             ->add('working_time', IntegerType::class, array(
-                'label' => 'Tiempo de trabajo',
+                'label' => 'Tiempo de trabajo (minutos)',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'data-parsley-errors-container' => '#working_time-input-errors',
@@ -21,16 +21,16 @@ class PomodoroConfigurationType extends AbstractType
                     'maxlength'=>'24',
                     'group' => 'block1',
                     'autofocus' => ''),
-                'help' => 'Ejemplo: 30 minutos'))
+                'help' => 'Ejemplo: 25'))
             ->add('break_time', IntegerType::class, array(
-                'label' => 'Tiempo de descanso',
+                'label' => 'Tiempo de descanso (minutos)',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'data-parsley-errors-container' => '#break_time-input-errors',
                     'data-parsley-required' => 'true',
                     'maxlength'=>'24',
                     'group' => 'block1'),
-                'help' => 'Ejemplo: 10 minutos'))
+                'help' => 'Ejemplo: 5'))
         ;
     }
 
