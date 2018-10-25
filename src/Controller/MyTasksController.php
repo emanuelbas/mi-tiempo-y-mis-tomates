@@ -31,13 +31,13 @@ class MyTasksController extends AbstractController
             $filters['task_state'] = $stateId;
         }
         switch ($sort) {
-            case 0:
+            case "name":
                 $orderBy['task_name'] = "ASC";
                 break;
-            case 1:
+            case "date":
                 $orderBy['creation_date'] = "DESC";
                 break;
-            case 2:
+            case "pomodoros":
                 $orderBy['stimated_pomodoros'] = "DESC";
                 break;
         }

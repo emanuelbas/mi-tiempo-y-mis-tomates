@@ -11,7 +11,7 @@
                     {% set state = app.request.attributes.get('state') %}
                     {% set sort = app.request.attributes.get('sort') %}
                     {% set page = app.request.attributes.get('page') %}
-
+                    {#{{ path('my_tasks', {'state':state,'sort':"name"}#}
 
                     <a href="{{ path('my_tasks') }}" class="my-tasks-filter {% if state == 'all' %} active {% endif %}">Todas</a>
                     <a href="{{ path('my_tasks', {'state':"pending"}) }}"
@@ -19,10 +19,16 @@
                     <a href="{{ path('my_tasks', {'state':"finished"}) }}"
                        class="my-tasks-filter {% if state == 'finished' %} active {% endif %}">Finalizadas</a>
                     <select id="select-sort" class="custom-select my-tasks-select-sort">
-                        <option selected value="order_by"> Ordenar por</option>
-                        <option value="{{ path('my_tasks', {'state':state,'sort':"0"}) }}"> Nombre</option>
-                        <option value="{{ path('my_tasks', {'sort':"1"}) }}"> Fecha de creación</option>
-                        <option value="{{ path('my_tasks', {'sort':"2"}) }}"> Cantidad de pomodoros</option>
+                        <option selected disabled hidden value="order_by"> Ordenar por</option>
+                        <option data-sorted-url="{{ path('my_tasks', {'state':state,'sort':"name"}) }}" value="name">
+                            Nombre (a-z)
+                        </option>
+                        <option data-sorted-url="{{ path('my_tasks', {'state':state,'sort':"date"}) }}" value="date">
+                            Fecha de creación (más reciente)
+                        </option>
+                        <option data-sorted-url="{{ path('my_tasks', {'state':state,'sort':"pomodoros"}) }}"
+                                value="pomodoros"> Cantidad de pomodoros (mayor cantidad)
+                        </option>
                     </select>
                     <a href="{{ path('task_creation') }}">
                         <button type="button" class="btn btn-primary my-tasks-create-task-button">Crear tarea</button>
@@ -70,11 +76,7 @@
                                 </div>
                             </div>
                         {% else %}
-                            {% if state == "PENDING" %}
-                                <div class="my-tasks-empty-message">Aún no has creado ninguna tarea. Haz click en "Crear
-                                    Tarea" para comenzar.
-                                </div>
-                            {% endif %}
+                            <div class="my-tasks-empty-message">No hay tareas por aquí.</div>
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -105,8 +107,9 @@
     <script>
         document.getElementById("select-sort").onchange = function (e) {
             if (e.target.value !== "order_by") {
+                var url = e.target.selectedOptions[0].getAttribute('data-sorted-url');
                 localStorage['selected_task_sort'] = document.getElementById("select-sort").value;
-                window.location = e.target.value;
+                window.location = url;
             }
         };
 

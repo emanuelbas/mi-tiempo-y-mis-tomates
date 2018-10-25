@@ -19,8 +19,8 @@ class TaskType extends AbstractType
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'data-parsley-errors-container' => '#task-name-input-errors',
-                    'data-parsley-length' => '[2, 24]',
-                    'maxlength' => '24',
+                    'data-parsley-length' => '[2, 34]',
+                    'maxlength' => '34',
                     'group' => 'block1',
                     'autofocus' => ''),
                 'help' => 'Ejemplo: Realizar trabajo practico'))
@@ -30,6 +30,9 @@ class TaskType extends AbstractType
                     'data-parsley-trigger' => "focusout",
                     'data-parsley-errors-container' => '#task-pomodoro-input-errors',
                     'data-parsley-required' => 'true',
+                    'data-parsley-type' =>'digits',
+                    'min' => '1',
+                    'max' => '100',
                     'maxlength' => '24',
                     'group' => 'block1'),
                 'help' => 'Ejemplo: 5'));

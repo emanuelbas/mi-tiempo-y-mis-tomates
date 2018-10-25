@@ -4,10 +4,10 @@
     <div class="jumbotron">
 
         {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-            <h1 class="display-4">¡Bienvenido a Mi Tiempo y Mis Tomates!</h1>
+            <h1 class="display-5">¡Bienvenido a Mi Tiempo y Mis Tomates!</h1>
 
             <p class="lead">Te ayudamos a mejorar tu productividad midiendo el tiempo que usas cada aplicación o página
-                web.</p>
+                web, además de utilizar la metodología <i>pomodoro</i>.</p>
             <hr class="my-4">
             <p>Para esto te proporcionaremos un programa para tu ordenador que medirá el uso.</p>
             <p class="lead">
@@ -17,7 +17,7 @@
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <h1 class="display-5">¡Bienvenido a Mi Tiempo y Mis Tomates {{ app.user.firstName }} {{ app.user.lastName }}!</h1>
 
-            <p class="lead">Te ayudamos a mejorar tu productividad midiendo el tiempo que usas cada aplicación o página web.</p>
+            <p class="lead">Te ayudamos a mejorar tu productividad midiendo el tiempo que usas cada aplicación o página web, además de utilizar la metodología <i>pomodoro</i>.</p>
             <hr class="my-4">
         {% endif %}
 
