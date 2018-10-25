@@ -30,7 +30,7 @@ class ClientType extends AbstractType
             ))
 
             ->add('first_name', TextType::class, array(
-                'label' => 'Nombre',
+                'label' => 'Nombre/s',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'data-parsley-errors-container' => '#first-name-input-errors',
@@ -38,9 +38,9 @@ class ClientType extends AbstractType
                     'maxlength'=>'24',
                     'group' => 'block1',
                     'autofocus' => ''),
-                'help' => 'Ejemplo: Jorge'))
+                'help' => 'Ejemplo: Jorge Mario'))
             ->add('last_name', TextType::class, array(
-                'label' => 'Apellido',
+                'label' => 'Apellido/s',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'group' => 'block1',
@@ -48,7 +48,7 @@ class ClientType extends AbstractType
                     'data-parsley-required' => 'true',
                     'maxlength'=>'24',
                 ),
-                'help' => 'Ejemplo: Lopez'))
+                'help' => 'Ejemplo: Lopez Larrega'))
             ->add('secret_question', EntityType::class, array(
                 'label' => 'Pregunta secreta',
                 'class' => SecretQuestion::class,
