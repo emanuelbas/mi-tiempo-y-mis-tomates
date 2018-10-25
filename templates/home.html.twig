@@ -3,9 +3,11 @@
 {% block body %}
     <div class="jumbotron">
 
-        <h1 class="display-4">¡Bienvenido a Mi Tiempo y Mis Tomates!</h1>
         {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-            <p class="lead">Te ayudamos a mejorar tu productividad midiendo el tiempo que usas cada aplicación o web.</p>
+            <h1 class="display-4">¡Bienvenido a Mi Tiempo y Mis Tomates!</h1>
+
+            <p class="lead">Te ayudamos a mejorar tu productividad midiendo el tiempo que usas cada aplicación o página
+                web.</p>
             <hr class="my-4">
             <p>Para esto te proporcionaremos un programa para tu ordenador que medirá el uso.</p>
             <p class="lead">
@@ -13,11 +15,10 @@
             </p>
         {% endif %}
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <p class="lead">Te ayudamos a mejorar tu productividad midiendo el tiempo que usas cada aplicación o web. Aqui se encuentran sus tareas:</p>
+            <h1 class="display-5">¡Bienvenido a Mi Tiempo y Mis Tomates {{ app.user.firstName }} {{ app.user.lastName }}!</h1>
+
+            <p class="lead">Te ayudamos a mejorar tu productividad midiendo el tiempo que usas cada aplicación o página web.</p>
             <hr class="my-4">
-        <li class="nav-item active">
-                        <a class="nav-link text-black" href="{{ path('task_creation') }}"> Crear Tarea <span class="sr-only">(current)</span></a>
-                    </li>
         {% endif %}
 
     </div>

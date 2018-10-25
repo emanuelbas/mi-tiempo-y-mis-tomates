@@ -19,6 +19,7 @@
                     <a href="{{ path('my_tasks', {'state':"finished"}) }}"
                        class="my-tasks-filter {% if state == 'finished' %} active {% endif %}">Finalizadas</a>
                     <select id="select-sort" class="custom-select my-tasks-select-sort">
+                        <option selected value="order_by"> Ordenar por</option>
                         <option value="{{ path('my_tasks', {'state':state,'sort':"0"}) }}"> Nombre</option>
                         <option value="{{ path('my_tasks', {'sort':"1"}) }}"> Fecha de creación</option>
                         <option value="{{ path('my_tasks', {'sort':"2"}) }}"> Cantidad de pomodoros</option>
@@ -35,7 +36,8 @@
                                 <span class="my-tasks-task-name"
                                       title="{{ task.taskName }}">{{ task.taskName }}</span>
                                 <span class="my-tasks-pomodoros"
-                                      title="Pomodoros usados/estimados"> {{ random(task.stimatedPomodoros-1) }}/{{ task.stimatedPomodoros }} </span>
+                                      title="Pomodoros usados/estimados"> {{ random(task.stimatedPomodoros-1) }}
+                                    /{{ task.stimatedPomodoros }} </span>
 
                                 {% if task.taskState.state == "PENDING" %}
                                     <span class="my-tasks-task-state" title="Estado de la tarea"> Pendiente </span>
@@ -64,7 +66,7 @@
                                                     class="my-tasks-action-button mr-2"></a>
                                     {% endif %}
                                     <a href="#" title="Borrar tarea"><img src="/build/assets/img/buttons/trash.png"
-                                                                             class="my-tasks-action-button mr-2"></a>
+                                                                          class="my-tasks-action-button mr-2"></a>
                                 </div>
                             </div>
                         {% else %}
@@ -102,8 +104,10 @@
 {% block javascripts %}
     <script>
         document.getElementById("select-sort").onchange = function (e) {
-            localStorage['selected_task_sort'] = document.getElementById("select-sort").value;
-            window.location = e.target.value;
+            if (e.target.value !== "order_by") {
+                localStorage['selected_task_sort'] = document.getElementById("select-sort").value;
+                window.location = e.target.value;
+            }
         };
 
         window.onload = function () {
