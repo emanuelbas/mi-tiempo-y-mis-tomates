@@ -36,8 +36,8 @@ class RegistrationController extends AbstractController
 
                 // 4) Add the default configuration for the pomodoros
                 $pomodorosConfiguration = new PomodorosConfiguration();
-                $pomodorosConfiguration->setBreakTime(10);
-                $pomodorosConfiguration->setWorkingTime(30);
+                $pomodorosConfiguration->setBreakTime(5);
+                $pomodorosConfiguration->setWorkingTime(25);
                 $pomodorosConfiguration->setEndBreakAlarm(FALSE);
                 $pomodorosConfiguration->setEndWorkAlarm(FALSE);
                 $pomodorosConfiguration->setClockSound(TRUE); 

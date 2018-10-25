@@ -32,7 +32,7 @@
 
                     <div class="form-group position-relative task-creation-form-group">
                         {{ form_label(form.stimated_pomodoros, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
-                        {{ form_widget(form.stimated_pomodoros, {'attr': {'class': 'd-inline-block task-creation-input'}}) }}
+                        {{ form_widget(form.stimated_pomodoros, {'attr': {'class': 'd-inline-block task-creation-input task-creation-pomodoro-input'}}) }}
                         <span class="d-inline-block ml-3 font-weight-light text-muted task-creation-input-help">
                             {{ form.stimated_pomodoros.vars.help }}
                         </span>
