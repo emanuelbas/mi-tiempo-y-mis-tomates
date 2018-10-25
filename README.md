@@ -31,6 +31,7 @@ sudo apt-get install php7.2-xml
 sudo apt-get install php7.2-curl
 sudo apt-get install php7.2-mbstring
 sudo apt-get install php7.2-zip
+sudo apt-get install php7.2-mysql
 ```
 
 ### NodeJS
