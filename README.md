@@ -85,7 +85,7 @@ php bin/console doctrine:fixtures:load (carga las tablas con datos mock)
 Posicionarse en la carpeta del proyecto y ejecutar el comando
 ```
 yarn dev --watch (esto crea un proceso para que se actualice el "paquete" de la aplicación de archivos JS y CSS mientras se van cambiando, NO se debe cerrar el proceso)
-php -S 127.0.0.1:8000 -t public (para "servir" la aplicación
+php -S 127.0.0.1:8000 -t public (para "servir" la aplicación)
 ```
 
 Luego para acceder a la aplicación
