@@ -56,9 +56,9 @@ class AccountConfigurationController extends AbstractController
             } else {
                 $this->addFlash(
                     'success',
-                    'Los datos de tu cuenta han sido actualizados correctamente.'
+                    'Los datos de su cuenta han sido actualizados correctamente.'
                 );
-                return $this->redirectToRoute('home'); //Colocar a donde redireccionar
+                return $this->redirectToRoute('my_tasks'); //Colocar a donde redireccionar
             }
         }
 

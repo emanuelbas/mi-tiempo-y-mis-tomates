@@ -198,12 +198,35 @@ class AppFixtures extends Fixture
         $user->setSecretAnswer('La plata');
         $manager->persist($user);
 
+        $pconfig = new PomodorosConfiguration();
+        $pconfig->setBreakTime(5);
+        $pconfig->setWorkingTime(25);
+        $pconfig->setEndWorkAlarm(true);
+        $pconfig->setEndBreakAlarm(true);
+        $pconfig->setClockSound(true);
+        $pconfig->setClient($user);
+        $user->setPomodorosConfiguration($pconfig);
+        $manager->persist($pconfig);
+        $manager->persist($user);
+
         $user = new Client();
         $user->setEmail('norbertod@gmail.com');
         $user->setPassword('1234');
         $user->setFirstName('Norberto');
         $user->setLastName('Díaz');
         $user->setSecretAnswer('Rojo');
+        $pconfig->setClient($user);
+        $manager->persist($user);
+
+        $pconfig = new PomodorosConfiguration();
+        $pconfig->setBreakTime(5);
+        $pconfig->setWorkingTime(25);
+        $pconfig->setEndWorkAlarm(true);
+        $pconfig->setEndBreakAlarm(true);
+        $pconfig->setClockSound(true);
+        $pconfig->setClient($user);
+        $user->setPomodorosConfiguration($pconfig);
+        $manager->persist($pconfig);
         $manager->persist($user);
 
 
