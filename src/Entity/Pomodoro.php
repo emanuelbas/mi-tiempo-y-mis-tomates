@@ -31,6 +31,11 @@ class Pomodoro
      */
     private $task;
 
+    public function __construct()
+    {
+        $this->start_date = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
