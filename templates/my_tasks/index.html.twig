@@ -67,7 +67,7 @@
                                         <a href="#" title="Pausar tarea"><img
                                                     src="/build/assets/img/buttons/pause.svg"
                                                     class="my-tasks-action-button mr-2"></a>
-                                        <a href="#" title="Finalizar tarea"><img
+                                        <a href="{{ path('stop_task_route', {'id': task.id }) }}" title="Detener tarea"><img
                                                     src="/build/assets/img/buttons/stop.png"
                                                     class="my-tasks-action-button mr-2"></a>
                                     {% endif %}

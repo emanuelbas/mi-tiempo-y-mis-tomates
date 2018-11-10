@@ -74,6 +74,8 @@ class MyTasksController extends AbstractController
      */
     public function startTask(Task $task){
 
+        /* Arreglar, seleccionar solo las tareas del usuario logueado */
+        /* Arreglar, se está guardando la hora de otra región */
         $activeState = $this->getDoctrine()
         ->getRepository(TaskState::class)
         ->findOneByState('ACTIVE');
@@ -83,22 +85,44 @@ class MyTasksController extends AbstractController
         $pomodoroNuevo = new Pomodoro();
         $task->addPomodoro($pomodoroNuevo);
 
-        // Persistiendo
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($pomodoroNuevo);
         $entityManager->flush();
         $entityManager->persist($task);
         $entityManager->flush();
-        
+
+        return $this->redirectToRoute('my_tasks');
+    }
 
 
-        /*
-        * $active; 
-        * $task->setTaskState($active);
-        * $pomodoroNuevo;
-        * $task->addPomodoro($pomodoroNuevo);
-        return $this->redirectToRoute('my_tasks')
-        */
+    /**
+     * @param Task $task
+     *
+     * @Route("/{id}/stop-task", requirements={"id" = "\d+"}, name="stop_task_route")
+     * @return RedirectResponse
+     *
+     */
+    public function stopTask(Task $task){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        /* Destruir el pomodoro si no finalizó */
+        $ultimoPomo = $task->getPomodoros()->last();
+        if ( is_null ( $ultimoPomo->getEndingDate() ) ) {
+            $task->removePomodoro($ultimoPomo);
+            $entityManager->remove($ultimoPomo);    
+            $entityManager->flush();
+        }
+
+        /* Cambiar el estado de la tarea a pendiente */
+        $pendingState = $this->getDoctrine()
+        ->getRepository(TaskState::class)
+        ->findOneByState('PENDING');
+        $task->setTaskState($pendingState);
+     
+        $entityManager->persist($task);
+        $entityManager->flush();
+
 
         return $this->redirectToRoute('my_tasks');
     }
