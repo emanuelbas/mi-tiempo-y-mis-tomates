@@ -20,9 +20,23 @@ class ApplicationController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
         //Falta el mensaje a la app y comenzar el reloj.
+        //curl('http://127.0.0.1:PUERTO_DE_LA_APP_WINDOWS', POST, [accion=> "empeza_a_registrar"])
+ 
+        $ch = curl_init();
+        //envio del mensaje. Poner el puerto correspondiente de la app
+        curl_setopt($ch, CURLOPT_URL,"http://127.0.0.1:PUERTO_DE_LA_APP_WINDOWS");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,
+            "postuserId=$clientId");
 
+        //recibir mensaje de la app antes de continuar
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $server_output = curl_exec($ch);        
+        curl_close ($ch);
         //Cambiar estado de tarea a ACTIVE
 
+        // Para preguntar por la respuesta de la app
+        //if ($server_output == "OK") { ... } else { ... }
         $state = $entityManager->getRepository("App\Entity\TaskState")->findOneBy(['state' => 'ACTIVE']);
         $task->setTaskState($state);
         $entityManager->persist($task);
