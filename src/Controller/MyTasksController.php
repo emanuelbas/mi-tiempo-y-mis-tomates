@@ -8,6 +8,10 @@ use Doctrine\Common\EventManager;
 use App\Entity\Task;
 use App\Entity\Client;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use App\Entity\TaskState;
+use App\Entity\Pomodoro;
+use Symfony\Component\Validator\Constraints\Date;
 
 class MyTasksController extends AbstractController
 {
@@ -60,4 +64,43 @@ class MyTasksController extends AbstractController
             'currentPage' => $page
         ]);
     }
+
+    /**
+     * @param Task $task
+     *
+     * @Route("/{id}/start-task", requirements={"id" = "\d+"}, name="start_task_route")
+     * @return RedirectResponse
+     *
+     */
+    public function startTask(Task $task){
+
+        $activeState = $this->getDoctrine()
+        ->getRepository(TaskState::class)
+        ->findOneByState('ACTIVE');
+
+        $task->setTaskState($activeState);
+
+        $pomodoroNuevo = new Pomodoro();
+        $task->addPomodoro($pomodoroNuevo);
+
+        // Persistiendo
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($pomodoroNuevo);
+        $entityManager->flush();
+        $entityManager->persist($task);
+        $entityManager->flush();
+        
+
+
+        /*
+        * $active; 
+        * $task->setTaskState($active);
+        * $pomodoroNuevo;
+        * $task->addPomodoro($pomodoroNuevo);
+        return $this->redirectToRoute('my_tasks')
+        */
+
+        return $this->redirectToRoute('my_tasks');
+    }
+
 }
