@@ -19,6 +19,7 @@ class AccountConfigurationType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, array(
+                'label' => 'Email *',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'group' => 'block1',
@@ -29,7 +30,7 @@ class AccountConfigurationType extends AbstractType
             ))
 
             ->add('first_name', TextType::class, array(
-                'label' => 'Nombre',
+                'label' => 'Nombre *',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'data-parsley-errors-container' => '#first-name-input-errors',
@@ -40,7 +41,7 @@ class AccountConfigurationType extends AbstractType
             ) )
 
             ->add('report_frequency', EntityType::class, array(
-                'label' => 'Frecuencia de reporte',
+                'label' => 'Frecuencia de reporte *',
                 'class' => ReportFrequency::class,
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
@@ -49,7 +50,7 @@ class AccountConfigurationType extends AbstractType
 
 
             ->add('last_name', TextType::class, array(
-                'label' => 'Apellido',
+                'label' => 'Apellido *',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'group' => 'block1',
