@@ -42,25 +42,32 @@ class ApplicationController extends AbstractController
     }
 
     /**
-     * @Route("/ask_state", name="ask_state")
+     * @Route("/chek_state", name="chek_state")
      */
-    public function ask_state($taskId)
+    public function check_state($taskId)
     {   
 
         $entityManager = $this->getDoctrine()->getManager();
         $task = $entityManager->getRepository("App\Entity\task")->findOneBy(['id' => $taskId]);
         $state = $task->getTaskState();
-        $taskState = $entityManager->getRepository("App\Entity\task")->findOneBy(['id' => $state->getId()]);
+        $taskState = $entityManager->getRepository("App\Entity\taskState")->findOneBy(['id' => $state->getId()]);
         return $taksState->getState();
 
     }
     /**
-     * @Route("/start_task", name="start_task")
+     * @Route("/ask_task", name="ask_task")
      */
-    public function start_task($taskId)
+    public function ask_task()
     {   
-        
-        return $taskId;
-
+        $entityManager = $this->getDoctrine()->getManager();
+        $state= 'ACTIVE';
+        $taskState = $entityManager->getRepository("App\Entity\taskState")->findOneBy(['state' => $state]);
+        $task = $entityManager->getRepository("App\Entity\task")->findOneBy(['id' => $taskState]);
+        if(task == NULL){
+            return NULL;
+        }
+        else{
+            return $task->getId();
+        }
     }
 }
