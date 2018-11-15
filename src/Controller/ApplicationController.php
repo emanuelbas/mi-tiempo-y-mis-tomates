@@ -16,7 +16,7 @@ class ApplicationController extends AbstractController
     /**
      * @Route("/app_data", name="app_data")
      */
-    public function app_data($dataJSON, $taskId)
+    public function appData($dataJSON, $taskId)
     {   
 
         //Obtengo la data del JSON
@@ -43,9 +43,9 @@ class ApplicationController extends AbstractController
     }
 
     /**
-     * @Route("/chek_state", name="chek_state")
+     * @Route("/check-task-state/{taskId}", name="check_task_state")
      */
-    public function check_state($taskId)
+    public function checkTaskState($taskId)
     {   
 
         $entityManager = $this->getDoctrine()->getManager();
@@ -56,14 +56,25 @@ class ApplicationController extends AbstractController
 
     }
     /**
-     * @Route("/ask_task", name="ask_task")
+     * Para el ID de un cliente, encontrar alguna tarea activa
+     * @Route("/ask-user-active-task/{id}", name="ask_task")
      */
-    public function ask_task()
+    public function askUserActiveTask($id)
     {   
         $entityManager = $this->getDoctrine()->getManager();
         $state= 'ACTIVE';
+        $client = $entityManager->getRepository("App\Entity\Client")->findOneBy(['id' => $id]);
+
+        if ($client == NULL) {
+            return $this->json([
+                'success' => "false",
+                'message' => "Cliente inválido"
+            ]);
+        }
+
+        $task = $entityManager->getRepository("App\Entity\task")->findOneBy(['client' => $id]);
+
         $taskState = $entityManager->getRepository("App\Entity\taskState")->findOneBy(['state' => $state]);
-        $task = $entityManager->getRepository("App\Entity\task")->findOneBy(['id' => $taskState]);
         if(task == NULL){
             return NULL;
         }

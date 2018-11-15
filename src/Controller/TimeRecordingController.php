@@ -38,10 +38,23 @@ class TimeRecordingController extends AbstractController
         }
     }
 
-      /**
+     /**
      * @Route("/log_time", name="log_time")
      */
     public function log_time(Request $request)
+    {
+        $programs = $request->request->get('programs');
+        var_dump($programs);
+        return $this->json([
+            'success' => true,
+            'message' => "Tiempo registrado correctamente"
+        ]); 
+    }
+
+       /**
+     * @Route("/check-pending-actions", name="check_pending_actions")
+     */
+    public function check_pending_actions(Request $request)
     {
         $programs = $request->request->get('programs');
         var_dump($programs);
