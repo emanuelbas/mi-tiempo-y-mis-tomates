@@ -15,6 +15,7 @@ require('../css/task-creation.scss');
 require('../css/my-tasks.scss');
 require('../css/account-configuration.scss');
 require('../css/pomodoro-configuration.scss');
+require('../css/navigation-task.scss');
 require('../css/plugins/parsley.css');
 
 // Javascript

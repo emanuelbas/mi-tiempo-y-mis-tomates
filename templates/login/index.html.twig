@@ -4,7 +4,7 @@
     <div class="container login-form-container d-flex justify-content-center align-items-center">
         <div class="row">
             <div class="position-relative col-md-12 shadow p-3 mb-5 bg-white border-top login-box">
-                <h2 class="text-center text-primary font-weight-light"> Iniciar sesión </h2>
+                <h2 class="text-center text-danger font-weight-light"> Iniciar sesión </h2>
                 {% if error %}
                     <div class="text-danger position-absolute text-center login-error-message">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}

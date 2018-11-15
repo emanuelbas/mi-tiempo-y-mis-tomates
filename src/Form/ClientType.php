@@ -19,6 +19,8 @@ class ClientType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, array(
+                'label' => 'Email *',
+
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'group' => 'block1',
@@ -30,7 +32,7 @@ class ClientType extends AbstractType
             ))
 
             ->add('first_name', TextType::class, array(
-                'label' => 'Nombre/s',
+                'label' => 'Nombre/s *',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'data-parsley-errors-container' => '#first-name-input-errors',
@@ -40,7 +42,7 @@ class ClientType extends AbstractType
                     'autofocus' => ''),
                 'help' => 'Ejemplo: Jorge Mario'))
             ->add('last_name', TextType::class, array(
-                'label' => 'Apellido/s',
+                'label' => 'Apellido/s *',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'group' => 'block1',
@@ -50,14 +52,14 @@ class ClientType extends AbstractType
                 ),
                 'help' => 'Ejemplo: Lopez Larrega'))
             ->add('secret_question', EntityType::class, array(
-                'label' => 'Pregunta secreta',
+                'label' => 'Pregunta secreta *',
                 'class' => SecretQuestion::class,
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'group' => 'block1',
                 )))
             ->add('secret_answer', TextType::class, array(
-                'label' => 'Respuesta secreta',
+                'label' => 'Respuesta secreta *',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'group' => 'block1',
@@ -70,7 +72,7 @@ class ClientType extends AbstractType
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options' => array(
-                    'label' => 'Contraseña',
+                    'label' => 'Contraseña *',
                     'help' => 'Entre 4 y 24 caracteres',
                     'attr' => array(
                         'data-parsley-trigger' => "focusout",
@@ -80,7 +82,7 @@ class ClientType extends AbstractType
                         'maxlength'=>'24',
                     )),
                 'second_options' => array(
-                    'label' => 'Repita la contraseña',
+                    'label' => 'Repita la contraseña *',
                     'help' => 'Debe coincidir con la contraseña',
                     'attr' => array(
                         'data-parsley-trigger' => "focusout",
