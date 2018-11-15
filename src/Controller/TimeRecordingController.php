@@ -37,8 +37,7 @@ class TimeRecordingController extends AbstractController
         ]);
         }
     }
-<<<<<<< HEAD
-
+    
      /**
      * @Route("/log_time", name="log_time")
      */
@@ -64,6 +63,4 @@ class TimeRecordingController extends AbstractController
             'message' => "Tiempo registrado correctamente"
         ]); 
     }
-=======
->>>>>>> master
 }
