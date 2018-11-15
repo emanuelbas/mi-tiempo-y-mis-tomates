@@ -53,6 +53,11 @@ class Task
      */
     private $pomodoros;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Clock", mappedBy="task", cascade={"persist", "remove"})
+     */
+    private $clock;
+
     public function __construct()
     {
         $this->pomodoros = new ArrayCollection();
@@ -161,6 +166,23 @@ class Task
             if ($pomodoro->getTask() === $this) {
                 $pomodoro->setTask(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getClock(): ?Clock
+    {
+        return $this->clock;
+    }
+
+    public function setClock(Clock $clock): self
+    {
+        $this->clock = $clock;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $clock->getTask()) {
+            $clock->setTask($this);
         }
 
         return $this;

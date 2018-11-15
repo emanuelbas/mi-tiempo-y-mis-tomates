@@ -33,6 +33,7 @@ class Pomodoro
 
     public function __construct()
     {
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
         $this->start_date = new \DateTime();
     }
 

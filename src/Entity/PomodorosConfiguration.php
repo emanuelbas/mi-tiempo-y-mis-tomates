@@ -46,6 +46,24 @@ class PomodorosConfiguration
      */
     private $clock_sound;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $long_break_time;
+
+    
+    public function __construct()
+    {
+        $this->setBreakTime(5);
+        $this->setLongBreakTime(30);
+        $this->setWorkingTime(25);
+        $this->setEndWorkAlarm(1);
+        $this->setEndBreakAlarm(1);
+        $this->setClockSound(1);
+
+
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +137,18 @@ class PomodorosConfiguration
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+        return $this;
+    }
+
+    public function getLongBreakTime(): ?int
+    {
+        return $this->long_break_time;
+    }
+
+    public function setLongBreakTime(int $long_break_time): self
+    {
+        $this->long_break_time = $long_break_time;
+
         return $this;
     }
 }

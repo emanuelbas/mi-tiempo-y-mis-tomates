@@ -72,12 +72,15 @@ class AppFixtures extends Fixture
         // - Pomodoros configuration
 
         $pconfig = new PomodorosConfiguration();
+        /* Se paso la config por default al constructor de la clase
         $pconfig->setBreakTime(5);
+        $pconfig->setLongBreakTime(30);
         $pconfig->setWorkingTime(25);
         $pconfig->setEndWorkAlarm(true);
         $pconfig->setEndBreakAlarm(true);
         $pconfig->setClockSound(true);
-        $pconfig->setClient($user);
+        */
+        //$pconfig->setClient($user);
         $user->setPomodorosConfiguration($pconfig);
         $manager->persist($pconfig);
         $manager->persist($user);
@@ -199,12 +202,15 @@ class AppFixtures extends Fixture
         $manager->persist($user);
 
         $pconfig = new PomodorosConfiguration();
+        /*
         $pconfig->setBreakTime(5);
+        $pconfig->setLongBreakTime(30);
         $pconfig->setWorkingTime(25);
         $pconfig->setEndWorkAlarm(true);
         $pconfig->setEndBreakAlarm(true);
         $pconfig->setClockSound(true);
-        $pconfig->setClient($user);
+        */
+        //$pconfig->setClient($user);
         $user->setPomodorosConfiguration($pconfig);
         $manager->persist($pconfig);
         $manager->persist($user);
@@ -219,12 +225,15 @@ class AppFixtures extends Fixture
         $manager->persist($user);
 
         $pconfig = new PomodorosConfiguration();
+        /*
         $pconfig->setBreakTime(5);
         $pconfig->setWorkingTime(25);
+        $pconfig->setLongBreakTime(30);
         $pconfig->setEndWorkAlarm(true);
         $pconfig->setEndBreakAlarm(true);
         $pconfig->setClockSound(true);
-        $pconfig->setClient($user);
+        */
+        //$pconfig->setClient($user);
         $user->setPomodorosConfiguration($pconfig);
         $manager->persist($pconfig);
         $manager->persist($user);
