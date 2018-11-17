@@ -1,23 +1,41 @@
-<div class="navigation-task-container text-black-50">
-    <div>
-        <span> Nombre de tarea </span>
-        <span> - </span>
-        <span> Trabajo </span>
-        <span> - </span>
-        <span> 3/5 </span>
-    </div>
-    <div class="d-flex justify-content-around align-items-center">
-        <span class="navigation-task-clock" title="Tiempo restante">21:22</span>
-        <div class="navigation-task-button-container d-flex justify-content-between">
-            <a href="#" title="Iniciar/reanudar tarea">
-                <img src="/build/assets/img/buttons/play.svg" class="navigation-task-button">
-            </a>
-            <a href="#" title="Pausar tarea">
-                <img src="/build/assets/img/buttons/pause.svg" class="navigation-task-button">
-            </a>
-            <a href="#" title="Detener tarea">
-                <img src="/build/assets/img/buttons/stop.png" class="navigation-task-button">
-            </a>
+
+ {% if app.user.canShowClock() %}
+    <div class="navigation-task-container text-black-50">
+        <div>
+            <span> {{ app.user.clock.getTaskName() }} </span>
+            <span> - </span>
+            <span> {{ app.user.clock.getPeriodType() }} </span>
+            <span> - </span>
+            <span> 3/5 </span>
+        </div>
+        <div class="d-flex justify-content-around align-items-center">
+            <span class="navigation-task-clock" title="Tiempo restante">21:22</span>
+            <div class="navigation-task-button-container d-flex justify-content-between">
+                {% if app.user.clock.canBePaused() %}
+                    <a href="{{ path('pause_task_route', {}) }}" title="Pausar/reanudar tarea">
+                        <img src="/build/assets/img/buttons/pause.svg" class="navigation-task-button">
+                    </a>
+                {% endif %}
+                {% if app.user.clock.canBeResumed() %}
+                    <a href="{{ path('resume_task_route', {}) }}" title="Pausar/reanudar tarea">
+                        <img src="/build/assets/img/buttons/play.svg" class="navigation-task-button">
+                    </a>
+                {% endif %}
+
+                {% if app.user.clock.canDoNext() %}
+                    <a href="{{ path('resume_task_route', {}) }}" title="Iniciar periodo de ">
+                        <img src="/build/assets/img/buttons/skip.png" class="navigation-task-button">
+                    </a>
+                {% endif %}
+
+
+                <a href="{{ path('finish_task_route', {'id': app.user.clock.task.getId() }) }}" title="Finalizar">
+                    <img src="/build/assets/img/buttons/success.png" class="navigation-task-button">
+                </a>
+                <a href="{{ path('stop_task_route', {'id': app.user.clock.task.getId() }) }}" title="Detener tarea">
+                    <img src="/build/assets/img/buttons/stop.png" class="navigation-task-button">
+                </a>
+            </div>
         </div>
     </div>
-</div>
+{% endif %}

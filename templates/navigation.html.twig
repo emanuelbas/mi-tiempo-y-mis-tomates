@@ -16,7 +16,9 @@
                 </li>
             </ul>
 
-            {% include 'navigation_task/index.html.twig' %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% include 'navigation_task/index.html.twig' %}
+            {% endif %}
 
             <ul class="navbar-nav ml-auto">
                 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}

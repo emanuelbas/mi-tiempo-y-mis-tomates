@@ -68,8 +68,8 @@ class Clock
         $this->task=$task;
         $this->lap=0;
         $this->pauseStamp=NULL;
-        $this->periodType='WORK';
-        $this->previousPeriod='BREAK';
+        $this->periodType='Trabajo';
+        $this->previousPeriod='Descanso';
         $this->ready=FALSE;
 
         date_default_timezone_set('America/Argentina/Buenos_Aires');
@@ -249,7 +249,7 @@ class Clock
     {
     //Si está en pausa puede retomarse
 
-        return !(is_null($this->pauseStamp));
+        return !(is_null($this->pauseStamp))&& (!($this->ready));
     }
 
     public function canDoNext(): ?bool
@@ -263,13 +263,18 @@ class Clock
     {
     //Resume recalcula el deadline
 
+    /*
         date_default_timezone_set('America/Argentina/Buenos_Aires');
         $nowStamp = new \DateTime();
-        $timePaused = $nowStamp - $this->pauseStamp;
-        $this->deadline = $this->deadline + $timePaused;
+        $pauseStamp = $this->getPauseStamp();
+        $differenceInSeconds =  $nowStamp->getTimeStamp() - $pauseStamp->getTimeStamp();
+        $this->deadline->modify("+{$differenceInSeconds} seconds");
+    */
+        $seconds=20;
+        $this->addToDeadlineSeconds($seconds);
 
         //Poner el pauseStamp en null para quitar la pausa
-        unset($this->pauseStamp);
+        $this->setPauseStamp(NULL);
 
         return $this;
     }
@@ -300,10 +305,10 @@ class Clock
         $this->periodStartStamp=  new \DateTime();
 
         //Actualizar la deadline y el tipo de periodo segun el periodo anterior
-        if ($this->previousPeriod == 'WORK')
+        if ($this->previousPeriod == 'Trabajo')
         {
-            $this->previousPeriod = 'WORK';
-            $this->periodType = 'BREAK';
+            $this->previousPeriod = 'Trabajo';
+            $this->periodType = 'Descanso';
             if ($this->lap == 3){
                 $minutesToAdd= $this->getClient()->getPomodorosConfiguration()->getLongBreakTime();
                 $this->lap = 0;
@@ -312,8 +317,8 @@ class Clock
                 $this->lap = $this->lap + 1;                
             }          
         } else {
-            $this->previousPeriod = 'BREAK';
-            $this->periodType = 'WORK';
+            $this->previousPeriod = 'Descanso';
+            $this->periodType = 'Trabajo';
             $minutesToAdd=$this->getClient()->getPomodorosConfiguration()->getWorkingTime();
         }
         $timenow = new DateTime();
@@ -334,7 +339,7 @@ class Clock
     public function storeData(): self
     {
     //Si el periodo es de trabajo, crea un pomo nuevo y lo guarda en la tarea
-    if ($this->periodType == 'WORK') {
+    if ($this->periodType == 'Trabajo') {
             $newPomodoro=new Pomodoro();
             $newPomodoro->setStartDate($this->periodStartStamp);
             $newPomodoro->setEndingDate($this->deadline);
@@ -346,6 +351,13 @@ class Clock
 
         return $this;
     }
+
+    public function addToDeadlineSeconds(Int $seconds): self
+    {
+        $this->deadline->modify("+{$seconds} seconds");
+        return $this;
+    }
+
 
 
 

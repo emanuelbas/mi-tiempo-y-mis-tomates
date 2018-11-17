@@ -170,4 +170,48 @@ class MyTasksController extends AbstractController
     }
 
 
+    /**
+     *
+     * @Route("/pause-task", name="pause_task_route")
+     * @return RedirectResponse
+     *
+     */
+    public function pauseTask(){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        /* Pedir al reloj que se pause */
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clock = $client->getClock();
+        $clock->pause();
+
+        $entityManager->persist($clock);
+        $entityManager->flush();
+
+
+        return $this->redirectToRoute('my_tasks');
+    }
+
+    /**
+     *
+     * @Route("/resume-task", name="resume_task_route")
+     * @return RedirectResponse
+     *
+     */
+    public function resumeTask(){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        /* Pedir al reloj que se pause */
+        
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clock = $client->getClock();
+        $clock->resume();
+
+        $entityManager->persist($clock);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('my_tasks');
+    }
+
 }
