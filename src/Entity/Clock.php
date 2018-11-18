@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClockRepository")
@@ -263,15 +264,15 @@ class Clock
     {
     //Resume recalcula el deadline
 
-    /*
+        $secondsToAdd = strtotime($this->pauseStamp->format('Y-m-d H:i:s')) - strtotime($this->deadline->format('Y-m-d H:i:s'));
         date_default_timezone_set('America/Argentina/Buenos_Aires');
-        $nowStamp = new \DateTime();
-        $pauseStamp = $this->getPauseStamp();
-        $differenceInSeconds =  $nowStamp->getTimeStamp() - $pauseStamp->getTimeStamp();
-        $this->deadline->modify("+{$differenceInSeconds} seconds");
-    */
-        $seconds=20;
-        $this->addToDeadlineSeconds($seconds);
+        $aDate =new \DateTime();
+        $time= $this->deadline;
+        $time= $time->format('Y-m-d H:i:s');
+        
+        $time = strtotime($time) + $secondsToAdd;
+        date_timestamp_set($aDate, $time);
+        $this->deadline= $aDate;
 
         //Poner el pauseStamp en null para quitar la pausa
         $this->setPauseStamp(NULL);
@@ -354,7 +355,9 @@ class Clock
 
     public function addToDeadlineSeconds(Int $seconds): self
     {
-        $this->deadline->modify("+{$seconds} seconds");
+        $deadline = $this->deadline;
+        $deadline = strtotime($deadline);
+        $this->deadline = $deadline + $seconds;
         return $this;
     }
 
