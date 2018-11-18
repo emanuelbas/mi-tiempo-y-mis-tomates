@@ -81,45 +81,6 @@ class Clock
         $this->deadline=$time;
     }
 
-    /*public function __construct(Client $client, Task $task)
-    {
-        //Al crearse el reloj se le pasa la tarea y el usuario
-        //La idea es que sea la clase usuario la que crea el reloj
-        //usando la función startTask(), desde alli se envian estos parametros
-        $this->client=$client;
-        $this->task=$task;
-
-
-        //En base a la configuración del cliente se obtiene el deadline
-
-        date_default_timezone_set('America/Argentina/Buenos_Aires');
-        $dateTime = new \DateTime();
-
-        $minutesToAdd = $this->getClient()->getPomodorosConfiguration()->getWorkingTime();
-        $dateTime->modify("+{$minutesToAdd} minutes");
-
-        $this->deadline=$dateTime
-
-        //Lap en 0, son las vueltas antes del descanso largo
-        $this->lap=0;
-
-        //pauseStamp se mantiene en null para indicar que no está pausado
-        $this->pauseStamp=NULL;
-
-        //periodType se le asigna 'work'
-        $this->periodType='WORK';
-
-        //previousPeriod se inicializa en 'break' para evitar irregularidades
-        $this->previousPeriod='BREAK';
-
-        //periodStartStamp arranca en la hora actual
-        $this->periodStartStamp= new \DateTime();
-
-        //ready debe arrancar en false
-        $this->ready=FALSE;
-    }
-    */
-
     public function getId(): ?int
     {
         return $this->id;
@@ -243,30 +204,31 @@ class Clock
     {
     //El reloj puede pausarse cuando no esta en pausa ni esperando el next
 
-        return ((is_null($this->pauseStamp))&& (!($this->ready)));
+        return ((is_null($this->pauseStamp))&& !($this->canDoNext()));
     }
 
     public function canBeResumed(): ?bool
     {
     //Si está en pausa puede retomarse
 
-        return !(is_null($this->pauseStamp))&& (!($this->ready));
+        return !(is_null($this->pauseStamp)) && !($this->canDoNext());
     }
 
     public function canDoNext(): ?bool
     {
     //Se puede hacer next solo cuando está ready
 
-        return $this->ready;
+        return ($this->secondsRemaining() <= 1);
     }
 
     public function resume(): self
     {
     //Resume recalcula el deadline
 
-        $secondsToAdd = strtotime($this->pauseStamp->format('Y-m-d H:i:s')) - strtotime($this->deadline->format('Y-m-d H:i:s'));
         date_default_timezone_set('America/Argentina/Buenos_Aires');
         $aDate =new \DateTime();
+        $secondsToAdd = strtotime($aDate->format('Y-m-d H:i:s')) - strtotime($this->pauseStamp->format('Y-m-d H:i:s'));
+        
         $time= $this->deadline;
         $time= $time->format('Y-m-d H:i:s');
         
@@ -361,6 +323,17 @@ class Clock
         return $this;
     }
 
+    public function secondsRemaining(): Int
+    {
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
+    if (is_null($this->pauseStamp)){ //Si no esta en pausa
+        $secondsRemaining = strtotime($this->deadline->format('Y-m-d H:i:s')) - strtotime((new \DateTime())->format('Y-m-d H:i:s'));
+    } else { //Si esta pausado
+        $secondsRemaining = strtotime($this->deadline->format('Y-m-d H:i:s')) - strtotime($this->pauseStamp->format('Y-m-d H:i:s'));
+    }
+        return $secondsRemaining;
+    }
+    
 
 
 
