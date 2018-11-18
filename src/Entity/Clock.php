@@ -268,8 +268,11 @@ class Clock
         $this->periodStartStamp=  new \DateTime();
 
         //Actualizar la deadline y el tipo de periodo segun el periodo anterior
-        if ($this->previousPeriod == 'Trabajo')
+        if ($this->periodType == 'Trabajo')
         {
+            //El true indica que aun no se hizo store de este pomodoro, la idea es que cuando llegue a 0 se almacene el pomo solo si está en ready=true, esto es para evitar que se haga store del mismo pomo más de una vez 
+            $this->setReady(TRUE); 
+
             $this->previousPeriod = 'Trabajo';
             $this->periodType = 'Descanso';
             if ($this->lap == 3){
@@ -284,37 +287,12 @@ class Clock
             $this->periodType = 'Trabajo';
             $minutesToAdd=$this->getClient()->getPomodorosConfiguration()->getWorkingTime();
         }
-        $timenow = new DateTime();
+        $timenow = new \DateTime();
         $this->deadline = $timenow->modify("+{$minutesToAdd} minutes");
 
-        /*
-            EJEMPLO DE COMO AGREGAR MINUTOS A UNA DATETIME
-            $dateTime = new DateTime('2011-11-17 05:05');
-            $minutesToAdd = 5;
-            $dateTime->modify("+{$minutesToAdd} minutes");
-        */
-      
-
-
         return $this;
     }
-
-    public function storeData(): self
-    {
-    //Si el periodo es de trabajo, crea un pomo nuevo y lo guarda en la tarea
-    if ($this->periodType == 'Trabajo') {
-            $newPomodoro=new Pomodoro();
-            $newPomodoro->setStartDate($this->periodStartStamp);
-            $newPomodoro->setEndingDate($this->deadline);
-            $this->task->addPomodoro($newPomodoro);
-
-            //Ahora necesitaria persistir $newPomodoro y $this->task
-        }
-
-
-        return $this;
-    }
-
+    
     public function addToDeadlineSeconds(Int $seconds): self
     {
         $deadline = $this->deadline;

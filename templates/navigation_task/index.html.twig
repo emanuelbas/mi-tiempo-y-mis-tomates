@@ -24,7 +24,7 @@
                 {% endif %}
 
                 {% if app.user.clock.canDoNext() %}
-                    <a href="{{ path('resume_task_route', {}) }}" title="Iniciar periodo de {{ app.user.clock.getPreviousPeriod()}}">
+                    <a href="{{ path('continue_task_route', {}) }}" title="Iniciar periodo de {{ app.user.clock.getPreviousPeriod()}}">
                         <img src="/build/assets/img/buttons/skip.png" class="navigation-task-button">
                     </a>
                 {% endif %}

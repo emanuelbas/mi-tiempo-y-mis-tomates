@@ -214,5 +214,57 @@ class MyTasksController extends AbstractController
         return $this->redirectToRoute('my_tasks');
     }
 
+    /**
+     *
+     * @Route("/continue-task", name="continue_task_route")
+     * @return RedirectResponse
+     *
+     */
+    public function continueTask(){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        
+        
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clock = $client->getClock();
+        $clock->next();
+
+        $entityManager->persist($clock);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('my_tasks');
+    }
+
+    /**
+     *
+     * @Route("/store", name="store_route")
+     * @return RedirectResponse
+     *
+     */
+    public function storeData(){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        
+        
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clock = $client->getClock();
+        if (($clock->getPeriodType() == "Trabajo")&&($clock->getReady())) {
+            $pomodoro = new Pomodoro();
+            $pomodoro->setStartDate($clock->getPeriodStartStamp());
+            $pomodoro->setEndingDate($clock->getDeadline());
+            $pomodoro->setTask($clock->getTask());
+
+            $clock->setReady(FALSE);
+
+
+            $entityManager->persist($clock);
+            $entityManager->flush();
+            $entityManager->persist($pomodoro);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('my_tasks');
+    }
 
 }
