@@ -148,6 +148,11 @@ class Task
         return $this->pomodoros;
     }
 
+    public function getPomodorosAmmount(): Int
+    {
+        return $this->pomodoros->count();
+    }
+
     public function addPomodoro(Pomodoro $pomodoro): self
     {
         if (!$this->pomodoros->contains($pomodoro)) {

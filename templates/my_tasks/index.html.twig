@@ -42,7 +42,7 @@
                                 <span class="my-tasks-task-name"
                                       title="{{ task.taskName }}">{{ task.taskName }}</span>
                                 <span class="my-tasks-pomodoros"
-                                      title="Pomodoros usados/estimados"> {{ random(task.stimatedPomodoros-1) }}
+                                      title="Pomodoros usados/estimados"> {{ task.pomodorosAmmount() }}
                                     /{{ task.stimatedPomodoros }} </span>
 
                                 {% if task.taskState.state == "PENDING" %}
@@ -59,14 +59,13 @@
 
                                 <div class="my-tasks-action-buttons-container d-flex justify-content-end">
                                     {% if task.taskState.state == "PENDING" %}
-                                        <a href="{{ path('start_task_route', {'id': task.id }) }}" title="Iniciar tarea"><img
-                                                    src="/build/assets/img/buttons/play.svg"
-                                                    class="my-tasks-action-button mr-2"></a>
+                                        {% if app.user.clock is null  %}
+                                            <a href="{{ path('start_task_route', {'id': task.id }) }}" title="Iniciar tarea"><img
+                                                        src="/build/assets/img/buttons/play.svg"
+                                                        class="my-tasks-action-button mr-2"></a>
+                                        {% endif %}
                                     {% endif %}
                                     {% if task.taskState.state == "ACTIVE" %}
-                                        <a href="#" title="Pausar tarea"><img
-                                                    src="/build/assets/img/buttons/pause.svg"
-                                                    class="my-tasks-action-button mr-2"></a>
                                         <a href="{{ path('stop_task_route', {'id': task.id }) }}" title="Detener tarea"><img
                                                     src="/build/assets/img/buttons/stop.png"
                                                     class="my-tasks-action-button mr-2"></a>

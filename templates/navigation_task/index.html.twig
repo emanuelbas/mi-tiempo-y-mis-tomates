@@ -6,7 +6,7 @@
             <span> - </span>
             <span> {{ app.user.clock.getPeriodType() }} </span>
             <span> - </span>
-            <span> 3/5 </span>
+            <span> {{ app.user.clock.task.getPomodorosAmmount() }}/{{ app.user.clock.task.getStimatedPomodoros() }} </span>
         </div>
         <div class="d-flex justify-content-around align-items-center">
             <p> {{ app.user.clock.secondsRemaining()}}s left </p>
