@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use App\Entity\ClientUsesApplication;
 use App\Entity\Client;
 use App\Entity\TaskState;
@@ -27,7 +28,7 @@ class ApplicationController extends AbstractController
             $app = $entityManager->getRepository("App\Entity\Application")->findOneBy(['app_name' => $application['app_name']]);
             //Si no encuentra una app con ese nombre se le pone una app predeterminada de la bd llamada OTHER
             if($app == NULL){
-                $app = $entityManager->getRepository("App\Entity\Application")->findOneBy(['app_name' => 'other']);
+                $app = $entityManager->getRepository('App\Entity\Application')->findOneBy(['app_name' => 'other']);
             }
             $clientUsesApplication->setApplication($app);
             $clientUsesApplication->setTimeAmount($application['minutes']);
@@ -43,43 +44,41 @@ class ApplicationController extends AbstractController
     }
 
     /**
-     * @Route("/check-task-state/{taskId}", name="check_task_state")
+     * @Route("/check_state/{taskId}", name="check_state")
      */
     public function checkTaskState($taskId)
     {   
 
         $entityManager = $this->getDoctrine()->getManager();
-        $task = $entityManager->getRepository("App\Entity\task")->findOneBy(['id' => $taskId]);
+        $task = $entityManager->getRepository('App\Entity\Task')->findOneBy(['id' => $taskId]);
+        if($task == NULL){
+            return new Response( "No existe la tarea");
+        }
         $state = $task->getTaskState();
-        $taskState = $entityManager->getRepository("App\Entity\taskState")->findOneBy(['id' => $state->getId()]);
-        return $taksState->getState();
+        $taskState = $entityManager->getRepository('App\Entity\TaskState')->findOneBy(['id' => $state->getId()]);
+        if($taskState == NULL){
+            return new Response( "Error en el estado de tarea");
+        }
+        else{
+            return new Response ($taskState->getState());
+        }
 
     }
     /**
-     * Para el ID de un cliente, encontrar alguna tarea activa
-     * @Route("/ask-user-active-task/{id}", name="ask_task")
+     * @Route("/ask_task/{clientId}", name="ask_task")
      */
     public function askUserActiveTask($id)
     {   
         $entityManager = $this->getDoctrine()->getManager();
         $state= 'ACTIVE';
-        $client = $entityManager->getRepository("App\Entity\Client")->findOneBy(['id' => $id]);
-
-        if ($client == NULL) {
-            return $this->json([
-                'success' => "false",
-                'message' => "Cliente inválido"
-            ]);
-        }
-
-        $task = $entityManager->getRepository("App\Entity\task")->findOneBy(['client' => $id]);
-
-        $taskState = $entityManager->getRepository("App\Entity\taskState")->findOneBy(['state' => $state]);
-        if(task == NULL){
-            return NULL;
+        $client = $entityManager->getRepository('App\Entity\Client')->findOneBy(['id' => $clientId]);
+        $taskState = $entityManager->getRepository('App\Entity\TaskState')->findOneBy(['state' => $state]);
+        $task = $entityManager->getRepository('App\Entity\Task')->findOneBy(['task_state' => $taskState, 'client'=>$client]);
+        if($task == NULL){
+            return new Response( 0);
         }
         else{
-            return $task->getId();
+            return new Response( $task->getId());
         }
     }
 }
