@@ -1,0 +1,42 @@
+
+ {% if app.user.canShowClock() %}
+    <div class="navigation-task-container text-black-50">
+        <div>
+            <span> {{ app.user.clock.getTaskName() }} </span>
+            <span> - </span>
+            <span> {{ app.user.clock.getPeriodType() }} </span>
+            <span> - </span>
+            <span> {{ app.user.clock.task.getPomodorosAmmount() }}/{{ app.user.clock.task.getStimatedPomodoros() }} </span>
+        </div>
+        <div class="d-flex justify-content-around align-items-center">
+            <p> {{ app.user.clock.secondsRemaining()}}s left </p>
+            <span class="navigation-task-clock" title="Tiempo restante">21:22</span>
+            <div class="navigation-task-button-container d-flex justify-content-between">
+                {% if app.user.clock.canBePaused() %}
+                    <a href="{{ path('pause_task_route', {}) }}" title="Pausar/reanudar tarea">
+                        <img src="/build/assets/img/buttons/pause.svg" class="navigation-task-button">
+                    </a>
+                {% endif %}
+                {% if app.user.clock.canBeResumed() %}
+                    <a href="{{ path('resume_task_route', {}) }}" title="Pausar/reanudar tarea">
+                        <img src="/build/assets/img/buttons/play.svg" class="navigation-task-button">
+                    </a>
+                {% endif %}
+
+                {% if app.user.clock.canDoNext() %}
+                    <a href="{{ path('continue_task_route', {}) }}" title="Iniciar periodo de {{ app.user.clock.getPreviousPeriod()}}">
+                        <img src="/build/assets/img/buttons/skip.png" class="navigation-task-button">
+                    </a>
+                {% endif %}
+
+
+                <a href="{{ path('finish_task_route', {'id': app.user.clock.task.getId() }) }}" title="Finalizar">
+                    <img src="/build/assets/img/buttons/success.png" class="navigation-task-button">
+                </a>
+                <a href="{{ path('stop_task_route', {'id': app.user.clock.task.getId() }) }}" title="Detener tarea">
+                    <img src="/build/assets/img/buttons/stop.png" class="navigation-task-button">
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}

@@ -81,6 +81,11 @@ class Client implements UserInterface, \Serializable
      */
     private $clientUsesApplications;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Clock", mappedBy="client", cascade={"persist", "remove"})
+     */
+    private $clock;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -299,6 +304,64 @@ class Client implements UserInterface, \Serializable
             }
         }
 
+        return $this;
+    }
+
+    public function getClock(): ?Clock
+    {
+        return $this->clock;
+    }
+
+    public function setClock(Clock $clock): self
+    {
+        $this->clock = $clock;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $clock->getClient()) {
+            $clock->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function canShowClock(): bool
+    {
+        //Lo puede mostrar si no es null
+        return !(is_null($this->clock));
+    }
+
+    public function canStartTask(): bool
+    {
+        //el usuario puede iniciar tareas solo si no hay una en curso
+        return is_null($this->clock);
+    }
+
+    public function canStopTask(): bool
+    {
+        return !(is_null($this->clock));
+    }
+
+    public function canFinishTask(): bool
+    {
+        return !(is_null($this->clock));
+    }
+    public function stopTask(TaskState $state): self
+    {
+        //Cambiar el state de la tarea
+        $this->clock->stop($state);
+
+        //Destruir el reloj
+        unset($this->clock);
+
+        return $this;
+    }
+
+    public function startClockForTask(Task $task): self
+    {
+        //Cambiar el state de la tarea a activo viene a ser responsabilidad de la funcion que llama a esta.
+        
+        $this->setClock(new Clock($this, $task));
+      
         return $this;
     }
 

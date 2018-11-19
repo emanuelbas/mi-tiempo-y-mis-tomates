@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\TaskState;
 use App\Entity\Pomodoro;
+use App\Entity\Clock;
 use Symfony\Component\Validator\Constraints\Date;
 
 class MyTasksController extends AbstractController
@@ -74,21 +75,21 @@ class MyTasksController extends AbstractController
      */
     public function startTask(Task $task){
 
-        /* Arreglar, seleccionar solo las tareas del usuario logueado */
-        /* Arreglar, se está guardando la hora de otra región */
-        $activeState = $this->getDoctrine()
+       $activeState = $this->getDoctrine()
         ->getRepository(TaskState::class)
         ->findOneByState('ACTIVE');
 
         $task->setTaskState($activeState);
 
-        $pomodoroNuevo = new Pomodoro();
-        $task->addPomodoro($pomodoroNuevo);
+        //Iniciando el reloj
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clock = new Clock($client,$task);
+        $client->setClock($clock);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($pomodoroNuevo);
-        $entityManager->flush();
         $entityManager->persist($task);
+        $entityManager->persist($clock);
+        $entityManager->persist($client);
         $entityManager->flush();
 
         return $this->redirectToRoute('my_tasks');
@@ -106,13 +107,9 @@ class MyTasksController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        /* Destruir el pomodoro si no finalizó */
-        $ultimoPomo = $task->getPomodoros()->last();
-        if ( is_null ( $ultimoPomo->getEndingDate() ) ) {
-            $task->removePomodoro($ultimoPomo);
-            $entityManager->remove($ultimoPomo);    
-            $entityManager->flush();
-        }
+        /* Destruir el reloj sin guardar datos del ciclo actual */
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clock = $client->getClock();
 
         /* Cambiar el estado de la tarea a pendiente */
         $pendingState = $this->getDoctrine()
@@ -120,10 +117,153 @@ class MyTasksController extends AbstractController
         ->findOneByState('PENDING');
         $task->setTaskState($pendingState);
      
+
+        $entityManager->persist($client);
+        $entityManager->flush();
+
         $entityManager->persist($task);
         $entityManager->flush();
 
+        $entityManager->remove($clock);
+        $entityManager->flush();
 
+
+
+
+
+
+        return $this->redirectToRoute('my_tasks');
+    }
+
+    /**
+     * @param Task $task
+     *
+     * @Route("/{id}/finish-task", requirements={"id" = "\d+"}, name="finish_task_route")
+     * @return RedirectResponse
+     *
+     */
+    public function finishTask(Task $task){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        /* Destruir el reloj sin guardar datos del ciclo actual */
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clock = $client->getClock();
+
+        /* Cambiar el estado de la tarea a terminada */
+        $finishedState = $this->getDoctrine()
+        ->getRepository(TaskState::class)
+        ->findOneByState('FINISHED');
+        $task->setTaskState($finishedState);
+     
+        $entityManager->persist($client);
+        $entityManager->flush();
+
+        $entityManager->persist($task);
+        $entityManager->flush();
+
+        $entityManager->remove($clock);
+        $entityManager->flush();
+
+
+        return $this->redirectToRoute('my_tasks');
+    }
+
+
+    /**
+     *
+     * @Route("/pause-task", name="pause_task_route")
+     * @return RedirectResponse
+     *
+     */
+    public function pauseTask(){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        /* Pedir al reloj que se pause */
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clock = $client->getClock();
+        $clock->pause();
+
+        $entityManager->persist($clock);
+        $entityManager->flush();
+
+
+        return $this->redirectToRoute('my_tasks');
+    }
+
+    /**
+     *
+     * @Route("/resume-task", name="resume_task_route")
+     * @return RedirectResponse
+     *
+     */
+    public function resumeTask(){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        /* Pedir al reloj que se pause */
+        
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clock = $client->getClock();
+        $clock->resume();
+
+        $entityManager->persist($clock);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('my_tasks');
+    }
+
+    /**
+     *
+     * @Route("/continue-task", name="continue_task_route")
+     * @return RedirectResponse
+     *
+     */
+    public function continueTask(){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        
+        
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clock = $client->getClock();
+        $clock->next();
+
+        $entityManager->persist($clock);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('my_tasks');
+    }
+
+    /**
+     *
+     * @Route("/store", name="store_route")
+     * @return RedirectResponse
+     *
+     */
+    public function storeData(){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        
+        
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clock = $client->getClock();
+        if (($clock->getPeriodType() == "Trabajo")&&($clock->getReady())) {
+            $pomodoro = new Pomodoro();
+            $pomodoro->setStartDate($clock->getPeriodStartStamp());
+            $pomodoro->setEndingDate($clock->getDeadline());
+            $pomodoro->setTask($clock->getTask());
+
+            $clock->setReady(FALSE);
+
+
+            $entityManager->persist($clock);
+            $entityManager->flush();
+            $entityManager->persist($pomodoro);
+            $entityManager->flush();
+        }
         return $this->redirectToRoute('my_tasks');
     }
 
