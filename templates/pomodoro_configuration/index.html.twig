@@ -40,6 +40,28 @@
 
                     </div>
 
+                    <div class="form-group position-relative pomodoro-configuration-form-group">
+                        {{ form_label(form.long_break_time, null, { 'label_attr': {'class': 'font-weight-light d-block'} }) }}
+                        {{ form_widget(form.long_break_time, {'attr': {'class': 'd-inline-block pomodoro-configuration-input'}}) }}
+                        <span class="d-inline-block ml-3 font-weight-light text-muted pomodoro-configuration-input-help">
+                            {{ form.long_break_time.vars.help }}
+                        </span>
+                        <div id="break_time-input-errors"></div>
+
+                    </div>
+
+                    <div class="form-group position-relative pomodoro-configuration-form-group">
+                        {{ form_widget(form.clock_sound) }}
+                    </div>
+                    <div class="form-group position-relative pomodoro-configuration-form-group">
+                        {{ form_widget(form.end_work_alarm) }}
+                    </div>
+                    <div class="form-group position-relative pomodoro-configuration-form-group">
+                        {{ form_widget(form.end_break_alarm) }}
+                    </div>
+
+
+
                     <button type="submit" class="btn btn-primary btn-block mx-auto pomodoro-configuration-submit-btn">Guardar cambios
                     </button>
                     {{ form_end(form) }}
