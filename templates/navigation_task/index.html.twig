@@ -2,11 +2,11 @@
  {% if app.user.canShowClock() %}
     <div class="navigation-task-container text-black-50">
         <div>
-            <span> {{ app.user.clock.getTaskName() }} </span>
+            <span title="Nombre de la tarea"> {{ app.user.clock.getTaskName() }} </span>
             <span> - </span>
-            <span> {{ app.user.clock.getPeriodType() }} </span>
+            <span title="Tipo de tiempo" > {{ app.user.clock.getPeriodType() }} </span>
             <span> - </span>
-            <span> {{ app.user.clock.task.getPomodorosAmmount() }}/{{ app.user.clock.task.getStimatedPomodoros() }} </span>
+            <span title="Pomodoros utilizados/estimados"> {{ app.user.clock.task.getPomodorosAmmount() }}/{{ app.user.clock.task.getStimatedPomodoros() }} </span>
         </div>
         <div class="d-flex justify-content-around align-items-center">
             <p> {{ app.user.clock.secondsRemaining()}}s left </p>
@@ -30,7 +30,7 @@
                 {% endif %}
 
 
-                <a href="{{ path('finish_task_route', {'id': app.user.clock.task.getId() }) }}" title="Finalizar">
+                <a href="{{ path('finish_task_route', {'id': app.user.clock.task.getId() }) }}" title="Finalizar tarea">
                     <img src="/build/assets/img/buttons/success.png" class="navigation-task-button">
                 </a>
                 <a href="{{ path('stop_task_route', {'id': app.user.clock.task.getId() }) }}" title="Detener tarea">

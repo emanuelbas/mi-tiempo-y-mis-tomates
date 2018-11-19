@@ -15,11 +15,11 @@ class ApplicationController extends AbstractController
 {
 
     /**
-     * @Route("/app_data", name="app_data")
+     * @Route("/log-app-data", name="app_data")
      */
-    public function appData($dataJSON, $taskId)
+    public function appData(Request $request)
     {   
-
+        $dataJSON = $request->request->get('programs'); // Aca tenes que obtener los programas enviados por POST que se deberia llamar "programs" 
         //Obtengo la data del JSON
         $entityManager = $this->getDoctrine()->getManager();
         $data = json_decode($dataJSON, true);
@@ -44,7 +44,7 @@ class ApplicationController extends AbstractController
     }
 
     /**
-     * @Route("/check_state/{taskId}", name="check_state")
+     * @Route("/check-task-state/{taskId}", name="check_task_state")
      */
     public function checkTaskState($taskId)
     {   
@@ -57,17 +57,23 @@ class ApplicationController extends AbstractController
         $state = $task->getTaskState();
         $taskState = $entityManager->getRepository('App\Entity\TaskState')->findOneBy(['id' => $state->getId()]);
         if($taskState == NULL){
-            return new Response( "Error en el estado de tarea");
-        }
-        else{
-            return new Response ($taskState->getState());
+            return $this->json([
+                'success' => false,
+                'message' => "Error en el estado de tarea",
+            ]);
+        } else {
+            return $this->json([
+                'success' => true,
+                'message' => "Estado de la tarea",
+                'state' => $taskState->getState()
+            ]);
         }
 
     }
     /**
-     * @Route("/ask_task/{clientId}", name="ask_task")
+     * @Route("/ask-task/{clientId}", name="ask_task")
      */
-    public function askUserActiveTask($id)
+    public function askUserActiveTask($clientId)
     {   
         $entityManager = $this->getDoctrine()->getManager();
         $state= 'ACTIVE';
@@ -75,10 +81,17 @@ class ApplicationController extends AbstractController
         $taskState = $entityManager->getRepository('App\Entity\TaskState')->findOneBy(['state' => $state]);
         $task = $entityManager->getRepository('App\Entity\Task')->findOneBy(['task_state' => $taskState, 'client'=>$client]);
         if($task == NULL){
-            return new Response( 0);
-        }
-        else{
-            return new Response( $task->getId());
+            return $this->json([
+                'success' => false,
+                'message' => "No hay cambios de tarea",
+            ]); 
+        } else {
+            return $this->json([
+                'success' => true,
+                'message' => "Estado de tarea",
+                'taskId' => $task->getId(),
+                'taskName' => $task->getTaskName()
+            ]); 
         }
     }
 }
