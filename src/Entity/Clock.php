@@ -221,6 +221,11 @@ class Clock
         return ($this->secondsRemaining() <= 1);
     }
 
+    public function isPaused(): ?bool
+    {
+            return (is_null($this->pauseStamp));
+    }
+
     public function resume(): self
     {
     //Resume recalcula el deadline

@@ -23,6 +23,8 @@ require('../js/plugins/parsley.min.js');
 require('../js/plugins/parsley-es.js');
 require('../js/registration.js');
 
+
+
 // Images
 const imagesContext = require.context('../img', true, /\.(png|jpg|jpeg|gif|ico|svg|webp)$/);
 imagesContext.keys().forEach(imagesContext);
@@ -30,4 +32,10 @@ imagesContext.keys().forEach(imagesContext);
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
 var $ = require('jquery');
+
+
+
 require('bootstrap');
+
+require('../js/jquery.countdownTimer.js');
+require('../js/jquery.countdownTimer.min.js');
