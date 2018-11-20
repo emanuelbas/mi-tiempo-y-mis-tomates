@@ -10,33 +10,61 @@
         </div>
         <div class="d-flex justify-content-around align-items-center">
             <p> {{ app.user.clock.secondsRemaining()}}s left </p>
-            <span class="navigation-task-clock" title="Tiempo restante">21:22</span>
+            <span class="navigation-task-clock" title="Tiempo restante"></span>
+             <p id="demo"></p>  <p id="segundos">
             <div class="navigation-task-button-container d-flex justify-content-between">
             
-            
-            
-            <table>
-                                <tr>
-                                    <td >Minutos</td>
-                                    <td >Segundos</td>
-                                </tr>
-                                
-                               <tr>
-                                    <td><span id="ms_timer"></span></td>
-                                </tr>								
-                            </table>
-                            
+           
+         
+                       
                             
   {% block javascripts %}
- 
-<script>
- $(document).ready(function(){
-$("#ms_timer").countdowntimer({
-		   minutes : 20,
-                seconds : 10,
-                size : "lg"
-	});
-});
+    <script>
+// Set the date we're counting down to
+
+
+var inicio= new Date();
+
+minutos=inicio.getMinutes();
+tiempo= {{ app.user.pomodorosConfiguration.getWorkingTime()}}
+
+//tiempo d trabajo 
+inicio.setMinutes(minutos+ tiempo );
+
+
+
+
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+    // Get todays date and time
+   
+   var now = new Date().getTime();
+    
+    // Find the distance between now and the count down date
+    var distance = inicio - now;
+    
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    // Output the result in an element with id="demo"
+    document.getElementById("demo").innerHTML = 
+     minutes + "minutos  " ;
+     
+     document.getElementById("segundos").innerHTML = 
+       seconds + "segundos ";
+    
+    // If the count down is over, write some text 
+    if (minutes==0 && seconds ==0) {
+        clearInterval(x);
+        alert ("alarma")
+    }
+}, 1000);
+</script>
 
           
 </script>
