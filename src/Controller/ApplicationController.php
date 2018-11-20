@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,32 +14,39 @@ class ApplicationController extends AbstractController
 {
 
     /**
-     * @Route("/log-app-data", name="app_data")
+     * @Route("/log-app-data", name="log_app_data")
      */
-    public function appData(Request $request)
+    public function app_data(Request $request)
     {   
-        $dataJSON = $request->request->get('programs'); // Aca tenes que obtener los programas enviados por POST que se deberia llamar "programs" 
         //Obtengo la data del JSON
         $entityManager = $this->getDoctrine()->getManager();
-        $data = json_decode($dataJSON, true);
+        $clientId = $request->request->get("userId");
+        $client =$entityManager->getRepository('App\Entity\Client')->findOneBy(['id' => $clientId]);
+        $data = $request->request->get('programs');       
+
         foreach($data as $application){
             $clientUsesApplication = new ClientUsesApplication();
-            $app = $entityManager->getRepository("App\Entity\Application")->findOneBy(['app_name' => $application['app_name']]);
+            $app = $entityManager->getRepository('App\Entity\Application')->findOneBy(['app_name' => $application['name']]);
             //Si no encuentra una app con ese nombre se le pone una app predeterminada de la bd llamada OTHER
             if($app == NULL){
-                $app = $entityManager->getRepository('App\Entity\Application')->findOneBy(['app_name' => 'other']);
+                $app = $entityManager->getRepository('App\Entity\Application')->findOneBy(['name' => 'other']);
             }
             $clientUsesApplication->setApplication($app);
-            $clientUsesApplication->setTimeAmount($application['minutes']);
-            $client = $this->get('security.token_storage')->getToken()->getUser();
+            $clientUsesApplication->setTimeAmount($application['duration']);
             $clientUsesApplication->setClient($client);
             //$task = $entityManager->getRepository("App\Entity\task")->findOneBy(['id' => $taskId]);
             //$clientUsesApplication->setTask($task);
 
             $entityManager->persist($clientUsesApplication);
+            var_dump($clientUsesApplication);
             //No se si el flush iria fuera o dentro del foreach
             $entityManager->flush();
         }
+        return $this->json([
+            'success' => true,
+            'message' => 'Datos guardados',
+
+        ]);
     }
 
     /**
@@ -52,7 +58,11 @@ class ApplicationController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $task = $entityManager->getRepository('App\Entity\Task')->findOneBy(['id' => $taskId]);
         if($task == NULL){
-            return new Response( "No existe la tarea");
+            return $this->json([
+                'success' => false,
+                'message' => 'No existe la tarea',
+
+            ]);
         }
         $state = $task->getTaskState();
         $taskState = $entityManager->getRepository('App\Entity\TaskState')->findOneBy(['id' => $state->getId()]);
