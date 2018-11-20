@@ -12,6 +12,47 @@
             <p> {{ app.user.clock.secondsRemaining()}}s left </p>
             <span class="navigation-task-clock" title="Tiempo restante">21:22</span>
             <div class="navigation-task-button-container d-flex justify-content-between">
+            
+            
+            
+            <table>
+                                <tr>
+                                    <td >Minutos</td>
+                                    <td >Segundos</td>
+                                </tr>
+                                
+                               <tr>
+                                    <td><span id="ms_timer"></span></td>
+                                </tr>								
+                            </table>
+                            
+                            
+  {% block javascripts %}
+ 
+<script>
+ $(document).ready(function(){
+$("#ms_timer").countdowntimer({
+		   minutes : 20,
+                seconds : 10,
+                size : "lg"
+	});
+});
+
+          
+</script>
+  {% endblock %}
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
                 {% if app.user.clock.canBePaused() %}
                     <a href="{{ path('pause_task_route', {}) }}" title="Pausar/reanudar tarea">
                         <img src="/build/assets/img/buttons/pause.svg" class="navigation-task-button">
