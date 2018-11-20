@@ -39,7 +39,7 @@ class PomodoroConfigurationType extends AbstractType
                     'group' => 'block1'),
                 'help' => 'Ejemplo: 5'))
             ->add('long_break_time', IntegerType::class, array(
-                'label' => 'Tiempo de descanso largo (minutos)',
+                'label' => 'Tiempo de descanso largo (minutos) *',
                 'attr' => array(
                     'data-parsley-trigger' => "focusout",
                     'data-parsley-errors-container' => '#break_time-input-errors',
