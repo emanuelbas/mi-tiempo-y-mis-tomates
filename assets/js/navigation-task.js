@@ -12,6 +12,7 @@ $(document).ready(function(){
   });
 
   function timerFinish() {
+    $.playSound("http://localhost:8000/sound/clock/alarm.mp3");    
     alert ("Terminó el periodo de" + periodType);
     window.location.href = refreshRoute;
    }
