@@ -1,8 +1,4 @@
 $(document).ready(function(){
-   // Usar código de cuenta regresiva y refresco aca
-    if (inicio === undefined) {
-        return;
-    }
 
    $("#js-clock").countdowntimer({
     startDate: new Date().getTime(),
@@ -11,9 +7,24 @@ $(document).ready(function(){
     timeUp: timerFinish
   });
 
+  $('.popover-dismiss').popover({
+    trigger: 'focus'
+  })
+
+  if (window.localStorage.getItem('notifyNewPomodoro') === "true" ) {
+    notifyNewPomodoro();
+    window.localStorage.setItem("notifyNewPomodoro", false);
+  } 
+
   function timerFinish() {
-    $.playSound("http://localhost:8000/sound/clock/alarm.mp3");    
-    alert ("Terminó el periodo de" + periodType);
+    window.localStorage.setItem("notifyNewPomodoro", "true");
+    //alert ("Terminó el periodo de" + periodType);
     window.location.href = refreshRoute;
    }
+
+  function notifyNewPomodoro () {
+    console.log('notify');
+    $('#button-next-action').popover('show')
+    $.playSound("/sound/clock/alarm.mp3");   
+  }
 });

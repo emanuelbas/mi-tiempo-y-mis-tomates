@@ -63,7 +63,14 @@ var refreshRoute = "{{ path('store_route', {}) }}";
                 {% endif %}
 
                 {% if app.user.clock.canDoNext() %}
-                    <a href="{{ path('continue_task_route', {}) }}" title="Iniciar periodo de {{ app.user.clock.getPreviousPeriod()}}">
+                    <a href="{{ path('continue_task_route', {}) }}" 
+                        id="button-next-action"
+                        title="Iniciar periodo de {{ app.user.clock.getPreviousPeriod()}}"
+                        tabindex="0"
+                        data-placement="bottom"
+                        data-toggle="popover" 
+                        data-trigger="focus"
+                        data-content="¡Haz click aqui para continuar!">
                         <img src="/build/assets/img/buttons/skip.png" class="navigation-task-button">
                     </a>
                 {% endif %}
