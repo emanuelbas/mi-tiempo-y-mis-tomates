@@ -123,7 +123,7 @@ class AppFixtures extends Fixture
         $task1->setStimatedPomodoros(2);
         $task1->setActive(true);
         $task1->setClient($user);
-        $task1->setTaskState($active);
+        $task1->setTaskState($pending);
         $manager->persist($user);
         $manager->persist($task1);
 

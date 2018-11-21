@@ -23,16 +23,16 @@ class ApplicationController extends AbstractController
         $clientId = json_decode($request->request->get('userId'), true);
         $client =$entityManager->getRepository('App\Entity\Client')->findOneBy(['id' => $clientId]);
         $programs = json_decode($request->request->get('programs'), true);
-        foreach($programs as $application){
+        foreach($programs as $programName => $programDuration){
             $clientUsesApplication = new ClientUsesApplication();
-            $app = $entityManager->getRepository('App\Entity\Application')->findOneBy(['app_name' => $application['name']]);
+            $app = $entityManager->getRepository('App\Entity\Application')->findOneBy(['app_name' => $programName]);
             //Si no encuentra una app con ese nombre se le pone una app predeterminada de la bd llamada OTHER
             if($app == NULL){
                 $other='Other';
                 $app = $entityManager->getRepository('App\Entity\Application')->findOneBy(['app_name' => $other]);
             }
             $clientUsesApplication->setApplication($app);
-            $clientUsesApplication->setTimeAmmount($application['duration']);
+            $clientUsesApplication->setTimeAmmount($programDuration);
             $dateC = date_create();
             $clientUsesApplication->setStartDate(date_timestamp_set($dateC, time()));
             $clientUsesApplication->setClient($client);
@@ -46,7 +46,6 @@ class ApplicationController extends AbstractController
         return $this->json([
             'success' => true,
             'message' => 'Datos guardados',
-
         ]);
     }
 
@@ -55,7 +54,6 @@ class ApplicationController extends AbstractController
      */
     public function checkTaskState($taskId)
     {   
-
         $entityManager = $this->getDoctrine()->getManager();
         $task = $entityManager->getRepository('App\Entity\Task')->findOneBy(['id' => $taskId]);
         if($task == NULL){
