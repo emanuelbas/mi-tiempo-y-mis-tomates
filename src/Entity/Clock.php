@@ -71,7 +71,7 @@ class Clock
         $this->pauseStamp=NULL;
         $this->periodType='Trabajo';
         $this->previousPeriod='Descanso';
-        $this->ready=FALSE;
+        $this->ready=TRUE;
 
         date_default_timezone_set('America/Argentina/Buenos_Aires');
         $this->periodStartStamp= new \DateTime();
@@ -267,8 +267,7 @@ class Clock
     public function next(): self
     {
     //Setea las variables para el proximo periodo
-        
-        $this->ready = FALSE;
+
         date_default_timezone_set('America/Argentina/Buenos_Aires');
         $this->periodStartStamp=  new \DateTime();
 
