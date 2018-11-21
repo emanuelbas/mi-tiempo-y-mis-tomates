@@ -49,8 +49,13 @@
                                     <span class="my-tasks-task-state" title="Estado de la tarea"> Pendiente </span>
                                 {% endif %}
                                 {% if task.taskState.state == "ACTIVE" %}
-                                    <span class="my-tasks-task-state" title="Estado de la tarea"> Activo </span>
+                                    {% if app.user.clock.isPaused() %}
+                                        <span class="my-tasks-task-state" title="Estado de la tarea"> Pausado </span>
+                                    {% else %}
+                                        <span class="my-tasks-task-state" title="Estado de la tarea"> Activo </span>
+                                    {% endif %}
                                 {% endif %}
+
                                 {% if task.taskState.state == "FINISHED" %}
                                     <span class="my-tasks-task-state" title="Estado de la tarea"> Finalizado </span>
                                 {% endif %}
