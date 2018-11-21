@@ -9,9 +9,10 @@
             <span> {{ app.user.clock.task.getPomodorosAmmount() }}/{{ app.user.clock.task.getStimatedPomodoros() }} </span>
         </div>
         <div class="d-flex justify-content-around align-items-center">
-            <p> {{ app.user.clock.secondsRemaining()}}s left </p>
-            <span class="navigation-task-clock" title="Tiempo restante"></span>
-             <p id="demo"></p>  <p id="segundos">
+            <span class="navigation-task-clock" title="Tiempo restante">
+                <p id="js-clock"></p>
+            </span>
+             
             <div class="navigation-task-button-container d-flex justify-content-between">
             
            
@@ -25,11 +26,11 @@
 
 var inicio= new Date();
 
-minutos=inicio.getMinutes();
-tiempo= {{ app.user.pomodorosConfiguration.getWorkingTime()}}
+seconds=inicio.getSeconds();
+tiempo= {{ app.user.clock.secondsRemaining()}};
 
 //tiempo d trabajo 
-inicio.setMinutes(minutos+ tiempo );
+inicio.setSeconds(seconds+ tiempo );
 
 
 
@@ -52,16 +53,14 @@ var x = setInterval(function() {
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
     // Output the result in an element with id="demo"
-    document.getElementById("demo").innerHTML = 
-     minutes + "minutos  " ;
-     
-     document.getElementById("segundos").innerHTML = 
-       seconds + "segundos ";
+    document.getElementById("js-clock").innerHTML = 
+     minutes + ":" + seconds ;
     
     // If the count down is over, write some text 
     if (minutes==0 && seconds ==0) {
         clearInterval(x);
-        alert ("alarma")
+        alert ("alarma");
+        location.reload(); 
     }
 }, 1000);
 </script>
