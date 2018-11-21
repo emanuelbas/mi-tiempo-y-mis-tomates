@@ -59,14 +59,22 @@ var x = setInterval(function() {
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
     // Output the result in an element with id="demo"
+    if (minutes < 10){
+        minutes = "0"+minutes;
+    }
+    if (seconds < 10){
+        seconds = "0"+seconds;
+    }
     document.getElementById("js-clock").innerHTML = 
      minutes + ":" + seconds ;
     
     // If the count down is over, write some text 
     if (minutes==0 && seconds ==0) {
         clearInterval(x);
-        alert ("alarma");
-        location.reload(); 
+        var route = "{{ path('store_route', {}) }}";
+        alert ("Terminó el periodo de {{ app.user.clock.periodType()}}" );
+        window.location.href = route;
+
     }
 }, 1000);
 </script>
