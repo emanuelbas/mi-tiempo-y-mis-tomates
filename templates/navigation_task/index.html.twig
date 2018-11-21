@@ -25,49 +25,17 @@
     <script>
 // Set the date we're counting down to
 
+var inicio = new Date();
 
-var inicio= new Date();
-
-seconds=inicio.getSeconds();
-tiempo= {{ app.user.clock.secondsRemaining()}};
+seconds = inicio.getSeconds();
+tiempo = {{ app.user.clock.secondsRemaining()}};
+var periodType = "{{ app.user.clock.periodType()}}";
 
 //tiempo d trabajo 
-inicio.setSeconds(seconds+ tiempo );
+inicio.setSeconds(seconds + tiempo );
+var refreshRoute = "{{ path('store_route', {}) }}";
 
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-    // Get todays date and time
-   
-   var now = new Date().getTime();
-    
-    // Find the distance between now and the count down date
-    var distance = inicio - now;
-    
-    // Time calculations for days, hours, minutes and seconds
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-    // Output the result in an element with id="demo"
-    if (minutes < 10){
-        minutes = "0"+minutes;
-    }
-    if (seconds < 10){
-        seconds = "0"+seconds;
-    }
-    document.getElementById("js-clock").innerHTML = 
-     minutes + ":" + seconds ;
-    
-    // If the count down is over, write some text 
-    if (minutes==0 && seconds ==0) {
-        clearInterval(x);
-        var route = "{{ path('store_route', {}) }}";
-        alert ("Terminó el periodo de {{ app.user.clock.periodType()}}" );
-        window.location.href = route;
-    }
-}, 1000);
 </script>
-
           
 </script>
   {% endblock %}
