@@ -10,7 +10,11 @@
         </div>
         <div class="d-flex justify-content-around align-items-center">
             <span class="navigation-task-clock" title="Tiempo restante">
+            {% if app.user.clock.secondsRemaining() <= 0 %}
+                00:00
+            {% else %}
                 <p id="js-clock"></p>
+            {% endif %}
             </span>
              
             <div class="navigation-task-button-container d-flex justify-content-between">
