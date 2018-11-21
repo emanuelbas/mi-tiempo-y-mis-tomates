@@ -1,12 +1,12 @@
 
  {% if app.user.canShowClock() %}
     <div class="navigation-task-container text-black-50">
-        <div>
-            <span title="Nombre de la tarea"> {{ app.user.clock.getTaskName() }} </span>
-            <span> - </span>
-            <span title="Tipo de tiempo" > {{ app.user.clock.getPeriodType() }} </span>
-            <span> - </span>
-            <span title="Pomodoros utilizados/estimados"> {{ app.user.clock.task.getPomodorosAmmount() }}/{{ app.user.clock.task.getStimatedPomodoros() }} </span>
+        <div class="navigation-task-data-container">
+            <span class="navigation-task-name navigation-task-data-separator" title="{{ app.user.clock.getTaskName() }}"> {{ app.user.clock.getTaskName() }} </span>
+            <span class="navigation-task-data-separator"> - </span>
+            <span class="navigation-task-data-separator" title="Tipo de tiempo" > {{ app.user.clock.getPeriodType() }} </span>
+            <span class="navigation-task-data-separator"> - </span>
+            <span class="navigation-task-data-separator" title="Pomodoros utilizados/estimados"> {{ app.user.clock.task.getPomodorosAmmount() }}/{{ app.user.clock.task.getStimatedPomodoros() }} </span>
         </div>
         <div class="d-flex justify-content-around align-items-center">
             <span class="navigation-task-clock" title="Tiempo restante">
@@ -45,8 +45,6 @@ var x = setInterval(function() {
     var distance = inicio - now;
     
     // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
     
@@ -66,7 +64,6 @@ var x = setInterval(function() {
         var route = "{{ path('store_route', {}) }}";
         alert ("Terminó el periodo de {{ app.user.clock.periodType()}}" );
         window.location.href = route;
-
     }
 }, 1000);
 </script>
@@ -87,12 +84,12 @@ var x = setInterval(function() {
             
             
                 {% if app.user.clock.canBePaused() %}
-                    <a href="{{ path('pause_task_route', {}) }}" title="Pausar/reanudar tarea">
+                    <a href="{{ path('pause_task_route', {}) }}" title="Pausar tarea">
                         <img src="/build/assets/img/buttons/pause.svg" class="navigation-task-button">
                     </a>
                 {% endif %}
                 {% if app.user.clock.canBeResumed() %}
-                    <a href="{{ path('resume_task_route', {}) }}" title="Pausar/reanudar tarea">
+                    <a href="{{ path('resume_task_route', {}) }}" title="Iniciar/reanudar tarea">
                         <img src="/build/assets/img/buttons/play.svg" class="navigation-task-button">
                     </a>
                 {% endif %}
