@@ -12,6 +12,8 @@
             <span class="navigation-task-clock" title="Tiempo restante">
             {% if app.user.clock.secondsRemaining() <= 0 %}
                 00:00
+            {% elseif app.user.clock.isPaused() %}
+                En pausa
             {% else %}
                 <p id="js-clock"></p>
             {% endif %}

@@ -223,7 +223,7 @@ class Clock
 
     public function isPaused(): ?bool
     {
-            return (is_null($this->pauseStamp));
+            return !(is_null($this->pauseStamp));
     }
 
     public function resume(): self
