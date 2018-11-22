@@ -14,6 +14,10 @@
                     <a class="nav-link text-black-50" href="{{ path('home') }}"> Inicio <span
                                 class="sr-only">(current)</span></a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link text-black-50" href="{{ path('download') }}"> Descargas <span
+                                class="sr-only"></span></a>
+                </li>
             </ul>
 
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}

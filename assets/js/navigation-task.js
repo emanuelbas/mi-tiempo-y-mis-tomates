@@ -7,10 +7,14 @@ $(document).ready(function(){
 
   function notifyNewPomodoro () {
     $('#button-next-action').popover('show')
-    $.playSound("/sound/clock/alarm.mp3");   
+    if(periodType === "Trabajo" && endWorkAlarm === "1") {
+      $.playSound("/sound/clock/alarm.mp3");   
+    } else if(periodType === "Descanso" && endBreakAlarm === "1") {
+      $.playSound("/sound/clock/alarm.mp3");  
+    }
   }
 
-  if ( !$("#js-clock").length ) {
+  if (!$("#js-clock").length) {
      return;
   }
 
@@ -21,18 +25,13 @@ $(document).ready(function(){
     timeUp: timerFinish
   });
 
-   if (tickAlarm) {
+   if (tickAlarm === "1") {
     $.playLoopedSound("/sound/clock/tick_tock.mp3");   
    }
 
   $('.popover-dismiss').popover({
     trigger: 'focus'
   })
-
-  if (window.localStorage.getItem('notifyNewPomodoro') === "true" ) {
-    notifyNewPomodoro();
-    window.localStorage.setItem("notifyNewPomodoro", false);
-  } 
 
   function timerFinish() {
     window.localStorage.setItem("notifyNewPomodoro", "true");

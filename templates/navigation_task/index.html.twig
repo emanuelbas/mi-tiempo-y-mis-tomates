@@ -34,7 +34,7 @@
         var endWorkAlarm =  "{{ app.user.getPomodorosConfiguration().getEndWorkAlarm() }}";
         var endBreakAlarm = "{{ app.user.getPomodorosConfiguration().getEndBreakAlarm() }}";
         var tickAlarm =     "{{ app.user.getPomodorosConfiguration.getClockSound()}}";
-         
+        
     </script>
   {% endblock %}
             
@@ -55,7 +55,7 @@
                     <a href="{{ path('continue_task_route', {}) }}" 
                         id="button-next-action"
                         role="button"
-                        title="Iniciar período de {{ app.user.clock.getPreviousPeriod()}}"
+                        title="Iniciar el período de {{ app.user.clock.getPreviousPeriod()}}"
                         tabindex="0"
                         data-placement="bottom"
                         data-toggle="popover" 
