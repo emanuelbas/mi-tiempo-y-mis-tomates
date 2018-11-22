@@ -1,12 +1,13 @@
 @import './navigation.scss';
 
 .registration-form-container {
-  height: calc(100% - #{$navigation-height});
+  height: auto !important;
 }
 
 .registration-box {
   width: 620px;
   padding: 5px 15px 20px;
+  margin: 20px 0;
   border-radius: 10px;
 }
 
