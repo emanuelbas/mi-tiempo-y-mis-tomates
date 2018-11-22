@@ -23,12 +23,12 @@ class TimeRecordingController extends AbstractController
         if ($user === NULL) {
             return $this->json([
                 'success' => "false",
-                'message' => "Credenciales invalidas"
+                'message' => "Credenciales inválidas"
             ]);
         } else {
         return $this->json([
             'success' => true,
-            'message' => 'Credenciales validas',
+            'message' => 'Credenciales válidas',
             'email' => $user->getUsername(),
             'id' => $user->getId(),
             'first_name' => $user->getFirstName(),

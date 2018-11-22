@@ -18,7 +18,6 @@ $(document).ready(function(){
 
   function timerFinish() {
     window.localStorage.setItem("notifyNewPomodoro", "true");
-    //alert ("Terminó el periodo de" + periodType);
     window.location.href = refreshRoute;
    }
 

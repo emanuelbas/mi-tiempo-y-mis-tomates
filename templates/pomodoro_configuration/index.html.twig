@@ -4,7 +4,7 @@
     <div class="container pomodoro-configuration-form-container d-flex justify-content-center align-items-center">
         <div class="row">
             <div class="position-relative shadow bg-white border-top col-md-10 pt-3 pomodoro-configuration-box">
-                <h2 class="text-center text-primary font-weight-light"> Configurar pomodoros </h2>
+                <h2 class="text-center font-weight-light"> Configurar pomodoros </h2>
                 {% if not form.vars.valid %}
                     {% for error in form.vars.errors %}
                         <div class="text-danger position-absolute text-center pomodoro-configuration-error-message">{{ error.message }}</div>
