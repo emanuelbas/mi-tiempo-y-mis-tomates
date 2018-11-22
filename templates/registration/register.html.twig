@@ -4,7 +4,7 @@
     <div class="container registration-form-container d-flex justify-content-center align-items-center">
         <div class="row">
             <div class="position-relative shadow bg-white border-top col-md-12 registration-box">
-                <h2 class="text-center text-primary font-weight-light"> Crear cuenta </h2>
+                <h2 class="text-center font-weight-light"> Crear cuenta </h2>
                 {% if not form.vars.valid %}
                     {% for error in form.vars.errors %}
                         <div class="text-danger position-absolute text-center registration-error-message">{{ error.message }}</div>

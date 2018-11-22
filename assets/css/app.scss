@@ -4,3 +4,11 @@ body, html {
   font-family: 'Roboto', sans-serif;
   height: 100%;
 }
+
+.page-item.active .page-link {
+  color: unset;
+  background-color: unset;
+}
+.dropdown-item.active, .dropdown-item:active {
+  background-color: #dc3545;
+}

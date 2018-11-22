@@ -6,7 +6,7 @@
     <div class="container my-tasks-form-container d-flex justify-content-center align-items-center">
         <div class="row">
             <div class="position-relative shadow bg-white border-top col-md-12 my-tasks-box">
-                <h2 class="text-center text-primary font-weight-light"> Mis Tareas </h2>
+                <h2 class="text-center font-weight-light"> Mis Tareas </h2>
                 <div class="my-3 my-tasks-filter-bar">
                     {% set state = app.request.attributes.get('state') %}
                     {% set sort = app.request.attributes.get('sort') %}
@@ -31,7 +31,7 @@
                         </option>
                     </select>
                     <a href="{{ path('task_creation') }}">
-                        <button type="button" class="btn btn-primary my-tasks-create-task-button">Crear tarea</button>
+                        <button type="button" class="btn btn-danger my-tasks-create-task-button">Crear tarea</button>
                     </a>
 
                 </div>

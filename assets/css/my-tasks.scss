@@ -31,7 +31,8 @@
 
 .my-tasks-filter {
   &.active {
-    border-bottom: 3px solid var(--blue);
+    border-bottom: 3px solid #dc3545;
+    border-radius: 2px;
   }
   &:hover {
     text-decoration: none;
