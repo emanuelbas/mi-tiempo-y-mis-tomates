@@ -25,7 +25,7 @@ $(document).ready(function(){
     timeUp: timerFinish
   });
 
-   if (tickAlarm) {
+   if (tickAlarm === "1") {
     $.playLoopedSound("/sound/clock/tick_tock.mp3");   
    }
 
