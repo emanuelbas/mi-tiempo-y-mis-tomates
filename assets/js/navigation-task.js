@@ -6,7 +6,6 @@ $(document).ready(function(){
   } 
 
   function notifyNewPomodoro () {
-    debugger
     $('#button-next-action').popover('show')
     if(periodType === "Trabajo" && endWorkAlarm === "1") {
       $.playSound("/sound/clock/alarm.mp3");   
