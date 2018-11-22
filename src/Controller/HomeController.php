@@ -13,4 +13,12 @@ class HomeController extends Controller
     {
          return $this->render('home.html.twig');
     }
+
+    /**
+    * @Route("download", name="download")
+    */
+    public function download()
+    {
+         return $this->render('download/download.html.twig');
+    }
 }
