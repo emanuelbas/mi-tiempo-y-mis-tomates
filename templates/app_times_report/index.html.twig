@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Aplicación</th>
+                    <th scope="col">Tiempo de uso (segundos)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for app in appData %}
+                    <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <td> {{app.getApplication.getAppName}}</td>
+                    <td> {{app.getTimeAmmount}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+{% endblock %}
