@@ -246,6 +246,18 @@ class AppFixtures extends Fixture
             $application->setAppId($i);
             $manager->persist($application);
         }
+        $applicationS = new Application();
+        $applicationS->setAppName('Spotify');
+        $applicationS->setAppId(14);
+        $manager->persist($applicationS);
+        $applicationG = new Application();
+        $applicationG->setAppName('Google Chrome');
+        $applicationG->setAppId(13);
+        $manager->persist($applicationG);
+        $applicationVS = new Application();
+        $applicationVS->setAppName('Microsoft Visual Studio 2017');
+        $applicationVS->setAppId(12);
+        $manager->persist($applicationVS);
 
 
         $manager->flush();
