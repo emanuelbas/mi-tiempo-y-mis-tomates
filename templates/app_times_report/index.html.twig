@@ -1,15 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
 {% block body %}
-<div class="container">
+    <div class="container pomodoro-configuration-form-container d-flex justify-content-center align-items-center">
         <div class="row">
-            <div class="col-md-8">
+            <div class="position-relative shadow bg-white border-top col-md-10 pt-3 app-times-report-box">
+                <h2 class="text-center font-weight-light mb-3"> Mis Reportes </h2>
                 <table class="table table-hover">
                 <thead>
                     <tr>
                     <th scope="col">#</th>
                     <th scope="col">Aplicación</th>
-                    <th scope="col">Tiempo de uso (segundos)</th>
+                    <th scope="col">Tiempo de uso (segs)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,7 +23,9 @@
                     {% endfor %}
                 </tbody>
                 </table>
+
             </div>
+        </div>
     </div>
-</div>
+
 {% endblock %}
