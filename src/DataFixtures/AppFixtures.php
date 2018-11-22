@@ -238,14 +238,6 @@ class AppFixtures extends Fixture
         $manager->persist($pconfig);
         $manager->persist($user);
 
-
-        // Creando 10 aplicaciones
-        for ($i = 0; $i < 10; $i++) {
-            $application = new Application();
-            $application->setAppName('Aplicacion ' . $i);
-            $application->setAppId($i);
-            $manager->persist($application);
-        }
         $applicationS = new Application();
         $applicationS->setAppName('Spotify');
         $applicationS->setAppId(14);
@@ -258,6 +250,30 @@ class AppFixtures extends Fixture
         $applicationVS->setAppName('Microsoft Visual Studio 2017');
         $applicationVS->setAppId(12);
         $manager->persist($applicationVS);
+        $applicationFF = new Application();
+        $applicationFF->setAppName('Mozila Firefox');
+        $applicationFF->setAppId(20);
+        $manager->persist($applicationFF);
+        $applicationBDN = new Application();
+        $applicationBDN->setAppName('Bloc de notas');
+        $applicationBDN->setAppId(21);
+        $manager->persist($applicationBDN);
+        $applicationFF1 = new Application();
+        $applicationFF1->setAppName('Firefox');
+        $applicationFF1->setAppId(22);
+        $manager->persist($applicationFF1);
+        $applicationHB = new Application();
+        $applicationHB->setAppName('HandBrake');
+        $applicationHB->setAppId(23);
+        $manager->persist($applicationHB);
+        $applicationPST = new Application();
+        $applicationPST->setAppName('PhpStorm');
+        $applicationPST->setAppId(24);
+        $manager->persist($applicationPST);
+        $applicationVSC = new Application();
+        $applicationVSC->setAppName('Visual Studio Code');
+        $applicationVSC->setAppId(25);
+        $manager->persist($applicationVSC);
 
 
         $manager->flush();
