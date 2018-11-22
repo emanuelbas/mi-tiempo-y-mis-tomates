@@ -23,31 +23,20 @@
                             
   {% block javascripts %}
     <script>
-// Set the date we're counting down to
+        var inicio = new Date();
+        seconds = inicio.getSeconds();
+        tiempo = {{ app.user.clock.secondsRemaining()}};
 
-var inicio = new Date();
+        inicio.setSeconds(seconds + tiempo );
 
-seconds = inicio.getSeconds();
-tiempo = {{ app.user.clock.secondsRemaining()}};
-var periodType = "{{ app.user.clock.periodType()}}";
-
-//tiempo d trabajo 
-inicio.setSeconds(seconds + tiempo );
-var refreshRoute = "{{ path('store_route', {}) }}";
-
-</script>
-          
-</script>
+        var periodType =    "{{ app.user.clock.periodType()}}";
+        var refreshRoute =  "{{ path('store_route', {}) }}";
+        var endWorkAlarm =  "{{ app.user.getPomodorosConfiguration().getEndWorkAlarm() }}";
+        var endBreakAlarm = "{{ app.user.getPomodorosConfiguration().getEndBreakAlarm() }}";
+        var tickAlarm =     "{{ app.user.getPomodorosConfiguration.getClockSound()}}";
+         
+    </script>
   {% endblock %}
-            
-            
-            
-            
-            
-            
-            
-            
-            
             
             
             
