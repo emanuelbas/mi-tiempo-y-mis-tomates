@@ -1,11 +1,15 @@
 $(document).ready(function () {
+    if (!$('#container-categories').length || !$('#container-tasks').length) {
+        return
+    }
+
     var categoriesChart = null;
     categoriesChart = new Highcharts.chart('container-categories', {
         chart: {
             type: 'bar'
         },
         title: {
-            text: 'Estadísticas de uso basado en categorías'
+            text: 'Estadísticas de uso por categorías'
         },
         credits: {
             enabled: false
