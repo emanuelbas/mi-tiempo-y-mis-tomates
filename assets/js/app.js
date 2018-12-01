@@ -19,11 +19,11 @@ require('../css/navigation-task.scss');
 require('../css/plugins/parsley.css');
 require('../css/app-times-report.scss');
 
-
 // Javascript
 require('../js/plugins/parsley.min.js');
 require('../js/plugins/parsley-es.js');
 require('../js/navigation-task.js');
+require('../js/my-reports.js');
 require('../js/plugins/jquery.countdownTimer.min.js');
 require('../js/plugins/jquery.playSound.js');
 
@@ -35,4 +35,3 @@ imagesContext.keys().forEach(imagesContext);
 var $ = require('jquery');
 
 require('bootstrap');
-
