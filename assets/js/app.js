@@ -17,6 +17,8 @@ require('../css/account-configuration.scss');
 require('../css/pomodoro-configuration.scss');
 require('../css/navigation-task.scss');
 require('../css/plugins/parsley.css');
+require('../css/app-times-report.scss');
+
 
 // Javascript
 require('../js/plugins/parsley.min.js');
