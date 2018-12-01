@@ -97,10 +97,10 @@ class SendEmail extends Command
         $query = $this->entityManager->createQuery(
             'SELECT SUM(cua.time_ammount)
             FROM App\Entity\ClientUsesApplication cua
-            WHERE cua.client = :clientId AND cua.start_date BETWEEN :date AND :today')
-            ->setParameter('clientId', $clientId)
-            ->setParameter('today', date('Y-m-d H:i:s', time()))
-            ->setParameter('date', $date);
+            WHERE cua.client = :clientId')
+            ->setParameter('clientId', $clientId);
+//            ->setParameter('today', date('Y-m-d H:i:s', time()))
+//            ->setParameter('date', $date);
 
         $suma = $query->getSingleScalarResult();
 
@@ -120,10 +120,10 @@ class SendEmail extends Command
             $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
         }
 
-        $query = $this->entityManager->createQuery('SELECT t FROM App\Entity\Task t WHERE t.client = :clientId AND t.creation_date BETWEEN :periodOfTime AND :today')
+        $query = $this->entityManager->createQuery('SELECT t FROM App\Entity\Task t WHERE t.client = :clientId')
             ->setParameter('clientId', $clientId)
-            ->setParameter('today', date('Y-m-d H:i:s', time()))
-            ->setParameter('periodOfTime', $periodOfTime)
+//            ->setParameter('today', date('Y-m-d H:i:s', time()))
+//            ->setParameter('periodOfTime', $periodOfTime)
             ->setMaxResults(5);
 
         $tasks = $query->getResult();
@@ -161,11 +161,12 @@ class SendEmail extends Command
             FROM App\Entity\ClientUsesApplication cua
             INNER JOIN App\Entity\ClientApplicationsConfiguration cac WITH cua.application = cac.application
             INNER JOIN App\Entity\Category cat WITH cac.category = cat.id
-            WHERE cua.client = :clientId AND cua.start_date BETWEEN :periodOfTime AND :today 
-            GROUP BY cat.id, cat.category_name')
-            ->setParameter('clientId', $clientId)
-            ->setParameter('today', date('Y-m-d H:i:s', time()))
-            ->setParameter('periodOfTime', $periodOfTime);
+            WHERE cua.client = :clientId
+            GROUP BY cat.id, cat.category_name
+            ORDER BY cua.time_ammount DESC')
+            ->setParameter('clientId', $clientId);
+//            ->setParameter('today', date('Y-m-d H:i:s', time()))
+//            ->setParameter('periodOfTime', $periodOfTime);
 
         $categories = $query->getResult();
 
@@ -201,12 +202,12 @@ class SendEmail extends Command
             'SELECT a.app_name , SUM(c.time_ammount)
             FROM App\Entity\ClientUsesApplication c
             INNER JOIN App\Entity\Application a WITH a.id = c.application
-            WHERE c.client = :clientId AND c.start_date BETWEEN :periodOfTime AND :today 
+            WHERE c.client = :clientId
             GROUP BY a.id
             ORDER BY c.time_ammount DESC')
             ->setParameter('clientId', $clientId)
-            ->setParameter('today', date('Y-m-d H:i:s', time()))
-            ->setParameter('periodOfTime', $periodOfTime)
+//            ->setParameter('today', date('Y-m-d H:i:s', time()))
+//            ->setParameter('periodOfTime', $periodOfTime)
             ->setMaxResults(5);
 
         $applications = $query->getResult();
