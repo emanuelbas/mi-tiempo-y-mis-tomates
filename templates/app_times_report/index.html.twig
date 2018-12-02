@@ -2,16 +2,54 @@
 
 {% block body %}
     <div class="container pomodoro-configuration-form-container d-flex justify-content-center align-items-center">
-        <div class="position-relative shadow bg-white border-top col-md-10 pt-3 app-times-report-box">
+        <div class="position-relative shadow bg-white border-top pt-3 app-times-report-box">
             <h2 class="text-center font-weight-light mb-3"> Mis Reportes </h2>
-            <div class="d-flex justify-content-around w-50 mx-auto my-3">
-                <a href="{{ path('my_reports', {'period':"year"}) }}"> Último año</a>
-                <a href="{{ path('my_reports', {'period':"month"}) }}"> Último mes</a>
-                <a href="{{ path('my_reports', {'period':"week"}) }}"> Última semana</a>
+            <hr>
+            {% set reportPath = app.request.attributes.get('_route') %}
+            {% set period = app.request.attributes.get('period') %}
+
+            <div class="d-flex justify-content-around mx-auto my-3">
+                <a href="{{ path('my_reports_tasks') }}"
+                   class="app-times-report-type {% if reportPath == 'my_reports_tasks' %} active {% endif %}">
+                    Estadísticas de pomodoros/tareas</a>
+                <a href="{{ path('my_reports_categories') }}"
+                   class="app-times-report-type {% if reportPath == 'my_reports_categories' %} active {% endif %}">
+                    Estadísticas de categorías</a>
             </div>
-            <div class="d-flex align-content-center justify-content-around">
-                <div id="container-categories" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                <div id="container-tasks" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            <hr>
+            <div class="d-flex justify-content-around mx-auto my-3">
+                <a href="{{ path(reportPath, {'period':"week"}) }}"
+                   class="app-times-report-period {% if period == 'week' %} active {% endif %}"> Última semana</a>
+                <a href="{{ path(reportPath, {'period':"month"}) }}"
+                   class="app-times-report-period {% if period == 'month' %} active {% endif %}"> Último mes</a>
+                <a href="{{ path(reportPath, {'period':"year"}) }}"
+                   class="app-times-report-period {% if period == 'year' %} active {% endif %}"> Último año</a>
+            </div>
+            <hr>
+            <div class="d-flex align-content-center justify-content-around flex-column">
+                {% if chartType == 'categories' %}
+                    <div id="container-categories" style="min-width: 100%; height: 400px; margin: 0 auto"></div>
+                {% elseif chartType == 'tasks' %}
+                    <div id="container-tasks" style="min-width: 100%; height: 400px; margin: 0 auto"></div>
+                    {% if totalPages > 0 %}
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item {% if currentPage == 1 %} disabled {% endif %}">
+                                <a class="page-link"
+                                   href="{{ path('my_reports_tasks', {'period': period, 'page': currentPage - 1}) }}">Anterior</a>
+                            </li>
+                            {% for i in 1..totalPages %}
+                                <li class="page-item {% if currentPage == i %} active {% endif %}">
+                                    <a class="page-link"
+                                       href="{{ path('my_reports_tasks', {'period': period, 'page': i}) }}">{{ i }}</a>
+                                </li>
+                            {% endfor %}
+                            <li class="page-item  {% if currentPage == totalPages %} disabled {% endif %}">
+                                <a class="page-link"
+                                   href="{{ path('my_reports_tasks', {'period': period, 'page': currentPage + 1}) }}">Siguiente</a>
+                            </li>
+                        </ul>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>
