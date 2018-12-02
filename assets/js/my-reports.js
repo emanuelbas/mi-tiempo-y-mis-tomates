@@ -346,7 +346,7 @@ $(document).ready(function () {
                 }
             },
             legend: {
-                reversed: true
+                reversed: true,
             },
             series: [
                 {
@@ -368,13 +368,14 @@ $(document).ready(function () {
                     color: 'blue'
                 },
                 {
-                    name: 'Usados',
+                    name: 'Usados (ROJO y VERDE)',
                     data: tasks.map(task => {
                         return {
                             y: task.usedPomodoros,
                             color: task.usedPomodoros > task.estimatedPomodoros ? 'red' : 'green'
                         }
-                    })
+                    }),
+                    color: 'white'
                 }
             ]
         })
