@@ -299,12 +299,17 @@ $(document).ready(function () {
     }
 
     if ($('#container-tasks').length) {
+        console.log(tasks.map(task => {
+            return {
+                x: task.usedPomodoros,
+                color: task.usedPomodoros > task.estimatedPomodros ? 'red' : 'green'
+            }
+        }))
         var tasksChart = null;
         tasksChart = new Highcharts.chart('container-tasks', {
             chart: {
                 type: 'bar'
             },
-            colors: ['red', 'green'],
             title: {
                 text: 'Estadísticas de uso de pomodoros por tareas'
             },
@@ -313,6 +318,7 @@ $(document).ready(function () {
             },
             xAxis: {
                 categories: tasks.map(task => task.name),
+                min: 0
             },
             yAxis: {
                 stackLabels: {
@@ -323,7 +329,9 @@ $(document).ready(function () {
                 },
                 title: {
                     text: null
-                }
+                },
+                min: 0
+
             },
             plotOptions: {
                 series: {
@@ -337,17 +345,38 @@ $(document).ready(function () {
                     }
                 }
             },
-
             legend: {
                 reversed: true
             },
-            series: [{
-                name: 'Estimados',
-                data: tasks.map(task => task.estimatedPomodoros)
-            }, {
-                name: 'Usados',
-                data: tasks.map(task => task.usedPomodoros)
-            }]
+            series: [
+                {
+                    name: 'Excedidos',
+                    data: tasks.map(task => {
+                        var exceeded = task.usedPomodoros - task.estimatedPomodoros
+
+                        if (exceeded > 0) {
+                            return exceeded
+                        } else {
+                            return 0
+                        }
+                    }),
+                    color: 'orange'
+                },
+                {
+                    name: 'Estimados',
+                    data: tasks.map(task => task.estimatedPomodoros),
+                    color: 'blue'
+                },
+                {
+                    name: 'Usados',
+                    data: tasks.map(task => {
+                        return {
+                            y: task.usedPomodoros,
+                            color: task.usedPomodoros > task.estimatedPomodoros ? 'red' : 'green'
+                        }
+                    })
+                }
+            ]
         })
     }
 
