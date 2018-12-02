@@ -360,22 +360,12 @@ $(document).ready(function () {
                             return 0
                         }
                     }),
-                    color: 'orange'
+                    color: 'red'
                 },
                 {
-                    name: 'Estimados',
-                    data: tasks.map(task => task.estimatedPomodoros),
-                    color: 'blue'
-                },
-                {
-                    name: 'Usados (ROJO y VERDE)',
-                    data: tasks.map(task => {
-                        return {
-                            y: task.usedPomodoros,
-                            color: task.usedPomodoros > task.estimatedPomodoros ? 'red' : 'green'
-                        }
-                    }),
-                    color: 'white'
+                    name: 'Usados',
+                    data: tasks.map(task => task.usedPomodoros),
+                    color: 'green'
                 }
             ]
         })
