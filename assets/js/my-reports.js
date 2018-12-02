@@ -313,13 +313,10 @@ $(document).ready(function () {
             },
             xAxis: {
                 categories: tasks.map(task => task.name),
-                stackLabels: {
-                    enabled: true
-                }
             },
             yAxis: {
                 stackLabels: {
-                    enabled: true
+                    enabled: false
                 },
                 labels: {
                     enabled: false
