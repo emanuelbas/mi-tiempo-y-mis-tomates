@@ -1,5 +1,31 @@
+.app-times-report-container {
+    height: 100%;
+}
+
 .app-times-report-box {
     height: auto;
-    width: 490px;
+    width: 580px;
     border-radius: 10px;
+}
+
+.app-times-report-period {
+    font-size: 13px;
+
+    &.active {
+        border-bottom: 2px solid #dc3545;
+        border-radius: 2px;
+    }
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.app-times-report-type {
+    &.active {
+        border-bottom: 2px solid #dc3545;
+        border-radius: 2px;
+    }
+    &:hover {
+        text-decoration: none;
+    }
 }
