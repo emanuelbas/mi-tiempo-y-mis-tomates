@@ -8,6 +8,11 @@ body, html {
 .page-item.active .page-link {
   color: unset;
   background-color: unset;
+  border-color: #dc3545;
+}
+
+.page-link {
+  color: #dc3545;
 }
 
 .dropdown-item.active, .dropdown-item:active {
