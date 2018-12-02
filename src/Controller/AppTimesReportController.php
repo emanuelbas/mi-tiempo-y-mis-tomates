@@ -32,7 +32,7 @@ class AppTimesReportController extends AbstractController
                 break;
         }
 
-        $pageLimit = 2;
+        $pageLimit = 5;
         $queryTaskCount = $entityManager->createQuery('SELECT COUNT(t) FROM App\Entity\Task t WHERE t.client = :clientId AND t.creation_date BETWEEN :periodFilterDate AND :today')
             ->setParameter('clientId', $clientId)
             ->setParameter('today', date("Y-m-d H:i:s"))
@@ -63,7 +63,8 @@ class AppTimesReportController extends AbstractController
             'tasksData' => $tasksData,
             'chartType' => 'tasks',
             'totalPages' => $totalPages,
-            'currentPage' => $page
+            'currentPage' => $page,
+            'categoriesData' => []
         ]);
     }
 
@@ -101,8 +102,23 @@ class AppTimesReportController extends AbstractController
 
         $categories = $query->getResult();
 
+        $categoriesData = [];
+
+        $totalCategoriesTime = 0;
+
+        foreach ($categories as $category) {
+            $totalCategoriesTime += $category[1];
+        }
+
+        foreach ($categories as $category) {
+            array_push($categoriesData, [
+                "name" => $category['category_name'],
+                "usePercentage" => (int) round(($category[1] / $totalCategoriesTime) * 100,2)
+            ]);
+        }
+
         return $this->render('app_times_report/index.html.twig', [
-            'categoriesData' => $categories,
+            'categoriesData' => $categoriesData,
             'tasksData' => [],
             'chartType' => 'categories'
         ]);
