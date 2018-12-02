@@ -313,7 +313,7 @@ $(document).ready(function () {
             enabled: false
         },
         xAxis: {
-            categories: ['Hacer sushi', 'Realizar entrega de Sprint 3', 'Estudiar Sistemas', 'Comprar naranjas'],
+            categories: tasks.map(task => task.name),
             stackLabels: {
                 enabled: true
             }
@@ -347,10 +347,11 @@ $(document).ready(function () {
         },
         series: [{
             name: 'Estimados',
-            data: [5, 3, 4, 7]
+            data: tasks.map(task => task.estimatedPomodoros)
         }, {
             name: 'Usados',
-            data: [2, 2, 3, 2]
+            data: tasks.map(task => task.usedPomodoros)
         }]
     })
+
 });

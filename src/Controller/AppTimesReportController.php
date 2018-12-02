@@ -5,11 +5,12 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\ClientUsesApplication;
+use App\Entity\Task;
 
 class AppTimesReportController extends AbstractController
 {
     /**
-     * @Route("/app-times-report", name="app_times_report")
+     * @Route("/my-reports", name="my_reports")
      */
     public function index()
     {
@@ -17,10 +18,20 @@ class AppTimesReportController extends AbstractController
 
         $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
 
-        $appData = $entityManager->getRepository("App\Entity\ClientUsesApplication")->findBy(["client" => $clientId]);
+        $tasks = $entityManager->getRepository("App\Entity\Task")
+            ->findBy(["client" => $clientId]);
+
+        $tasksData = [];
+
+        foreach ($tasks as $task) {
+            array_push($tasksData, [
+                "name" => $task->getTaskName(),
+                "estimatedPomodoros" => $task->getStimatedPomodoros(),
+                "usedPomodoros" => count($task->getPomodoros())]);
+        }
 
         return $this->render('app_times_report/index.html.twig', [
-            'appData' => $appData,
+            'tasksData' => $tasksData,
         ]);
     }
 }
