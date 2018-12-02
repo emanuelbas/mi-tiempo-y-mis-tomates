@@ -307,7 +307,7 @@ $(document).ready(function () {
         },
         colors: ['red', 'green'],
         title: {
-            text: 'Estadísticas de uso de pomodoros por tarea'
+            text: 'Estadísticas de uso de pomodoros por tareas finalizadas'
         },
         credits: {
             enabled: false

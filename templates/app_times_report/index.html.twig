@@ -5,15 +5,14 @@
         <div class="position-relative shadow bg-white border-top col-md-10 pt-3 app-times-report-box">
             <h2 class="text-center font-weight-light mb-3"> Mis Reportes </h2>
             <div class="d-flex justify-content-around w-50 mx-auto my-3">
-                <a href=""> Último año</a>
-                <a href=""> Último mes</a>
-                <a href=""> Última semana</a>
+                <a href="{{ path('my_reports', {'period':"year"}) }}"> Último año</a>
+                <a href="{{ path('my_reports', {'period':"month"}) }}"> Último mes</a>
+                <a href="{{ path('my_reports', {'period':"week"}) }}"> Última semana</a>
             </div>
             <div class="d-flex align-content-center justify-content-around">
                 <div id="container-categories" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                 <div id="container-tasks" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
             </div>
-
             {#<div class="position-relative shadow bg-white border-top col-md-10 pt-3 app-times-report-box">#}
             {#<h2 class="text-center font-weight-light mb-3"> Mis Reportes </h2>#}
             {#<table class="table table-hover">#}
@@ -34,7 +33,6 @@
             {#{% endfor %}#}
             {#</tbody>#}
             {#</table>#}
-
         </div>
     </div>
 

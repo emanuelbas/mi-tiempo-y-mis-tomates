@@ -10,16 +10,19 @@ use App\Entity\Task;
 class AppTimesReportController extends AbstractController
 {
     /**
-     * @Route("/my-reports", name="my_reports")
+     * @Route("/my-reports/{period}", name="my_reports", defaults={"period"="week"})
+
      */
-    public function index()
+    public function index($period)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
         $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
+        $finishedStateId = $entityManager->getRepository("App\Entity\TaskState")
+            ->findBy(["state" => "FINISHED"]);
 
         $tasks = $entityManager->getRepository("App\Entity\Task")
-            ->findBy(["client" => $clientId]);
+            ->findBy(["client" => $clientId, "task_state" => $finishedStateId]);
 
         $tasksData = [];
 
