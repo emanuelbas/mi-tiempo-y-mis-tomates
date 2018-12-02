@@ -25,6 +25,45 @@ class AppFixtures extends Fixture
 
     {
 
+        // Aplicaciones
+        $applicationS = new Application();
+        $applicationS->setAppName('Spotify');
+        $applicationS->setAppId(14);
+        $manager->persist($applicationS);
+        $applicationG = new Application();
+        $applicationG->setAppName('Google Chrome');
+        $applicationG->setAppId(13);
+        $manager->persist($applicationG);
+        $applicationVS = new Application();
+        $applicationVS->setAppName('Microsoft Visual Studio 2017');
+        $applicationVS->setAppId(12);
+        $manager->persist($applicationVS);
+        $applicationFF = new Application();
+        $applicationFF->setAppName('Mozila Firefox');
+        $applicationFF->setAppId(20);
+        $manager->persist($applicationFF);
+        $applicationBDN = new Application();
+        $applicationBDN->setAppName('Bloc de notas');
+        $applicationBDN->setAppId(21);
+        $manager->persist($applicationBDN);
+        $applicationFF1 = new Application();
+        $applicationFF1->setAppName('Firefox');
+        $applicationFF1->setAppId(22);
+        $manager->persist($applicationFF1);
+        $applicationHB = new Application();
+        $applicationHB->setAppName('HandBrake');
+        $applicationHB->setAppId(23);
+        $manager->persist($applicationHB);
+        $applicationPST = new Application();
+        $applicationPST->setAppName('PhpStorm');
+        $applicationPST->setAppId(24);
+        $manager->persist($applicationPST);
+        $applicationVSC = new Application();
+        $applicationVSC->setAppName('Visual Studio Code');
+        $applicationVSC->setAppId(25);
+        $manager->persist($applicationVSC);
+        $manager->flush();
+        // FIN APLICACIONES //
 
         // Niveles de productividad
         $productividadAlta = new ProductivityLevel();
@@ -125,7 +164,7 @@ class AppFixtures extends Fixture
         $manager->persist($pconfig);
         $manager->persist($user);
 
-        // - Configuraciones de categorias del usuario
+        // - Configuraciones de categorias del usuario por defecto
         
         $category = $negocios;
         $productivityLevel = $productividadAlta;
@@ -151,6 +190,11 @@ class AppFixtures extends Fixture
         $manager->persist($cconfig);
         $manager->flush();
 
+        // Aplicaciones de diseño
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationHB, $category);
+        $manager->persist($aconfig);
+        $manager->flush();
+
         $category = $noticias;
         $productivityLevel = $productividadBaja;
         $cconfig = new ClientCategoryConfiguration($user, $category, $productivityLevel);
@@ -162,6 +206,14 @@ class AppFixtures extends Fixture
         $cconfig = new ClientCategoryConfiguration($user, $category, $productivityLevel);
         $manager->persist($cconfig);
         $manager->flush();
+
+        // Aplicaciones de desarrollo
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationPST, $category);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationVS, $category);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationVSC, $category);
+        $manager->persist($aconfig); $manager->flush();
 
         $category = $compras;
         $productivityLevel = $productividadBaja;
@@ -175,8 +227,15 @@ class AppFixtures extends Fixture
         $manager->persist($cconfig);
         $manager->flush();
 
-
-
+        // Aplicaciones de utilidad
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationG, $category);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationFF, $category);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationFF1, $category);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationBDN, $category);
+        $manager->persist($aconfig); $manager->flush();
 
 
 
@@ -329,15 +388,6 @@ class AppFixtures extends Fixture
         $manager->persist($user);
 
         $pconfig = new PomodorosConfiguration();
-        /*
-        $pconfig->setBreakTime(5);
-        $pconfig->setLongBreakTime(30);
-        $pconfig->setWorkingTime(25);
-        $pconfig->setEndWorkAlarm(true);
-        $pconfig->setEndBreakAlarm(true);
-        $pconfig->setClockSound(true);
-        */
-        //$pconfig->setClient($user);
         $user->setPomodorosConfiguration($pconfig);
         $manager->persist($pconfig);
         $manager->persist($user);
@@ -352,61 +402,11 @@ class AppFixtures extends Fixture
         $manager->persist($user);
 
         $pconfig = new PomodorosConfiguration();
-        /*
-        $pconfig->setBreakTime(5);
-        $pconfig->setWorkingTime(25);
-        $pconfig->setLongBreakTime(30);
-        $pconfig->setEndWorkAlarm(true);
-        $pconfig->setEndBreakAlarm(true);
-        $pconfig->setClockSound(true);
-        */
-        //$pconfig->setClient($user);
         $user->setPomodorosConfiguration($pconfig);
         $manager->persist($pconfig);
         $manager->persist($user);
 
-        $applicationS = new Application();
-        $applicationS->setAppName('Spotify');
-        $applicationS->setAppId(14);
-        $manager->persist($applicationS);
-        $applicationG = new Application();
-        $applicationG->setAppName('Google Chrome');
-        $applicationG->setAppId(13);
-        $manager->persist($applicationG);
-        $applicationVS = new Application();
-        $applicationVS->setAppName('Microsoft Visual Studio 2017');
-        $applicationVS->setAppId(12);
-        $manager->persist($applicationVS);
-        $applicationFF = new Application();
-        $applicationFF->setAppName('Mozila Firefox');
-        $applicationFF->setAppId(20);
-        $manager->persist($applicationFF);
-        $applicationBDN = new Application();
-        $applicationBDN->setAppName('Bloc de notas');
-        $applicationBDN->setAppId(21);
-        $manager->persist($applicationBDN);
-        $applicationFF1 = new Application();
-        $applicationFF1->setAppName('Firefox');
-        $applicationFF1->setAppId(22);
-        $manager->persist($applicationFF1);
-        $applicationHB = new Application();
-        $applicationHB->setAppName('HandBrake');
-        $applicationHB->setAppId(23);
-        $manager->persist($applicationHB);
-        $applicationPST = new Application();
-        $applicationPST->setAppName('PhpStorm');
-        $applicationPST->setAppId(24);
-        $manager->persist($applicationPST);
-        $applicationVSC = new Application();
-        $applicationVSC->setAppName('Visual Studio Code');
-        $applicationVSC->setAppId(25);
-        $manager->persist($applicationVSC);
-
-
         $manager->flush();
-
-        
-
 
     }
 }
