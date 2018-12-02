@@ -36,6 +36,11 @@ class ClientUsesApplication
      */
     private $client;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Task", inversedBy="clientUsesApplications")
+     */
+    private $task;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +90,18 @@ class ClientUsesApplication
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getTask(): ?Task
+    {
+        return $this->task;
+    }
+
+    public function setTask(?Task $task): self
+    {
+        $this->task = $task;
 
         return $this;
     }

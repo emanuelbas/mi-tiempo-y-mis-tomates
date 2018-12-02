@@ -58,9 +58,15 @@ class Task
      */
     private $clock;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClientUsesApplication", mappedBy="task")
+     */
+    private $clientUsesApplications;
+
     public function __construct()
     {
         $this->pomodoros = new ArrayCollection();
+        $this->clientUsesApplications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,6 +194,37 @@ class Task
         // set the owning side of the relation if necessary
         if ($this !== $clock->getTask()) {
             $clock->setTask($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ClientUsesApplication[]
+     */
+    public function getClientUsesApplications(): Collection
+    {
+        return $this->clientUsesApplications;
+    }
+
+    public function addClientUsesApplication(ClientUsesApplication $clientUsesApplication): self
+    {
+        if (!$this->clientUsesApplications->contains($clientUsesApplication)) {
+            $this->clientUsesApplications[] = $clientUsesApplication;
+            $clientUsesApplication->setTask($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClientUsesApplication(ClientUsesApplication $clientUsesApplication): self
+    {
+        if ($this->clientUsesApplications->contains($clientUsesApplication)) {
+            $this->clientUsesApplications->removeElement($clientUsesApplication);
+            // set the owning side to null (unless already changed)
+            if ($clientUsesApplication->getTask() === $this) {
+                $clientUsesApplication->setTask(null);
+            }
         }
 
         return $this;
