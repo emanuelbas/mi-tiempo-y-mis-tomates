@@ -29,18 +29,19 @@ class Application
     private $app_name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="applications")
-     */
-    private $category;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\ClientUsesApplication", mappedBy="application")
      */
     private $clientUsesApplications;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClientApplicationsConfiguration", mappedBy="application")
+     */
+    private $clientApplicationsConfigurations;
+
     public function __construct()
     {
         $this->clientUsesApplications = new ArrayCollection();
+        $this->clientApplicationsConfigurations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,18 +73,6 @@ class Application
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
     /**
      * @return Collection|ClientUsesApplication[]
      */
@@ -109,6 +98,37 @@ class Application
             // set the owning side to null (unless already changed)
             if ($clientUsesApplication->getApplication() === $this) {
                 $clientUsesApplication->setApplication(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ClientApplicationsConfiguration[]
+     */
+    public function getClientApplicationsConfigurations(): Collection
+    {
+        return $this->clientApplicationsConfigurations;
+    }
+
+    public function addClientApplicationsConfiguration(ClientApplicationsConfiguration $clientApplicationsConfiguration): self
+    {
+        if (!$this->clientApplicationsConfigurations->contains($clientApplicationsConfiguration)) {
+            $this->clientApplicationsConfigurations[] = $clientApplicationsConfiguration;
+            $clientApplicationsConfiguration->setApplication($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClientApplicationsConfiguration(ClientApplicationsConfiguration $clientApplicationsConfiguration): self
+    {
+        if ($this->clientApplicationsConfigurations->contains($clientApplicationsConfiguration)) {
+            $this->clientApplicationsConfigurations->removeElement($clientApplicationsConfiguration);
+            // set the owning side to null (unless already changed)
+            if ($clientApplicationsConfiguration->getApplication() === $this) {
+                $clientApplicationsConfiguration->setApplication(null);
             }
         }
 

@@ -10,6 +10,10 @@ use App\Entity\PomodorosConfiguration;
 use App\Entity\ReportFrequency;
 use App\Entity\Task;
 use App\Entity\TaskState;
+use App\Entity\Category;
+use App\Entity\ProductivityLevel;
+use App\Entity\ClientApplicationsConfiguration;
+use App\Entity\ClientCategoryConfiguration;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -20,6 +24,51 @@ class AppFixtures extends Fixture
 
 
     {
+
+
+        // Niveles de productividad
+        $productividadAlta = new ProductivityLevel();
+        $productividadAlta->setLevelName('Alta');
+        $manager->persist($productividadAlta);
+        $manager->flush();
+        $productividadBaja = new ProductivityLevel();
+        $productividadBaja->setLevelName('Baja');
+        $manager->persist($productividadBaja);
+        $manager->flush();
+        $productividadNeutral = new ProductivityLevel();
+        $productividadNeutral->setLevelName('Neutral');
+        $manager->persist($productividadNeutral);
+        $manager->flush();
+        // FIN NIVELES //
+
+
+        // Categorias
+        $negocios = new Category('Negocios');
+        $manager->persist($negocios);
+        $manager->flush();
+        $comunicacionYPlanificacion = new Category('Comunicación y planificación');
+        $manager->persist($comunicacionYPlanificacion);
+        $manager->flush();
+        $entretenimientoYRedesSociales = new Category('Entretenimientos y redes sociales');
+        $manager->persist($entretenimientoYRedesSociales);
+        $manager->flush();
+        $diseno = new Category('Diseño');
+        $manager->persist($diseno);
+        $manager->flush();
+        $noticias = new Category('Noticias');
+        $manager->persist($noticias);
+        $manager->flush();
+        $desarrolloDeSoftware = new Category('Desarrollo de software');
+        $manager->persist($desarrolloDeSoftware);
+        $manager->flush();
+        $compras = new Category('Compras');
+        $manager->persist($compras);
+        $manager->flush();
+        $utilidadReferencias = new Category('Utilidad, referencias');
+        $manager->persist($utilidadReferencias);
+        $manager->flush();
+        // FIN CATEGORIAS //
+
         // Preguntas secretas
 
         $secretQuestion1 = new SecretQuestion();
@@ -72,18 +121,96 @@ class AppFixtures extends Fixture
         // - Pomodoros configuration
 
         $pconfig = new PomodorosConfiguration();
-        /* Se paso la config por default al constructor de la clase
-        $pconfig->setBreakTime(5);
-        $pconfig->setLongBreakTime(30);
-        $pconfig->setWorkingTime(25);
-        $pconfig->setEndWorkAlarm(true);
-        $pconfig->setEndBreakAlarm(true);
-        $pconfig->setClockSound(true);
-        */
-        //$pconfig->setClient($user);
         $user->setPomodorosConfiguration($pconfig);
         $manager->persist($pconfig);
         $manager->persist($user);
+
+        // - Configuraciones de categorias del usuario
+        
+        $category = $negocios;
+        $productivityLevel = $productividadAlta;
+        $cconfig = new ClientCategoryConfiguration($user, $category, $productivityLevel);
+        $manager->persist($cconfig);
+        $manager->flush();
+
+        $category = $comunicacionYPlanificacion;
+        $productivityLevel = $productividadNeutral;
+        $cconfig = new ClientCategoryConfiguration($user, $category, $productivityLevel);
+        $manager->persist($cconfig);
+        $manager->flush();
+
+        $category = $entretenimientoYRedesSociales;
+        $productivityLevel = $productividadBaja;
+        $cconfig = new ClientCategoryConfiguration($user, $category, $productivityLevel);
+        $manager->persist($cconfig);
+        $manager->flush();
+
+        $category = $diseno;
+        $productivityLevel = $productividadAlta;
+        $cconfig = new ClientCategoryConfiguration($user, $category, $productivityLevel);
+        $manager->persist($cconfig);
+        $manager->flush();
+
+        $category = $noticias;
+        $productivityLevel = $productividadBaja;
+        $cconfig = new ClientCategoryConfiguration($user, $category, $productivityLevel);
+        $manager->persist($cconfig);
+        $manager->flush();
+
+        $category = $desarrolloDeSoftware;
+        $productivityLevel = $productividadAlta;
+        $cconfig = new ClientCategoryConfiguration($user, $category, $productivityLevel);
+        $manager->persist($cconfig);
+        $manager->flush();
+
+        $category = $compras;
+        $productivityLevel = $productividadBaja;
+        $cconfig = new ClientCategoryConfiguration($user, $category, $productivityLevel);
+        $manager->persist($cconfig);
+        $manager->flush();
+
+        $category = $utilidadReferencias;
+        $productivityLevel = $productividadNeutral;
+        $cconfig = new ClientCategoryConfiguration($user, $category, $productivityLevel);
+        $manager->persist($cconfig);
+        $manager->flush();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // - Tareas del usuario
 
@@ -277,6 +404,10 @@ class AppFixtures extends Fixture
 
 
         $manager->flush();
+
+        
+
+
     }
 }
 

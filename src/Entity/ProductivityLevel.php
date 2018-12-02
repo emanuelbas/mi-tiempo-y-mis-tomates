@@ -28,9 +28,15 @@ class ProductivityLevel
      */
     private $categories;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClientCategoryConfiguration", mappedBy="productivityLevel", orphanRemoval=true)
+     */
+    private $clientCategoryConfigurations;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->clientCategoryConfigurations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +81,37 @@ class ProductivityLevel
             // set the owning side to null (unless already changed)
             if ($category->getProductivityLevel() === $this) {
                 $category->setProductivityLevel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ClientCategoryConfiguration[]
+     */
+    public function getClientCategoryConfigurations(): Collection
+    {
+        return $this->clientCategoryConfigurations;
+    }
+
+    public function addClientCategoryConfiguration(ClientCategoryConfiguration $clientCategoryConfiguration): self
+    {
+        if (!$this->clientCategoryConfigurations->contains($clientCategoryConfiguration)) {
+            $this->clientCategoryConfigurations[] = $clientCategoryConfiguration;
+            $clientCategoryConfiguration->setProductivityLevel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClientCategoryConfiguration(ClientCategoryConfiguration $clientCategoryConfiguration): self
+    {
+        if ($this->clientCategoryConfigurations->contains($clientCategoryConfiguration)) {
+            $this->clientCategoryConfigurations->removeElement($clientCategoryConfiguration);
+            // set the owning side to null (unless already changed)
+            if ($clientCategoryConfiguration->getProductivityLevel() === $this) {
+                $clientCategoryConfiguration->setProductivityLevel(null);
             }
         }
 

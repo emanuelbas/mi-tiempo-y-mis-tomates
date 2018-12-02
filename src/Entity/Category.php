@@ -24,18 +24,20 @@ class Category
     private $category_name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Application", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\ClientApplicationsConfiguration", mappedBy="category")
      */
-    private $applications;
+    private $clientApplicationsConfigurations;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ProductivityLevel", inversedBy="categories")
+     * @ORM\OneToMany(targetEntity="App\Entity\ClientCategoryConfiguration", mappedBy="category", orphanRemoval=true)
      */
-    private $productivity_level;
+    private $clientCategoryConfigurations;
 
-    public function __construct()
+    public function __construct(string $name)
     {
-        $this->applications = new ArrayCollection();
+        $this->clientApplicationsConfigurations = new ArrayCollection();
+        $this->clientCategoryConfigurations = new ArrayCollection();
+        $this->category_name = $name;
     }
 
     public function getId(): ?int
@@ -56,45 +58,65 @@ class Category
     }
 
     /**
-     * @return Collection|Application[]
+     * @return Collection|ClientApplicationsConfiguration[]
      */
-    public function getApplications(): Collection
+    public function getClientApplicationsConfigurations(): Collection
     {
-        return $this->applications;
+        return $this->clientApplicationsConfigurations;
     }
 
-    public function addApplication(Application $application): self
+    public function addClientApplicationsConfiguration(ClientApplicationsConfiguration $clientApplicationsConfiguration): self
     {
-        if (!$this->applications->contains($application)) {
-            $this->applications[] = $application;
-            $application->setCategory($this);
+        if (!$this->clientApplicationsConfigurations->contains($clientApplicationsConfiguration)) {
+            $this->clientApplicationsConfigurations[] = $clientApplicationsConfiguration;
+            $clientApplicationsConfiguration->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeApplication(Application $application): self
+    public function removeClientApplicationsConfiguration(ClientApplicationsConfiguration $clientApplicationsConfiguration): self
     {
-        if ($this->applications->contains($application)) {
-            $this->applications->removeElement($application);
+        if ($this->clientApplicationsConfigurations->contains($clientApplicationsConfiguration)) {
+            $this->clientApplicationsConfigurations->removeElement($clientApplicationsConfiguration);
             // set the owning side to null (unless already changed)
-            if ($application->getCategory() === $this) {
-                $application->setCategory(null);
+            if ($clientApplicationsConfiguration->getCategory() === $this) {
+                $clientApplicationsConfiguration->setCategory(null);
             }
         }
 
         return $this;
     }
 
-    public function getProductivityLevel(): ?ProductivityLevel
+    /**
+     * @return Collection|ClientCategoryConfiguration[]
+     */
+    public function getClientCategoryConfigurations(): Collection
     {
-        return $this->productivity_level;
+        return $this->clientCategoryConfigurations;
     }
 
-    public function setProductivityLevel(?ProductivityLevel $productivity_level): self
+    public function addClientCategoryConfiguration(ClientCategoryConfiguration $clientCategoryConfiguration): self
     {
-        $this->productivity_level = $productivity_level;
+        if (!$this->clientCategoryConfigurations->contains($clientCategoryConfiguration)) {
+            $this->clientCategoryConfigurations[] = $clientCategoryConfiguration;
+            $clientCategoryConfiguration->setCategory($this);
+        }
 
         return $this;
     }
+
+    public function removeClientCategoryConfiguration(ClientCategoryConfiguration $clientCategoryConfiguration): self
+    {
+        if ($this->clientCategoryConfigurations->contains($clientCategoryConfiguration)) {
+            $this->clientCategoryConfigurations->removeElement($clientCategoryConfiguration);
+            // set the owning side to null (unless already changed)
+            if ($clientCategoryConfiguration->getCategory() === $this) {
+                $clientCategoryConfiguration->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

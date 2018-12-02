@@ -86,10 +86,22 @@ class Client implements UserInterface, \Serializable
      */
     private $clock;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClientApplicationsConfiguration", mappedBy="client")
+     */
+    private $clientApplicationsConfigurations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClientCategoryConfiguration", mappedBy="client", orphanRemoval=true)
+     */
+    private $clientCategoryConfigurations;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
         $this->clientUsesApplications = new ArrayCollection();
+        $this->clientApplicationsConfigurations = new ArrayCollection();
+        $this->clientCategoryConfigurations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -362,6 +374,68 @@ class Client implements UserInterface, \Serializable
         
         $this->setClock(new Clock($this, $task));
       
+        return $this;
+    }
+
+    /**
+     * @return Collection|ClientApplicationsConfiguration[]
+     */
+    public function getClientApplicationsConfigurations(): Collection
+    {
+        return $this->clientApplicationsConfigurations;
+    }
+
+    public function addClientApplicationsConfiguration(ClientApplicationsConfiguration $clientApplicationsConfiguration): self
+    {
+        if (!$this->clientApplicationsConfigurations->contains($clientApplicationsConfiguration)) {
+            $this->clientApplicationsConfigurations[] = $clientApplicationsConfiguration;
+            $clientApplicationsConfiguration->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClientApplicationsConfiguration(ClientApplicationsConfiguration $clientApplicationsConfiguration): self
+    {
+        if ($this->clientApplicationsConfigurations->contains($clientApplicationsConfiguration)) {
+            $this->clientApplicationsConfigurations->removeElement($clientApplicationsConfiguration);
+            // set the owning side to null (unless already changed)
+            if ($clientApplicationsConfiguration->getClient() === $this) {
+                $clientApplicationsConfiguration->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ClientCategoryConfiguration[]
+     */
+    public function getClientCategoryConfigurations(): Collection
+    {
+        return $this->clientCategoryConfigurations;
+    }
+
+    public function addClientCategoryConfiguration(ClientCategoryConfiguration $clientCategoryConfiguration): self
+    {
+        if (!$this->clientCategoryConfigurations->contains($clientCategoryConfiguration)) {
+            $this->clientCategoryConfigurations[] = $clientCategoryConfiguration;
+            $clientCategoryConfiguration->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClientCategoryConfiguration(ClientCategoryConfiguration $clientCategoryConfiguration): self
+    {
+        if ($this->clientCategoryConfigurations->contains($clientCategoryConfiguration)) {
+            $this->clientCategoryConfigurations->removeElement($clientCategoryConfiguration);
+            // set the owning side to null (unless already changed)
+            if ($clientCategoryConfiguration->getClient() === $this) {
+                $clientCategoryConfiguration->setClient(null);
+            }
+        }
+
         return $this;
     }
 
