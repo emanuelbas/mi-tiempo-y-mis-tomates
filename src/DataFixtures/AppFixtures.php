@@ -125,7 +125,7 @@ class AppFixtures extends Fixture
 
         // Frecuencias de reporte disponibles
         $frecuencia1 = new ReportFrequency();
-        $frecuencia1->setFrequencyName('Diaria');
+        $frecuencia1->setFrequencyName('Semanal');
         $manager->persist($frecuencia1);
         $frecuencia2 = new ReportFrequency();
         $frecuencia2->setFrequencyName('Mensual');
