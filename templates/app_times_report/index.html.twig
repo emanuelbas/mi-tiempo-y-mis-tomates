@@ -9,10 +9,10 @@
             {% set period = app.request.attributes.get('period') %}
 
             <div class="d-flex justify-content-around mx-auto my-3">
-                <a href="{{ path('my_reports_tasks') }}"
+                <a href="{{ path('my_reports_tasks', {'period': period}) }}"
                    class="app-times-report-type {% if reportPath == 'my_reports_tasks' %} active {% endif %}">
                     Estadísticas de pomodoros/tareas</a>
-                <a href="{{ path('my_reports_categories') }}"
+                <a href="{{ path('my_reports_categories', {'period': period}) }}"
                    class="app-times-report-type {% if reportPath == 'my_reports_categories' %} active {% endif %}">
                     Estadísticas de categorías</a>
             </div>
@@ -58,6 +58,7 @@
 {% block javascripts %}
     <script>
         var tasks = {{ tasksData | json_encode| raw }};
+        var categories = {{ categoriesData | json_encode| raw }};
     </script>
 {% endblock %}
 
