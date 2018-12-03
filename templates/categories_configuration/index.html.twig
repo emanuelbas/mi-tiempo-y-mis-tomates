@@ -4,6 +4,24 @@
 
 {% block body %}
 
-	<img src="https://trello-attachments.s3.amazonaws.com/5b92d92e33649576719dfc8c/5bff52889b40503ccd29fadd/0bd364d01bca7ea85f8cb6cc106d26d4/Sprint_3_-_B_-_Configurar_Categor%C3%ADas.png">
+	<div>
+		<div>
+			<div>
+				<h2>Configuraciones de categorias y aplicaciones</h2>
+
+				{% if applications is defined %}
+                    <div>
+                        {% for application in applications %}
+                        	
+
+                            <div>
+                                <span title="{{ application.appName }}">{{ application.appName }}</span>
+                            </div>                               
+                        {% endfor %}
+                    </div>
+                {% endif %}
+			</div>
+		</div>
+	</div>
 
 {% endblock %}
