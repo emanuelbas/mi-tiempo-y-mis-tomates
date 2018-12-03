@@ -9,14 +9,37 @@
 			<div>
 				<h2>Configuraciones de categorias y aplicaciones</h2>
 
-				{% if applications is defined %}
+				{% if appConfigurations is defined %}
                     <div>
-                        {% for application in applications %}
+                        {% for appConfiguration in appConfigurations %}
                         	
 
                             <div>
-                                <span title="{{ application.appName }}">{{ application.appName }}</span>
-                            </div>                               
+                            <span title="{{ appConfiguration.application.appName }}">{{ appConfiguration.application.appName }}</span>
+                             
+                            <select id="select-category">
+
+	                          	<option selected disabled hidden >
+	                            	{{ appConfiguration.category.categoryName }}
+	                        	</option>
+	                        	{% for category in categories %}
+		                        	<option >
+		                            	{{ category.categoryName }}
+		                        	</option>
+	                        	{% endfor %}
+                    		</select>
+                    		<select id="select-category">
+	                          	<option selected disabled hidden >
+	                            	{{ app.user.productivityLevelFor(appConfiguration.category) }}
+	                        	</option>
+	                        	{% for level in levels %}
+		                        	<option >
+		                            	{{ level.levelName }}
+		                        	</option>
+	                        	{% endfor %}
+	                        	
+                    		</select>
+                    		</div>                              
                         {% endfor %}
                     </div>
                 {% endif %}

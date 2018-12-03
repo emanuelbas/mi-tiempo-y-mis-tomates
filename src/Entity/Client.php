@@ -439,4 +439,17 @@ class Client implements UserInterface, \Serializable
         return $this;
     }
 
-}
+    public function productivityLevelFor(Category $unaCategoria): String
+    {
+        
+        $configuracion=$this->getClientCategoryConfigurations()->filter(function ($categoryConfig) use($unaCategoria) {
+        return $categoryConfig->getCategory() == $unaCategoria;
+    })->first();
+
+        $productividad=$configuracion->getProductivityLevel()->getLevelName();
+        return $productividad;
+        
+    }
+
+    
+ }

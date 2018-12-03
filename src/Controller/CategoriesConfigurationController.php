@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Application;
 use App\Entity\ClientCategoryConfiguration;
 use App\Entity\ClientApplicationsConfiguration;
+use App\Entity\ProductivityLevel;
+use App\Entity\Category;
 
 class CategoriesConfigurationController extends AbstractController
 {
@@ -26,16 +28,21 @@ class CategoriesConfigurationController extends AbstractController
 
         //$countFilters = array('client' => $clientId);
         $countFilters = array();
-        $applications = $this->getDoctrine()->getRepository(Application::class)->findAll();
-        
-        $applicationsCount = sizeof($applications);
+        $appConfigurations = $this->getDoctrine()->getRepository(ClientApplicationsConfiguration::class)->findBy(array('client' => $clientId));
+
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        $levels = $this->getDoctrine()->getRepository(ProductivityLevel::class)->findAll();
+
+        $applicationsCount = sizeof($appConfigurations);
         $totalPages = ceil($applicationsCount / $pageLimit);
 
         return $this->render('categories_configuration/index.html.twig', [
             'controller_name' => 'CategoriesConfigurationController', 
-            	'applications' => $applications , 
+            	'appConfigurations' => $appConfigurations , 
             	'totalPages' => $totalPages , 
-            	'currentPage' => $page
+            	'currentPage' => $page ,
+                'categories' => $categories ,
+                'levels' => $levels
         ]);
     }
 }
