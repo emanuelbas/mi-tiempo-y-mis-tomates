@@ -49,7 +49,7 @@ class CategoriesConfigurationController extends AbstractController
 
     /**
      * 
-     * @Route("/{app}/{category}/change-category", name="change_category_level_route")
+     * @Route("/{app}/{category}/change-category", name="change_category_route")
      * @return RedirectResponse
      *
      */
@@ -73,6 +73,52 @@ class CategoriesConfigurationController extends AbstractController
 
         /* Persistir */
         $entityManager->persist($appConfiguration);
+        $entityManager->flush();
+
+
+
+
+
+
+        return $this->redirectToRoute('categories_configuration');
+    }
+
+
+
+    /**
+     * 
+     * @Route("/{appName}/{level}/change-level", name="change_category_level_route")
+     * @return RedirectResponse
+     *
+     */
+    public function changeCategoryLevel(String $appName, String $level){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        /* Recuperar la configuracion de categorias del cliente */
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clientId = $client->getId();
+        
+        /* Tengo el appName, necesito recuperar su categoria */
+        $application = $this->getDoctrine()->getRepository(Application::class)->findOneBy(array('app_name' => $appName));
+        $appId = $application->getId();
+        $appConfiguration = $this->getDoctrine()->getRepository(ClientApplicationsConfiguration::class)->findOneBy(array('client' => $clientId,'application' => $appId));
+        $category= $appConfiguration->getCategory();
+        $categoryId = $category->getId();
+        /* FIN RECUPERANDO CATEGORIA */
+     
+
+        $level = $this->getDoctrine()->getRepository(ProductivityLevel::class)->findOneBy(array('level_name' => $level));
+
+        $categoryConfiguration = $this->getDoctrine()->getRepository(ClientCategoryConfiguration::class)->findOneBy(array('client' => $clientId,'category' => $categoryId));
+
+        /* Cambiar la configuracion para que tenga el nivel recibido */
+        
+        $categoryConfiguration->setProductivityLevel($level);
+
+
+        /* Persistir */
+        $entityManager->persist($categoryConfiguration);
         $entityManager->flush();
 
 
