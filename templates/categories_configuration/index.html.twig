@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Configuración de aplicaciones y categorías {{ controller_name }}{% endblock %}
+
+{% block body %}
+
+	<div>
+		<div>
+			<div>
+				<h2>Configuraciones de categorias y aplicaciones</h2>
+
+				{% if appConfigurations is defined %}
+                    <div>
+                        {% for appConfiguration in appConfigurations %}
+                        	
+
+                            <div>
+                            <span title="{{ appConfiguration.application.appName }}">{{ appConfiguration.application.appName }}</span>
+                             
+                            <select onchange="javascript:seleccionarCategoria('{{appConfiguration.application.appName}}', this)" id="select-category">
+
+	                          	<option selected disabled hidden >
+	                            	{{ appConfiguration.category.categoryName }}
+	                        	</option>
+	                        	{% for category in categories %}
+		                        	<option >
+		                            	{{ category.categoryName }}
+		                        	</option>
+	                        	{% endfor %}
+                    		</select>
+                    		<select onchange="javascript:seleccionarNivel('{{appConfiguration.application.appName}}', this)" id="select-category">
+	                          	<option selected disabled hidden >
+	                            	{{ app.user.productivityLevelFor(appConfiguration.category) }}
+	                        	</option>
+	                        	{% for level in levels %}
+		                        	<option >
+		                            	{{ level.levelName }}
+		                        	</option>
+	                        	{% endfor %}
+	                        	
+                    		</select>
+
+
+                    		<script type="text/javascript">
+							function seleccionarCategoria(appName,categoria)
+								{
+									window.location = '/'+appName+'/'+categoria.value+'/change-category';
+								}
+
+							function seleccionarNivel(appName,nivel)
+								{																
+									window.location = '/'+appName+'/'+nivel.value+'/change-level';
+								}
+							</script>
+
+
+
+
+
+                    		</div>                              
+                        {% endfor %}
+                    </div>
+                {% endif %}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
