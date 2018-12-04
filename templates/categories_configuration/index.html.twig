@@ -4,58 +4,56 @@
 
 {% block body %}
 
-	<div>
-		<div>
-			<div>
-				<h2>Configuraciones de categorias y aplicaciones</h2>
-
+	<div class="container my-tasks-form-container d-flex justify-content-center align-items-center">
+		<div class="row">
+			<div class="position-relative shadow bg-white border-top col-md-12 my-tasks-box">
+				<h2 class="text-center font-weight-light">Configuraciones de categorías y aplicaciones</h2>
+				<br>
 				{% if appConfigurations is defined %}
-                    <div>
+                    <div  class="my-tasks-task-section">
                         {% for appConfiguration in appConfigurations %}
                         	
+                            <div class="my-tasks-task-container my-3">
+	                            <span class="my-tasks-task-name" title="{{ appConfiguration.application.appName }}">
+	                            	{{ appConfiguration.application.appName }}
+	                            </span>
 
-                            <div>
-                            <span title="{{ appConfiguration.application.appName }}">{{ appConfiguration.application.appName }}</span>
-                             
-                            <select onchange="javascript:seleccionarCategoria('{{appConfiguration.application.appName}}', this)" id="select-category">
+	                            <select title="Cambiar la categoria de {{appConfiguration.application.appName}}" class="custom-select my-tasks-select-sort" onchange="javascript:seleccionarCategoria('{{appConfiguration.application.appName}}', this)" id="select-category">
 
-	                          	<option selected disabled hidden >
-	                            	{{ appConfiguration.category.categoryName }}
-	                        	</option>
-	                        	{% for category in categories %}
-		                        	<option >
-		                            	{{ category.categoryName }}
+		                          	<option selected disabled hidden >
+		                            	{{ appConfiguration.category.categoryName }}
 		                        	</option>
-	                        	{% endfor %}
-                    		</select>
-                    		<select onchange="javascript:seleccionarNivel('{{appConfiguration.application.appName}}', this)" id="select-category">
-	                          	<option selected disabled hidden >
-	                            	{{ app.user.productivityLevelFor(appConfiguration.category) }}
-	                        	</option>
-	                        	{% for level in levels %}
-		                        	<option >
-		                            	{{ level.levelName }}
+		                        	{% for category in categories %}
+			                        	<option >
+			                            	{{ category.categoryName }}
+			                        	</option>
+		                        	{% endfor %}
+	                    		</select>
+
+	                    		<select title="Cambiar el nivel de productividad de {{ appConfiguration.category.getCategoryName() }}" class="custom-select my-tasks-select-sort" onchange="javascript:seleccionarNivel('{{appConfiguration.application.appName}}', this)" id="select-category">
+		                          	<option selected disabled hidden >
+		                            	{{ app.user.productivityLevelFor(appConfiguration.category) }}
 		                        	</option>
-	                        	{% endfor %}
-	                        	
-                    		</select>
+		                        	{% for level in levels %}
+			                        	<option >
+			                            	{{ level.levelName }}
+			                        	</option>
+		                        	{% endfor %}
+		                        	
+	                    		</select>
 
 
-                    		<script type="text/javascript">
-							function seleccionarCategoria(appName,categoria)
-								{
-									window.location = '/'+appName+'/'+categoria.value+'/change-category';
-								}
+	                    		<script type="text/javascript">
+								function seleccionarCategoria(appName,categoria)
+									{
+										window.location = '/'+appName+'/'+categoria.value+'/change-category';
+									}
 
-							function seleccionarNivel(appName,nivel)
-								{																
-									window.location = '/'+appName+'/'+nivel.value+'/change-level';
-								}
-							</script>
-
-
-
-
+								function seleccionarNivel(appName,nivel)
+									{																
+										window.location = '/'+appName+'/'+nivel.value+'/change-level';
+									}
+								</script>
 
                     		</div>                              
                         {% endfor %}
