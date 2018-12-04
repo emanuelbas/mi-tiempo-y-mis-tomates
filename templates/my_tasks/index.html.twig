@@ -92,7 +92,7 @@
                                                     src="/build/assets/img/buttons/stop.png"
                                                     class="my-tasks-action-button mr-2"></a>
                                     {% endif %}
-                                    <a href="#" title="Borrar tarea"><img src="/build/assets/img/buttons/trash.png"
+                                    <a href="{{ path('delete_task_route',{'id': task.id }) }}" title="Borrar tarea"><img src="/build/assets/img/buttons/trash.png"
                                                                           class="my-tasks-action-button mr-2"></a>
                                 </div>
                             </div>

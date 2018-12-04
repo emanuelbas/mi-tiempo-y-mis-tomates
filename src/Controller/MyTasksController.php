@@ -237,6 +237,34 @@ class MyTasksController extends AbstractController
     }
 
     /**
+     * @param Task $task
+     *
+     * @Route("/{id}/delete-task", requirements={"id" = "\d+"}, name="delete_task_route")
+     * @return RedirectResponse
+     *
+     */
+    public function deleteTask(Task $task){
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $uses = $entityManager->getRepository('App\Entity\ClientUsesApplication')->findBy(['task'=>$task]);
+        foreach ($uses as $use){
+            $entityManager->remove($use);
+        }
+        $pomodoros = $entityManager->getRepository('App\Entity\Pomodoro')->findBy(['task'=>$task]);
+        foreach ($pomodoros as $pomodoro){
+            $entityManager->remove($pomodoro);
+        }
+        $clocks = $entityManager->getRepository('App\Entity\Clock')->findBy(['task'=>$task]);
+        foreach ($clocks as $clock){
+            $entityManager->remove($clock);
+        }
+        $entityManager->remove($task);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('my_tasks');
+    }
+
+    /**
      *
      * @Route("/store", name="store_route")
      * @return RedirectResponse
