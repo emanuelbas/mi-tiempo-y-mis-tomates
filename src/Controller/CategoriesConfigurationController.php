@@ -45,4 +45,41 @@ class CategoriesConfigurationController extends AbstractController
                 'levels' => $levels
         ]);
     }
+
+
+    /**
+     * 
+     * @Route("/{app}/{category}/change-category", name="change_category_level_route")
+     * @return RedirectResponse
+     *
+     */
+    public function changeAppCategory(String $app, String $category){
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        /* Recuperar la configuracion cliente/aplicacion */
+        $client = $this->get('security.token_storage')->getToken()->getUser();
+        $clientId = $client->getId();
+        $application = $this->getDoctrine()->getRepository(Application::class)->findOneBy(array('app_name' => $app));
+        $appId = $application->getId();
+        $categoryOb = $this->getDoctrine()->getRepository(Category::class)->findOneBy(array('category_name' => $category));
+
+        $appConfiguration = $this->getDoctrine()->getRepository(ClientApplicationsConfiguration::class)->findOneBy(array('client' => $clientId,'application' => $appId));
+
+        /* Cambiar la configuracion para que tenga la categoria recibida */
+        
+        $appConfiguration->setCategory($categoryOb);
+
+
+        /* Persistir */
+        $entityManager->persist($appConfiguration);
+        $entityManager->flush();
+
+
+
+
+
+
+        return $this->redirectToRoute('categories_configuration');
+    }
 }
