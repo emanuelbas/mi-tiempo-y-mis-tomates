@@ -24,7 +24,7 @@ class CategoriesConfigurationController extends AbstractController
     	$entityManager = $this->getDoctrine()->getManager();
 
         $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-        $pageLimit = 10;
+        $pageLimit = 5;
 
         //$countFilters = array('client' => $clientId);
         $countFilters = array();
@@ -35,6 +35,8 @@ class CategoriesConfigurationController extends AbstractController
 
         $applicationsCount = sizeof($appConfigurations);
         $totalPages = ceil($applicationsCount / $pageLimit);
+
+        $appConfigurations = $this->getDoctrine()->getRepository(ClientApplicationsConfiguration::class)->findBy(array('client' => $clientId), null, $pageLimit, ($page - 1) * $pageLimit);
 
         return $this->render('categories_configuration/index.html.twig', [
             'controller_name' => 'CategoriesConfigurationController', 
