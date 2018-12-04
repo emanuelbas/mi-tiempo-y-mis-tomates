@@ -76,7 +76,7 @@
                         {% endfor %}
                         <li class="page-item  {% if currentPage == totalPages %} disabled {% endif %}">
                             <a class="page-link"
-                               href=" path('categories_configuration', {'page': currentPage+1})">Siguiente</a>
+                               href="{{ path('categories_configuration', {'page': currentPage+1}) }}">Siguiente</a>
                         </li>
                     </ul>
                 {% endif %}
