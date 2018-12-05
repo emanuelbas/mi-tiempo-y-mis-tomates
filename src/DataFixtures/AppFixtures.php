@@ -62,6 +62,75 @@ class AppFixtures extends Fixture
         $applicationVSC->setAppName('Visual Studio Code');
         $applicationVSC->setAppId(25);
         $manager->persist($applicationVSC);
+        $applicationTWT = new Application();
+        $applicationTWT->setAppName('Twitter');
+        $applicationTWT->setAppId(26);
+        $manager->persist($applicationTWT);
+        $applicationFB = new Application();
+        $applicationFB->setAppName('Facebook');
+        $applicationFB->setAppId(27);
+        $manager->persist($applicationFB);
+
+        $applicationIG = new Application();
+        $applicationIG->setAppName('Instagram');
+        $applicationIG->setAppId(28);
+        $manager->persist($applicationIG);
+
+        $applicationGML = new Application();
+        $applicationGML->setAppName('Gmail');
+        $applicationGML->setAppId(30);
+        $manager->persist($applicationGML);
+
+        $applicationGTH = new Application();
+        $applicationGTH->setAppName('GitHub');
+        $applicationGTH->setAppId(31);
+        $manager->persist($applicationGTH);
+
+        $applicationWKP = new Application();
+        $applicationWKP->setAppName('Wikipedia');
+        $applicationWKP->setAppId(32);
+        $manager->persist($applicationWKP);
+
+        $applicationOLX = new Application();
+        $applicationOLX->setAppName('OLX');
+        $applicationOLX->setAppId(33);
+        $manager->persist($applicationOLX);
+
+        $applicationCLR = new Application();
+        $applicationCLR->setAppName('Clarin');
+        $applicationCLR->setAppId(34);
+        $manager->persist($applicationCLR);
+
+        $applicationP12 = new Application();
+        $applicationP12->setAppName('Página12');
+        $applicationP12->setAppId(35);
+        $manager->persist($applicationP12);
+
+        $applicationDED = new Application();
+        $applicationDED->setAppName('Diario El Día');
+        $applicationDED->setAppId(36);
+        $manager->persist($applicationDED);
+
+        $applicationWSP = new Application();
+        $applicationWSP->setAppName('WhatsApp');
+        $applicationWSP->setAppId(36);
+        $manager->persist($applicationWSP);
+
+        $applicationAMZ = new Application();
+        $applicationAMZ->setAppName('Amazon');
+        $applicationAMZ->setAppId(37);
+        $manager->persist($applicationAMZ);
+
+        $applicationML = new Application();
+        $applicationML->setAppName('Mercado Libre');
+        $applicationML->setAppId(37);
+        $manager->persist($applicationML);
+
+        $applicationGS = new Application();
+        $applicationGS->setAppName('Google Search');
+        $applicationGS->setAppId(37);
+        $manager->persist($applicationGS);
+
         $manager->flush();
         // FIN APLICACIONES //
 
@@ -214,6 +283,9 @@ class AppFixtures extends Fixture
         $manager->persist($aconfig); $manager->flush();
         $aconfig = new ClientApplicationsConfiguration($user, $applicationVSC, $category);
         $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationGTH, $category);
+        $manager->persist($aconfig); $manager->flush();
+
 
         $category = $compras;
         $productivityLevel = $productividadBaja;
@@ -236,6 +308,43 @@ class AppFixtures extends Fixture
         $manager->persist($aconfig); $manager->flush();
         $aconfig = new ClientApplicationsConfiguration($user, $applicationBDN, $category);
         $manager->persist($aconfig); $manager->flush();
+
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationWKP, $category);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationGS, $category);
+        $manager->persist($aconfig); $manager->flush();
+
+        // Aplicaciones de comunicación y planificación
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationGML, $comunicacionYPlanificacion);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationWSP, $comunicacionYPlanificacion);
+        $manager->persist($aconfig); $manager->flush();
+
+        // Aplicaciones de noticias
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationDED, $noticias);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationP12, $noticias);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationCLR, $noticias);
+        $manager->persist($aconfig); $manager->flush();
+
+        // Aplicaciones de compras
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationML, $compras);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationAMZ, $compras);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationOLX, $compras);
+        $manager->persist($aconfig); $manager->flush();
+    
+        // Aplicaciones de entretenimiento
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationTWT, $entretenimientoYRedesSociales);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationFB, $entretenimientoYRedesSociales);
+        $manager->persist($aconfig); $manager->flush();
+        $aconfig = new ClientApplicationsConfiguration($user, $applicationIG, $entretenimientoYRedesSociales);
+        $manager->persist($aconfig); $manager->flush();
+    
+ 
 
 
 
