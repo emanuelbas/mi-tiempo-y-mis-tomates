@@ -7,18 +7,20 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use App\Entity\Client;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SendEmail extends Command
 {
 
     private $mailer;
     private $entityManager;
+    private $templating;
 
-    public function __construct(\Swift_Mailer $mailer, EntityManagerInterface $entityManager)
+    public function __construct(\Swift_Mailer $mailer, EntityManagerInterface $entityManager, \Twig_Environment $templating)
     {
         $this->mailer = $mailer;
         $this->entityManager = $entityManager;
+        $this->templating = $templating;
 
         // you *must* call the parent constructor
         parent::__construct();
@@ -39,7 +41,7 @@ class SendEmail extends Command
         $message = (new \Swift_Message('Reporte de Mi Tiempo y Mis Tomates'))
         ->setFrom('no-reply@mitiempoymistomates.com')
         ->setTo($email)
-        ->setBody('- Email de reporte de prueba -');
+        ->setBody($this->templating->render('email_report.html.twig'), 'text/html');
 
         $this->mailer->send($message);
     }
