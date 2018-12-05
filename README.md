@@ -90,3 +90,10 @@ php -S 127.0.0.1:8000 -t public (para "servir" la aplicación)
 
 Luego para acceder a la aplicación
 http://localhost:8000
+
+
+## Levantar la aplicaci�n
+Para purgar la base de datos y restaurarla por defecto:
+```
+yes | ./renewDB.sh
+```
