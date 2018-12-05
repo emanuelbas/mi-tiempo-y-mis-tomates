@@ -27,7 +27,7 @@ En definitiva, estas implementaciones quieren acercar al usuario a una experienc
 
 ## Modelo UML
 
-![Scheme](https://drive.google.com/open?id=13EJEr16iaSXyXw3KvWqpn-4J9CdqZkOf)
+![Scheme](https://trello-attachments.s3.amazonaws.com/5b92d92e33649576719dfc8c/5bffcda9e0d86a492d84b0f9/fc579345d4300d4bb0a83ebe8eacd571/Modelo_de_dise%C3%B1o_UML.png)
 
 ## Requerimientos
 * PHP 7.1+
