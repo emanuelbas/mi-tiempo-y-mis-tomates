@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div class="container email-report-container d-flex justify-content-center align-items-center">
+    <div class="container email-report-container">
         <div class="position-relative pt-3 email-report-box">
             <div class="d-flex justify-content-around align-items-baseline mb-4"> 
                 <h2 class="font-weight-light pl-5"> Mi Tiempo y Mis Tomates </h2>
@@ -19,8 +19,7 @@
                      <div class="d-flex flex-column align-items-center">
                         <div> Estuviste conectado durante </div>
                         <h1> 6h 25m </div>                    
-                    </div>
-               
+                    </div>               
 
                 <div class="mt-5"> 
                     <ul class="list-unstyled position-relative">
@@ -52,14 +51,76 @@
                             <div class="email-report-pomodoro-count position-absolute"> 
                             5
                             </div>
-                        </li> 
-
-                    
+                        </li>                     
                     <ul>
                 </div>
                 </div>
             </div>
 
+            <div class="d-flex justify-content-around mt-5">
+                <div> 
+                    <div class="font-weight-bold mb-3"> La mayor parte de su tiempo la utilizo en: </div>
+                        <ul class="list-unstyled position-relative d-flex flex-column">
+                            <div>
+                                <div class="email-report-category-percentage d-inline-block mr-4"> 50% </div>
+                                <li class="position-relative d-inline-block mb-2">  Desarrollo de Software  </li>  
+                            </div>   
+
+                            <div>
+                                <div class="email-report-category-percentage d-inline-block mr-4 bg-primary"> 20% </div>
+                                <li class="position-relative d-inline-block mb-2">  Diseño  </li>  
+                            </div>
+
+                            <div>
+                                <div class="email-report-category-percentage d-inline-block mr-4 bg-info"> 15% </div>
+                                <li class="position-relative d-inline-block mb-2">  Noticias </li>  
+                            </div>
+
+                            <div>
+                                <div class="email-report-category-percentage d-inline-block mr-4 bg-success"> 10% </div>
+                                <li class="position-relative d-inline-block mb-2">  Comunicación y Planificación  </li>  
+                            </div>
+
+                            <div>
+                                <div class="email-report-category-percentage d-inline-block mr-4 bg-warning"> 5% </div>
+                                <li class="position-relative d-inline-block mb-2">  Entretenimiento  </li>  
+                            </div>               
+                        <ul>
+                    </div>
+                     <div class="email-report-separator-line"></div>
+                     <div>
+                    <div class="font-weight-bold mb-3"> Aplicaciones que más utilizó: </div>
+                        <ul class="list-unstyled position-relative d-flex flex-column">
+                            <div>
+                                <div class="email-report-category-percentage d-inline-block mr-4 bg-success"> 5h</div>
+                                <li class="position-relative d-inline-block mb-2">  Sublime </li>  
+                            </div>   
+
+                            <div>
+                                <div class="email-report-category-percentage d-inline-block mr-4 bg-success"> 4h </div>
+                                <li class="position-relative d-inline-block mb-2">  VSCode </li>  
+                            </div>
+
+                            <div>
+                                <div class="email-report-category-percentage d-inline-block mr-4 bg-info"> 3h </div>
+                                <li class="position-relative d-inline-block mb-2">  Google Chrome </li>  
+                            </div>
+
+                            <div>
+                                <div class="email-report-category-percentage d-inline-block mr-4 bg-warning"> 2h </div>
+                                <li class="position-relative d-inline-block mb-2">  Spotify </li>  
+                            </div>
+
+                            <div>
+                                <div class="email-report-category-percentage d-inline-block mr-4 bg-warning"> 1h </div>
+                                <li class="position-relative d-inline-block mb-2">  Facebook  </li>  
+                            </div>               
+                        <ul>
+                        </div>
+                    </div>
+                </div>
+                   
+            </div>
         </div>
     </div>
         

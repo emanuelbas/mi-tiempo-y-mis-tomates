@@ -1,5 +1,6 @@
 .email-report-container {
     height: 100%;
+    width: 960px;
 }
 
 .email-report-box {
@@ -24,4 +25,21 @@
     text-align: center;
     color: #ffffff;
     border-radius: 5px;
+}
+
+
+.email-report-category-percentage {
+    right: -95px;
+    top: 3px;
+    width: 40px;
+    height: 22px;
+    background-color: red;
+    text-align: center;
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+.email-report-separator-line {
+    height: 200px;
+    border: 1px solid #00000029;
 }
