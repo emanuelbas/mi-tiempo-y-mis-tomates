@@ -1,3 +1,30 @@
+## Objetivo del proyecto
+
+El objetivo de Mi tiempo y mis tomates es crear una plataforma web que permite al usuario utilizar la [técnica de pomodoro](https://es.wikipedia.org/wiki/Técnica_Pomodoro) para aumentar su productividad personal. Se puede dar inicio a cada Pomodoro y la aplicación emite una alarma cuando debe iniciarse el período de descanso. Luego vuelve a emitir una alarma para iniciar otro Pomodoro. Puedo indicar el nombre de una tarea y la cantidad de Pomodoros que estimo me va a llevar completarla. 
+Se fortalece la web con una aplicación de escritorio la cual durante el tiempo de ejecución de un Pomodoro registra el tiempo en que una aplicación o un sitio web está en foco para poder analizar luego las razones de mi aumento o disminución de productividad
+
+En definitiva, estas implementaciones quieren acercar al usuario a una experiencia de navegación sencilla y agradable, ofreciéndole características de la tecnica de pomodoro para ayudarlo a administrar el tiempo que utiliza en realizar tareas
+
+## Lista de user stories realizadas
+
+- [x] Registrar usuario
+- [x] Iniciar sesión
+- [x] Ver tareas
+- [x] Crear tarea
+- [x] Configurar pomodoros
+- [x] Configurar cuenta
+- [x] Cerrar sesión
+- [x] Iniciar tarea
+- [x] Cancelar tarea
+- [x] Finalizar tarea
+- [x] Pausar y reanudar tarea
+- [x] Retomar tarea
+- [x] Medir el tiempo de uso de aplicaciones
+- [x] Medir el tiempo de uso de sitios web
+- [x] Visualizar tiempo de trabajo o descanso
+- [x] Eliminar tarea
+- [x] Enviar email con estadísticas periodicamente
+
 ## Requerimientos
 * PHP 7.1+
 * Composer
