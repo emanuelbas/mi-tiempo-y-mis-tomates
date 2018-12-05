@@ -18,6 +18,8 @@ require('../css/pomodoro-configuration.scss');
 require('../css/navigation-task.scss');
 require('../css/plugins/parsley.css');
 require('../css/app-times-report.scss');
+require('../css/email-report.scss');
+
 
 // Javascript
 require('../js/plugins/parsley.min.js');

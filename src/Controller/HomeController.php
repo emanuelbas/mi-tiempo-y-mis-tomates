@@ -21,4 +21,12 @@ class HomeController extends Controller
     {
          return $this->render('download/download.html.twig');
     }
+
+      /**
+    * @Route("/email-test", name="email_test")
+    */
+    public function email_report_test()
+    {
+         return $this->render('email_report.html.twig');
+    }
 }
