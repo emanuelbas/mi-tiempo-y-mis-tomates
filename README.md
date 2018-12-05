@@ -7,23 +7,23 @@ En definitiva, estas implementaciones quieren acercar al usuario a una experienc
 
 ## Lista de user stories realizadas
 
-- [x] Registrar usuario
-- [x] Iniciar sesión
-- [x] Ver tareas
-- [x] Crear tarea
-- [x] Configurar pomodoros
-- [x] Configurar cuenta
-- [x] Cerrar sesión
-- [x] Iniciar tarea
-- [x] Cancelar tarea
-- [x] Finalizar tarea
-- [x] Pausar y reanudar tarea
-- [x] Retomar tarea
-- [x] Medir el tiempo de uso de aplicaciones
-- [x] Medir el tiempo de uso de sitios web
-- [x] Visualizar tiempo de trabajo o descanso
-- [x] Eliminar tarea
-- [x] Enviar email con estadísticas periodicamente
+✔ Registrar usuario
+✔ Iniciar sesión
+✔ Ver tareas
+✔ Crear tarea
+✔ Configurar pomodoros
+✔ Configurar cuenta
+✔ Cerrar sesión
+✔ Iniciar tarea
+✔ Cancelar tarea
+✔ Finalizar tarea
+✔ Pausar y reanudar tarea
+✔ Retomar tarea
+✔ Medir el tiempo de uso de aplicaciones
+✔ Medir el tiempo de uso de sitios web
+✔ Visualizar tiempo de trabajo o descanso
+✔ Eliminar tarea
+✔ Enviar email con estadísticas periodicamente
 
 ## Requerimientos
 * PHP 7.1+
