@@ -4,14 +4,24 @@
 
 .email-report-box {
     height: auto;
-    width: 1024px;
+    width: 960px;
     border-radius: 10px;
 }
 
 .email-report-pomodoros-box {
-    height: 400px;
+    height: 365px;
     width: 600px;
     border-radius: 80px;
-    border: 1px solid #000000;
+    border: 2px solid #000000;
 }
 
+.email-report-pomodoro-count {
+    right: -95px;
+    top: 3px;
+    width: 35px;
+    height: 20px;
+    background-color: red;
+    text-align: center;
+    color: #ffffff;
+    border-radius: 5px;
+}
