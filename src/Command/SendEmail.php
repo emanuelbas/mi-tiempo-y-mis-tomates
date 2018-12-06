@@ -33,37 +33,32 @@ class SendEmail extends Command
     {
         $this
             ->setDescription('Envia un mail')
-
             ->setHelp('Envia un mail a un usuario dependiendo de su configuracion');
     }
-	
-	
-	
-	
-	
 
-    private function sendEmail ($email) {
+    private function sendEmail($email)
+    {
         $message = (new \Swift_Message('Reporte de Mi Tiempo y Mis Tomates'))
-        ->setFrom('no-reply@mitiempoymistomates.com')
-        ->setTo($email)
-        ->setBody($this->templating->render('email_report.html.twig'), 'text/html');
+            ->setFrom('no-reply@mitiempoymistomates.com')
+            ->setTo($email)
+            ->setBody($this->templating->render('email_report.html.twig'), 'text/html');
 
         $this->mailer->send($message);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
-    {    
+    {
         $clients = $this->entityManager->getRepository("App\Entity\Client")->findAll();
-        foreach ($clients as $client){
+        foreach ($clients as $client) {
             $config = $client->getReportFrequency();
             $day = getdate();
 
-            if($config == "Mensual") {
-                if($day['mday'] == 1) {
+            if ($config == "Mensual") {
+                if ($day['mday'] == 1) {
                     $this->sendEmail($client->getEmail());
                 }
-            } elseif ($config=="Anual"){
-                if($day['mon'] == 1) {
+            } elseif ($config == "Anual") {
+                if ($day['mon'] == 1) {
                     $this->sendEmail($client->getEmail());
                 }
             } else {
@@ -73,17 +68,17 @@ class SendEmail extends Command
 
         $output->writeln('Enviando emails de reporte..');
     }
-	
-	
-	 public function getTiempoDeSesion()
+
+
+    public function getTiempoDeSesion()
     {
         $entityManager = $this->getDoctrine()->getManager();
         $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-          $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
+        //$periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
 
- 		$periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
-		
-		
+        $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
+
+
         $query = $entityManager->createQuery(
             'SELECT  SUM(cua.time_ammount) as suma 
             FROM App\Entity\ClientUsesApplication cua
@@ -93,21 +88,21 @@ class SendEmail extends Command
             ->setParameter('today', date("Y-m-d H:i:s"))
             ->setParameter('periodFilterDate', $periodFilterDate);
 
-         $suma  = $query->getResult();
+        $suma = $query->getResult();
 
 
         return $this->render('email_report.html.twig', [
             'tiempo' => $suma
-            
+
         ]);
     }
-	
-	
-	 public function getTareas($period, $page)
+
+
+    public function getTareas($period, $page)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-          $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
+        $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
 
         $query = $entityManager->createQuery('SELECT t FROM App\Entity\Task t WHERE t.client = :clientId AND t.creation_date BETWEEN :periodFilterDate AND :today')
             ->setParameter('clientId', $clientId)
@@ -119,7 +114,7 @@ class SendEmail extends Command
 
         $tasksData = [];
 
-         foreach ($tasks as $task) {
+        foreach ($tasks as $task) {
             array_push($tasksData, [
                 "name" => $task->getTaskName(),
                 "usedPomodoros" => count($task->getPomodoros())]);
@@ -127,21 +122,21 @@ class SendEmail extends Command
 
 
         return $this->render('email_report.html.twig', [
-            
+
             'tasksData' => $tasksData,
             'chartType' => 'tasks',
-           
+
         ]);
     }
-	
-	
-	 public function getCategorias()
+
+
+    public function getCategorias()
     {
         $entityManager = $this->getDoctrine()->getManager();
         $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-          $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
+        $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
 
-             $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
+        $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
         $query = $entityManager->createQuery(
             'SELECT cat.category_name, SUM(cua.time_ammount)
             FROM App\Entity\ClientUsesApplication cua
@@ -166,7 +161,7 @@ class SendEmail extends Command
         foreach ($categories as $category) {
             array_push($categoriesData, [
                 "name" => $category['category_name'],
-                "usePercentage" => (int) round(($category[1] / $totalCategoriesTime) * 100,2)
+                "usePercentage" => (int)round(($category[1] / $totalCategoriesTime) * 100, 2)
             ]);
         }
 
@@ -176,17 +171,15 @@ class SendEmail extends Command
             'chartType' => 'categories'
         ]);
     }
-	
-	
-	
-	
-	 public function getAplicaciones()
+
+
+    public function getAplicaciones()
     {
         $entityManager = $this->getDoctrine()->getManager();
         $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-          $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
+        $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
 
-             
+
         $query = $entityManager->createQuery(
             'SELECT cat.app_name , SUM(cua.time_ammount)as tiempo 
             FROM App\Entity\ClientUsesApplication cua
@@ -201,16 +194,16 @@ class SendEmail extends Command
 
         $appsData = [];
         foreach ($aplicaciones as $aplicacion) {
-            array_push($$appsData , [
+            array_push($$appsData, [
                 "name" => $aplicacion['app_name'],
                 "time" => $aplicacion['time']
             ]);
         }
 
         return $this->render('email_report.html.twig', [
-            'aplicaciionesData' => $appsData,
+            'aplicacionesData' => $appsData,
             'tasksData' => [],
-           
+
         ]);
     }
 }
