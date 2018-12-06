@@ -29,7 +29,9 @@ class HomeController extends Controller
 
     public function getTiempoDeSesion($clientId)
     {
-        $client = $this->entityManager->getRepository("App\Entity\Client")->find($clientId);
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $client = $entityManager->getRepository("App\Entity\Client")->find($clientId);
         $periodOfTime = $client->getReportFrequency()->getFrequencyName();
         if ($periodOfTime == 'Semanal') {
             $date = date("m/d/Y h:i:s A T", strtotime('-1 week'));
@@ -38,7 +40,7 @@ class HomeController extends Controller
         } else {
             $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
         }
-        $query = $this->entityManager->createQuery(
+        $query = $entityManager->createQuery(
             'SELECT SUM(cua.time_ammount)
             FROM App\Entity\ClientUsesApplication cua
             WHERE cua.client = :clientId')
@@ -54,7 +56,9 @@ class HomeController extends Controller
 
     public function getTareas($clientId)
     {
-        $client = $this->entityManager->getRepository("App\Entity\Client")->find($clientId);
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $client = $entityManager->getRepository("App\Entity\Client")->find($clientId);
         $periodOfTime = $client->getReportFrequency()->getFrequencyName();
         if ($periodOfTime == 'Semanal') {
             $date = date("m/d/Y h:i:s A T", strtotime('-1 week'));
@@ -64,7 +68,7 @@ class HomeController extends Controller
             $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
         }
 
-        $query = $this->entityManager->createQuery('SELECT t FROM App\Entity\Task t WHERE t.client = :clientId')
+        $query = $entityManager->createQuery('SELECT t FROM App\Entity\Task t WHERE t.client = :clientId')
             ->setParameter('clientId', $clientId)
 //            ->setParameter('today', date('Y-m-d H:i:s', time()))
 //            ->setParameter('periodOfTime', $periodOfTime)
@@ -90,7 +94,9 @@ class HomeController extends Controller
 
     public function getCategorias($clientId)
     {
-        $client = $this->entityManager->getRepository("App\Entity\Client")->find($clientId);
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $client = $entityManager->getRepository("App\Entity\Client")->find($clientId);
         $periodOfTime = $client->getReportFrequency()->getFrequencyName();
         if ($periodOfTime == 'Semanal') {
             $date = date("m/d/Y h:i:s A T", strtotime('-1 week'));
@@ -100,7 +106,7 @@ class HomeController extends Controller
             $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
         }
 
-        $query = $this->entityManager->createQuery(
+        $query = $entityManager->createQuery(
             'SELECT cat.category_name, SUM(cua.time_ammount)
             FROM App\Entity\ClientUsesApplication cua
             INNER JOIN App\Entity\ClientApplicationsConfiguration cac WITH cua.application = cac.application
@@ -133,7 +139,9 @@ class HomeController extends Controller
 
     public function getAplicaciones($clientId)
     {
-        $client = $this->entityManager->getRepository("App\Entity\Client")->find($clientId);
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $client = $entityManager->getRepository("App\Entity\Client")->find($clientId);
         $periodOfTime = $client->getReportFrequency()->getFrequencyName();
         if ($periodOfTime == 'Semanal') {
             $date = date("m/d/Y h:i:s A T", strtotime('-1 week'));
@@ -142,7 +150,7 @@ class HomeController extends Controller
         } else {
             $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
         }
-        $query = $this->entityManager->createQuery(
+        $query = $entityManager->createQuery(
             'SELECT a.app_name , SUM(c.time_ammount)
             FROM App\Entity\ClientUsesApplication c
             INNER JOIN App\Entity\Application a WITH a.id = c.application
