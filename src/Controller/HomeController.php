@@ -146,17 +146,18 @@ class HomeController extends Controller
             'SELECT ap.app_name , cua.time_ammount
             FROM App\Entity\ClientUsesApplication cua
             INNER JOIN App\Entity\Application ap
-            WHERE cua.client = :clientId AND cua.start_date BETWEEN :periodOfTime AND :today 
+            INNER JOIN App\Entity\Client c
+            WHERE c.id = :clientId AND cua.start_date BETWEEN :periodOfTime AND :today 
             GROUP BY ap.app_name')
             ->setParameter('clientId', $clientId)
             ->setParameter('today', date('Y-m-d H:i:s', time()))
             ->setParameter('periodOfTime', $periodOfTime);
 
-        $aplicaciones = $query->getResult();
+        $applications = $query->getResult();
 
         $appsData = [];
-        foreach ($aplicaciones as $aplicacion) {
-            $appsData[$aplicacion['app_name']] = $aplicacion['time_ammount'];
+        foreach ($applications as $application) {
+            $appsData[$application['app_name']] = $application['time_ammount'];
         }
 
         return $appsData;
