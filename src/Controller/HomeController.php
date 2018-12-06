@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Entity\ClientUsesApplication;
 
 class HomeController extends Controller
 {
@@ -26,10 +27,9 @@ class HomeController extends Controller
     public function getTiempoDeSesion()
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-        //$periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
+        $clientId = 1;
 
-        $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
+        $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 month'));
 
         $query = $entityManager->createQuery(
             'SELECT SUM(cua.time_ammount)
@@ -39,9 +39,9 @@ class HomeController extends Controller
             ->setParameter('today', date("Y-m-d H:i:s"))
             ->setParameter('periodFilterDate', $periodFilterDate);
 
-        $suma = $query->getResult();
+        $suma = $query->getSingleScalarResult();
 
-        return $suma;
+        return (int) $suma;
     }
 
 
