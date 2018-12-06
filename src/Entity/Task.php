@@ -229,4 +229,39 @@ class Task
 
         return $this;
     }
+
+/*
+ 
+    //////////////////////////////////////////////////////////////
+
+*/
+    public function getPomodorosOlderThan($aDate): Collection
+    {
+        return $this->getPomodoros()
+            ->filter(function($pomo) use($aDate)
+                {
+                    return ($pomo->getEndingDate() < $aDate);
+                });
+
+    }
+
+
+    public function getPomodorosNewerThan($aDate): Collection
+    {
+        return $this->getPomodoros()
+            ->filter(function($pomo) use($aDate) 
+                {
+                    return ($pomo->getEndingDate() > $aDate);
+                });
+    }
+ 
+
+/*
+ 
+    //////////////////////////////////////////////////////////////
+
+*/
+
+
+
 }

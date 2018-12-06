@@ -56,11 +56,21 @@ class AppTimesReportController extends AbstractController
 
         $tasksData = [];
 
+
         foreach ($tasks as $task) {
+
+            $estimadosParaEstePeriodo = ($task->getStimatedPomodoros() - count($task->getPomodorosOlderThan($periodFilterDate)));
+            if ($estimadosParaEstePeriodo < 0) $estimadosParaEstePeriodo = 0;
+
+            $totalDePomodorosRealizadosEnEstePeriodo = (count($task->getPomodorosNewerThan($periodFilterDate)));
+
             array_push($tasksData, [
                 "name" => $task->getTaskName(),
-                "estimatedPomodoros" => $task->getStimatedPomodoros(),
-                "usedPomodoros" => count($task->getPomodoros())]);
+                "estimatedPomodoros" => $estimadosParaEstePeriodo,
+                "usedPomodoros" => $totalDePomodorosRealizadosEnEstePeriodo
+                ]);
+            //usedPomodoros deberían ser solo los que se usaron durante este periodo
+            //estimatedPomodoros imagino que es la linea que separa los malos pomodoros de los buenos, entonces deberia ser task.stimatedPomodoros menos la suma de todos los pomos que se hicieron antes del periodo seleccionado
         }
 
         return $this->render('app_times_report/index.html.twig', [

@@ -90,8 +90,10 @@ $(document).ready(function () {
             },
             series: [
                 {
-                    name: 'Excedidos',
-                    data: tasks.map(task => {
+                    name: 'Pomodoros que excedieron la estimación',
+                    data: tasks.map(task => 
+                    { 
+                        //Tengo que mostrar los que se pasaron de estimed
                         var exceeded = task.usedPomodoros - task.estimatedPomodoros
 
                         if (exceeded > 0) {
@@ -102,9 +104,28 @@ $(document).ready(function () {
                     }),
                     color: 'red'
                 },
-                {
-                    name: 'Usados',
-                    data: tasks.map(task => task.usedPomodoros),
+                {   
+                    name: 'Pomodoros estimados',
+                    data: tasks.map(task => 
+                    {
+                        //Tengo que mostrar todos los usados, menos los que se pasaron de estimed
+                       
+                        var exceeded = task.usedPomodoros - task.estimatedPomodoros
+
+                        if (exceeded < 0) 
+                            {
+                                exceeded = 0
+                            } 
+                        var verdes = task.usedPomodoros - exceeded
+                        if (verdes > 0){
+                            return verdes
+                        } else {
+                            return 0
+                        }
+                       
+
+                         
+                    }),
                     color: 'green'
                 }
             ]
