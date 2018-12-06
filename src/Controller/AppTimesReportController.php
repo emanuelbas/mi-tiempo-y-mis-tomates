@@ -33,7 +33,11 @@ class AppTimesReportController extends AbstractController
         }
 
         $pageLimit = 5;
-        $queryTaskCount = $entityManager->createQuery('SELECT COUNT(t) FROM App\Entity\Task t WHERE t.client = :clientId AND t.creation_date BETWEEN :periodFilterDate AND :today')
+
+        //Esta levantando las tareas que fueron creadas en el periodo seleccionado
+        //Lo que debería hacer es levantar las tareas que contengan algún Pomo
+        //En el periodo
+        $queryTaskCount = $entityManager->createQuery('SELECT COUNT(DISTINCT t.id) FROM App\Entity\Task t INNER JOIN App\Entity\Pomodoro p WITH p.task = t.id WHERE t.client = :clientId AND p.ending_date BETWEEN :periodFilterDate AND :today')
             ->setParameter('clientId', $clientId)
             ->setParameter('today', date("Y-m-d H:i:s"))
             ->setParameter('periodFilterDate', $periodFilterDate);
@@ -42,7 +46,7 @@ class AppTimesReportController extends AbstractController
 
         $totalPages = ceil($taskCount / $pageLimit);
 
-        $query = $entityManager->createQuery('SELECT t FROM App\Entity\Task t WHERE t.client = :clientId AND t.creation_date BETWEEN :periodFilterDate AND :today')
+        $query = $entityManager->createQuery('SELECT t FROM App\Entity\Task t INNER JOIN App\Entity\Pomodoro p WITH p.task = t.id WHERE t.client = :clientId AND p.ending_date BETWEEN :periodFilterDate AND :today GROUP BY t.id' )
             ->setParameter('clientId', $clientId)
             ->setParameter('today', date("Y-m-d H:i:s"))
             ->setParameter('periodFilterDate', $periodFilterDate)

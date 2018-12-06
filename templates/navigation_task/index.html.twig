@@ -55,12 +55,12 @@
                     <a href="{{ path('continue_task_route', {}) }}" 
                         id="button-next-action"
                         role="button"
-                        title="Iniciar el período de {{ app.user.clock.getPreviousPeriod()}}"
+                        title="Iniciar el siguiente período"
                         tabindex="0"
                         data-placement="bottom"
                         data-toggle="popover" 
                         data-trigger="focus"
-                        data-content="¡Haz click en el botón para continuar!">
+                        data-content="Haz 🖱click en el botón para iniciar el período de {{ app.user.clock.getPreviousPeriod()}}">
                         <img src="/build/assets/img/buttons/skip.png" class="navigation-task-button">
                     </a>
                 {% endif %}
