@@ -36,12 +36,23 @@ class SendEmail extends Command
             ->setHelp('Envia un mail a un usuario dependiendo de su configuracion');
     }
 
-    private function sendEmail($email)
+    private function sendEmail($clientId, $email)
     {
+        $connectedTime = $this->getTiempoDeSesion($clientId);
+        $connectedString = gmdate('H', $connectedTime) . 'h ' . gmdate('i', $connectedTime) . 'm';
+        $tasksData = $this->getTareas($clientId);
+        $categoriesData = $this->getCategorias($clientId);
+        $appsData = $this->getAplicaciones($clientId);
+
         $message = (new \Swift_Message('Reporte de Mi Tiempo y Mis Tomates'))
             ->setFrom('no-reply@mitiempoymistomates.com')
             ->setTo($email)
-            ->setBody($this->templating->render('email_report.html.twig'), 'text/html');
+            ->setBody($this->templating->render('email_report.html.twig', [
+                'connectedTime' => $connectedString,
+                'tasksData' => $tasksData,
+                'appsData' => $appsData,
+                'categoriesData' => $categoriesData
+            ]), 'text/html');
 
         $this->mailer->send($message);
     }
@@ -50,21 +61,21 @@ class SendEmail extends Command
     {
         $clients = $this->entityManager->getRepository("App\Entity\Client")->findAll();
         foreach ($clients as $client) {
-            $this->sendEmail($client->getEmail());
+            //$this->sendEmail($client->getId(), $client->getEmail());
 
             $config = $client->getReportFrequency();
             $day = getdate();
 
             if ($config == "Mensual") {
                 if ($day['mday'] == 1) {
-                    $this->sendEmail($client->getEmail());
+                    $this->sendEmail($client->getId(), $client->getEmail());
                 }
             } elseif ($config == "Anual") {
                 if ($day['mon'] == 1) {
-                    $this->sendEmail($client->getEmail());
+                    $this->sendEmail($client->getId(), $client->getEmail());
                 }
             } else {
-                $this->sendEmail($client->getEmail());
+                $this->sendEmail($client->getId(), $client->getEmail());
             }
         }
 
@@ -72,83 +83,87 @@ class SendEmail extends Command
     }
 
 
-    public function getTiempoDeSesion()
+    public function getTiempoDeSesion($clientId)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-        //$periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
-
-        $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
-
-
-        $query = $entityManager->createQuery(
-            'SELECT  SUM(cua.time_ammount) as suma 
+        $client = $this->entityManager->getRepository("App\Entity\Client")->find($clientId);
+        $periodOfTime = $client->getReportFrequency()->getFrequencyName();
+        if ($periodOfTime == 'Semanal') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 week'));
+        } elseif ($periodOfTime == 'Mensual') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 month'));
+        } else {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
+        }
+        $query = $this->entityManager->createQuery(
+            'SELECT SUM(cua.time_ammount)
             FROM App\Entity\ClientUsesApplication cua
-            WHERE cua.client = :clientId AND cua.start_date BETWEEN :periodFilterDate AND :today 
-            GROUP BY cua.id')
+            WHERE cua.client = :clientId AND cua.start_date BETWEEN :date AND :today')
             ->setParameter('clientId', $clientId)
-            ->setParameter('today', date("Y-m-d H:i:s"))
-            ->setParameter('periodFilterDate', $periodFilterDate);
+            ->setParameter('today', date('Y-m-d H:i:s', time()))
+            ->setParameter('date', $date);
 
-        $suma = $query->getResult();
+        $suma = $query->getSingleScalarResult();
 
-
-        return $this->render('email_report.html.twig', [
-            'tiempo' => $suma
-
-        ]);
+        return (int)$suma;
     }
 
 
-    public function getTareas($period, $page)
+    public function getTareas($clientId)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-        $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
+        $client = $this->entityManager->getRepository("App\Entity\Client")->find($clientId);
+        $periodOfTime = $client->getReportFrequency()->getFrequencyName();
+        if ($periodOfTime == 'Semanal') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 week'));
+        } elseif ($periodOfTime == 'Mensual') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 month'));
+        } else {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
+        }
 
-        $query = $entityManager->createQuery('SELECT t FROM App\Entity\Task t WHERE t.client = :clientId AND t.creation_date BETWEEN :periodFilterDate AND :today')
+        $query = $this->entityManager->createQuery('SELECT t FROM App\Entity\Task t WHERE t.client = :clientId AND t.creation_date BETWEEN :periodOfTime AND :today')
             ->setParameter('clientId', $clientId)
-            ->setParameter('today', date("Y-m-d H:i:s"))
-            ->setParameter('periodFilterDate', $periodFilterDate)
-            ->setFirstResult(($page - 1) * $pageLimit)
-            ->setMaxResults($pageLimit);
+            ->setParameter('today', date('Y-m-d H:i:s', time()))
+            ->setParameter('periodOfTime', $periodOfTime);
         $tasks = $query->getResult();
 
         $tasksData = [];
 
+        $totalPomodoros = 0;
+
         foreach ($tasks as $task) {
-            array_push($tasksData, [
-                "name" => $task->getTaskName(),
-                "usedPomodoros" => count($task->getPomodoros())]);
+            $totalPomodoros += count($task->getPomodoros());
+            $tasksData[$task->getTaskName()] = count($task->getPomodoros());
         }
 
+        $result = [$totalPomodoros, $tasksData];
 
-        return $this->render('email_report.html.twig', [
+        return $result;
 
-            'tasksData' => $tasksData,
-            'chartType' => 'tasks',
-
-        ]);
     }
 
 
-    public function getCategorias()
+    public function getCategorias($clientId)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-        $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
+        $client = $this->entityManager->getRepository("App\Entity\Client")->find($clientId);
+        $periodOfTime = $client->getReportFrequency()->getFrequencyName();
+        if ($periodOfTime == 'Semanal') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 week'));
+        } elseif ($periodOfTime == 'Mensual') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 month'));
+        } else {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
+        }
 
-        $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
-        $query = $entityManager->createQuery(
+        $query = $this->entityManager->createQuery(
             'SELECT cat.category_name, SUM(cua.time_ammount)
             FROM App\Entity\ClientUsesApplication cua
             INNER JOIN App\Entity\ClientApplicationsConfiguration cac WITH cua.application = cac.application
             INNER JOIN App\Entity\Category cat WITH cac.category = cat.id
-            WHERE cua.client = :clientId AND cua.start_date BETWEEN :periodFilterDate AND :today 
+            WHERE cua.client = :clientId AND cua.start_date BETWEEN :periodOfTime AND :today 
             GROUP BY cat.id, cat.category_name')
             ->setParameter('clientId', $clientId)
-            ->setParameter('today', date("Y-m-d H:i:s"))
-            ->setParameter('periodFilterDate', $periodFilterDate);
+            ->setParameter('today', date('Y-m-d H:i:s', time()))
+            ->setParameter('periodOfTime', $periodOfTime);
 
         $categories = $query->getResult();
 
@@ -161,52 +176,43 @@ class SendEmail extends Command
         }
 
         foreach ($categories as $category) {
-            array_push($categoriesData, [
-                "name" => $category['category_name'],
-                "usePercentage" => (int)round(($category[1] / $totalCategoriesTime) * 100, 2)
-            ]);
+            $categoriesData[$category['category_name']] = (int)round(($category[1] / $totalCategoriesTime) * 100, 2);
+
         }
 
-        return $this->render('email_report.html.twig', [
-            'categoriesData' => $categoriesData,
-            'tasksData' => [],
-            'chartType' => 'categories'
-        ]);
+        return $categoriesData;
     }
 
 
-    public function getAplicaciones()
+    public function getAplicaciones($clientId)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $clientId = $this->get('security.token_storage')->getToken()->getUser()->getId();
-        $periodFilterDate = date('Y-m-d H:i:s', strtotime('-1 week'));
-
-
-        $query = $entityManager->createQuery(
-            'SELECT cat.app_name , SUM(cua.time_ammount)as tiempo 
-            FROM App\Entity\ClientUsesApplication cua
-            INNER JOIN App\Entity\Application ap
-            WHERE cua.client = :clientId AND cua.start_date BETWEEN :periodFilterDate AND :today 
-            GROUP BY ap.id, ap.app_name')
+        $client = $this->entityManager->getRepository("App\Entity\Client")->find($clientId);
+        $periodOfTime = $client->getReportFrequency()->getFrequencyName();
+        if ($periodOfTime == 'Semanal') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 week'));
+        } elseif ($periodOfTime == 'Mensual') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 month'));
+        } else {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
+        }
+        $query = $this->entityManager->createQuery(
+            'SELECT a.app_name , SUM(c.time_ammount)
+            FROM App\Entity\ClientUsesApplication c
+            INNER JOIN App\Entity\Application a WITH a.id = c.application
+            WHERE c.client = :clientId AND c.start_date BETWEEN :periodOfTime AND :today 
+            GROUP BY a.id')
             ->setParameter('clientId', $clientId)
-            ->setParameter('today', date("Y-m-d H:i:s"))
-            ->setParameter('periodFilterDate', $periodFilterDate);
+            ->setParameter('today', date('Y-m-d H:i:s', time()))
+            ->setParameter('periodOfTime', $periodOfTime);
 
-        $aplicaciones = $query->getResult();
+        $applications = $query->getResult();
 
         $appsData = [];
-        foreach ($aplicaciones as $aplicacion) {
-            array_push($$appsData, [
-                "name" => $aplicacion['app_name'],
-                "time" => $aplicacion['time']
-            ]);
+        foreach ($applications as $application) {
+            $appsData[$application['app_name']] = $application[1];
         }
 
-        return $this->render('email_report.html.twig', [
-            'aplicacionesData' => $appsData,
-            'tasksData' => [],
-
-        ]);
+        return $appsData;
     }
 }
 	

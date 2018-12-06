@@ -143,12 +143,11 @@ class HomeController extends Controller
             $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
         }
         $query = $entityManager->createQuery(
-            'SELECT ap.app_name , cua.time_ammount
-            FROM App\Entity\ClientUsesApplication cua
-            INNER JOIN App\Entity\Application ap
-            INNER JOIN App\Entity\Client c
-            WHERE c.id = :clientId AND cua.start_date BETWEEN :periodOfTime AND :today 
-            GROUP BY ap.app_name')
+            'SELECT a.app_name , SUM(c.time_ammount)
+            FROM App\Entity\ClientUsesApplication c
+            INNER JOIN App\Entity\Application a WITH a.id = c.application
+            WHERE c.client = :clientId AND c.start_date BETWEEN :periodOfTime AND :today 
+            GROUP BY a.id')
             ->setParameter('clientId', $clientId)
             ->setParameter('today', date('Y-m-d H:i:s', time()))
             ->setParameter('periodOfTime', $periodOfTime);
@@ -157,7 +156,7 @@ class HomeController extends Controller
 
         $appsData = [];
         foreach ($applications as $application) {
-            $appsData[$application['app_name']] = $application['time_ammount'];
+            $appsData[$application['app_name']] = $application[1];
         }
 
         return $appsData;
