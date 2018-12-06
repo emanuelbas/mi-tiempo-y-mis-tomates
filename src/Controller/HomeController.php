@@ -29,14 +29,14 @@ class HomeController extends Controller
     public function getTiempoDeSesion($clientId)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $client=$entityManager->getRepository("App\Entity\Client")->find( $clientId);
+        $client = $entityManager->getRepository("App\Entity\Client")->find($clientId);
         $periodOfTime = $client->getReportFrequency()->getFrequencyName();
-        if($periodOfTime=='Semanal') {
-            $date = date("m/d/Y h:i:s A T",strtotime('-1 week'));
-        }elseif ($periodOfTime=='Mensual'){
-            $date = date("m/d/Y h:i:s A T",strtotime('-1 month'));
-        }else{
-            $date = date("m/d/Y h:i:s A T",strtotime('-1 year'));
+        if ($periodOfTime == 'Semanal') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 week'));
+        } elseif ($periodOfTime == 'Mensual') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 month'));
+        } else {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
         }
         $query = $entityManager->createQuery(
             'SELECT SUM(cua.time_ammount)
@@ -48,21 +48,21 @@ class HomeController extends Controller
 
         $suma = $query->getSingleScalarResult();
 
-        return (int) $suma;
+        return (int)$suma;
     }
 
 
     public function getTareas($clientId)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $client=$entityManager->getRepository("App\Entity\Client")->find( $clientId);
+        $client = $entityManager->getRepository("App\Entity\Client")->find($clientId);
         $periodOfTime = $client->getReportFrequency()->getFrequencyName();
-        if($periodOfTime=='Semanal') {
-            $date = date("m/d/Y h:i:s A T",strtotime('-1 week'));
-        }elseif ($periodOfTime=='Mensual'){
-            $date = date("m/d/Y h:i:s A T",strtotime('-1 month'));
-        }else{
-            $date = date("m/d/Y h:i:s A T",strtotime('-1 year'));
+        if ($periodOfTime == 'Semanal') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 week'));
+        } elseif ($periodOfTime == 'Mensual') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 month'));
+        } else {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
         }
 
         $query = $entityManager->createQuery('SELECT t FROM App\Entity\Task t WHERE t.client = :clientId AND t.creation_date BETWEEN :periodOfTime AND :today')
@@ -73,11 +73,16 @@ class HomeController extends Controller
 
         $tasksData = [];
 
+        $totalPomodoros = 0;
+
         foreach ($tasks as $task) {
-            $tasksData[$task->getTaskName()]= count($task->getPomodoros());
+            $totalPomodoros += count($task->getPomodoros());
+            $tasksData[$task->getTaskName()] = count($task->getPomodoros());
         }
 
-        return $tasksData;
+        $result = [$totalPomodoros, $tasksData];
+
+        return $result;
 
     }
 
@@ -85,14 +90,14 @@ class HomeController extends Controller
     public function getCategorias($clientId)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $client=$entityManager->getRepository("App\Entity\Client")->find( $clientId);
+        $client = $entityManager->getRepository("App\Entity\Client")->find($clientId);
         $periodOfTime = $client->getReportFrequency()->getFrequencyName();
-        if($periodOfTime=='Semanal') {
-            $date = date("m/d/Y h:i:s A T",strtotime('-1 week'));
-        }elseif ($periodOfTime=='Mensual'){
-            $date = date("m/d/Y h:i:s A T",strtotime('-1 month'));
-        }else{
-            $date = date("m/d/Y h:i:s A T",strtotime('-1 year'));
+        if ($periodOfTime == 'Semanal') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 week'));
+        } elseif ($periodOfTime == 'Mensual') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 month'));
+        } else {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
         }
 
         $query = $entityManager->createQuery(
@@ -117,7 +122,7 @@ class HomeController extends Controller
         }
 
         foreach ($categories as $category) {
-            $categoriesData[$category['category_name']]= (int)round(($category[1] / $totalCategoriesTime) * 100, 2);
+            $categoriesData[$category['category_name']] = (int)round(($category[1] / $totalCategoriesTime) * 100, 2);
 
         }
 
@@ -128,14 +133,14 @@ class HomeController extends Controller
     public function getAplicaciones($clientId)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $client=$entityManager->getRepository("App\Entity\Client")->find( $clientId);
+        $client = $entityManager->getRepository("App\Entity\Client")->find($clientId);
         $periodOfTime = $client->getReportFrequency()->getFrequencyName();
-        if($periodOfTime=='Semanal') {
-            $date = date("m/d/Y h:i:s A T",strtotime('-1 week'));
-        }elseif ($periodOfTime=='Mensual'){
-            $date = date("m/d/Y h:i:s A T",strtotime('-1 month'));
-        }else{
-            $date = date("m/d/Y h:i:s A T",strtotime('-1 year'));
+        if ($periodOfTime == 'Semanal') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 week'));
+        } elseif ($periodOfTime == 'Mensual') {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 month'));
+        } else {
+            $date = date("m/d/Y h:i:s A T", strtotime('-1 year'));
         }
         $query = $entityManager->createQuery(
             'SELECT ap.app_name , cua.time_ammount
@@ -151,7 +156,7 @@ class HomeController extends Controller
 
         $appsData = [];
         foreach ($aplicaciones as $aplicacion) {
-           $appsData[$aplicacion['app_name']]= $aplicacion['time_ammount'];
+            $appsData[$aplicacion['app_name']] = $aplicacion['time_ammount'];
         }
 
         return $appsData;
@@ -164,11 +169,12 @@ class HomeController extends Controller
     public function email_report_test()
     {
         $connectedTime = $this->getTiempoDeSesion('1');
+        $connectedString = gmdate('H', $connectedTime) . 'h ' . gmdate('i', $connectedTime) . 'm';
         $tasksData = $this->getTareas(1);
         $categoriesData = $this->getCategorias(1);
         $appsData = $this->getAplicaciones(1);
         return $this->render('email_report.html.twig', [
-            'connectedTime' => $connectedTime ,
+            'connectedTime' => $connectedString,
             'tasksData' => $tasksData,
             'appsData' => $appsData,
             'categoriesData' => $categoriesData

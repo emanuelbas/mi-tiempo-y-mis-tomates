@@ -1,133 +1,200 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
-</head>
-<body>
-{{ dump(connectedTime) }}
-{{ dump(tasksData) }}
+<body style="box-sizing:border-box;margin:0;font-family:'Roboto', sans-serif;font-size:1rem;font-weight:400;line-height:1.5;color:#212529;text-align:left;background-color:#fff;height:100%;">
+{#{{ dump(connectedTime) }}#}
+{#{{ dump(tasksData) }}#}
 {{ dump(categoriesData) }}
 {{ dump(appsData) }}
-{#<div class="container email-report-container mt-5">#}
-    {#<div class="position-relative pt-3 email-report-box">#}
-        {#<div class="d-flex justify-content-around align-items-baseline mb-4">#}
-            {#<h2 class="font-weight-light pl-5"> Mi Tiempo y Mis Tomates </h2>#}
-            {#<h5 class="font-weight-light pl-5"> Su reporte para la semana de Noviembre 11, 2018 </h5>#}
-        {#</div>#}
+<div class="container email-report-container mt-5"
+     style="box-sizing:border-box;width:960px;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto;max-width:1280px;margin-top:3rem !important;height:100%;">
+    <div class="position-relative pt-3 email-report-box"
+         style="box-sizing:border-box;position:relative !important;padding-top:1rem !important;height:auto;width:960px;border-radius:10px;">
+        <div class="d-flex justify-content-around align-items-baseline mb-4"
+             style="box-sizing:border-box;display:flex !important;margin-bottom:1.5rem !important;justify-content:space-around !important;align-items:baseline !important;">
+            <h2 class="font-weight-light pl-5"
+                style="box-sizing:border-box;margin-top:0;margin-bottom:0.5rem;font-family:inherit;font-weight:300 !important;line-height:1.2;color:inherit;font-size:2rem;padding-left:3rem !important;">
+                Mi Tiempo y Mis Tomates </h2>
+            <h5 class="font-weight-light pl-5"
+                style="box-sizing:border-box;margin-top:0;margin-bottom:0.5rem;font-family:inherit;font-weight:300 !important;line-height:1.2;color:inherit;font-size:1.25rem;padding-left:3rem !important;">
+                Su reporte para la semana de Noviembre 11, 2018 </h5>
+        </div>
 
-        {#<div class="align-items-center d-flex email-report-pomodoros-box flex-column mt-3 w-100 ">#}
-            {#<div class="d-flex justify-content-around w-100 mt-3">#}
-                {#<div class="d-flex flex-column align-items-center">#}
-                    {#<div> Esta semana usted realizo</div>#}
-                    {#<h1 class="my-0"> 12 </h1>#}
-                    {#<div> Pomodoros</div>#}
-                {#</div>#}
+        <div class="align-items-center d-flex email-report-pomodoros-box flex-column mt-3 w-100 "
+             style="box-sizing:border-box;display:flex !important;margin-top:1rem !important;align-items:center !important;height:365px;border-radius:80px;border:2px solid #000000;">
+            <div class="d-flex justify-content-around w-100 mt-3"
+                 style="box-sizing:border-box;display:flex !important;width:100% !important;margin-top:1rem !important;justify-content:space-around !important;">
+                <div class="d-flex flex-column align-items-center"
+                     style="box-sizing:border-box;display:flex !important;align-items:center !important;">
+                    <div style="box-sizing: border-box;"> Esta semana usted realizo</div>
+                    <h1 class="my-0"
+                        style="box-sizing:border-box;margin-top:0 !important;margin-bottom:0 !important;font-family:inherit;font-weight:500;line-height:1.2;color:inherit;font-size:2.5rem;">
+                        {{ tasksData[0] }} </h1>
+                    <div style="box-sizing: border-box;"> Pomodoros</div>
+                </div>
 
-                {#<div class="d-flex flex-column align-items-center">#}
-                    {#<div> Estuviste conectado durante</div>#}
-                    {#<h1 class="my-0"> 6h 25m</div>#}
-            {#</div>#}
+                <div class="d-flex flex-column align-items-center"
+                     style="box-sizing:border-box;display:flex !important;align-items:center !important;">
+                    <div style="box-sizing: border-box;"> Estuviste conectado durante</div>
+                    <h1 class="my-0"
+                        style="box-sizing:border-box;margin-top:0 !important;margin-bottom:0 !important;font-family:inherit;font-weight:500;line-height:1.2;color:inherit;font-size:2.5rem;">
+                        {{ connectedTime }}</h1>
+                </div>
+            </div>
 
-            {#<div class="mt-5">#}
-                {#<ul class="list-unstyled position-relative">#}
-                    {#<li class="position-relative mb-2"> Estudiar para examen de Mate#}
-                        {#<div class="email-report-pomodoro-count bg-danger position-absolute">#}
-                            {#2#}
-                        {#</div>#}
+            <div class="mt-5" style="box-sizing:border-box;margin-top:3rem !important;">
+                <ul class="list-unstyled position-relative"
+                    style="box-sizing:border-box;margin-top:0;margin-bottom:1rem;padding-left:0;list-style:none;position:relative !important;">
+
+                    {% for task, key in tasksData[1] %}
+                    <li class="position-relative mb-2"
+                        style="box-sizing:border-box;position:relative !important;margin-bottom:0.5rem !important;">
+                        {{ task }}
+                        <div class="email-report-pomodoro-count bg-danger position-absolute"
+                             style="box-sizing:border-box;background-color:#dc3545 !important;position:absolute !important;right:-95px;top:3px;width:35px;height:20px;text-align:center;color:#ffffff;border-radius:5px;">
+                            {{ key }}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="justify-content-around mt-5"
+         style="box-sizing:border-box;display:flex !important;margin-top:3rem !important;justify-content:space-around !important;">
+        <div style="box-sizing: border-box; width: 50%;">
+            <div class="font-weight-bold mb-3"
+                 style="box-sizing:border-box;margin-bottom:1rem !important;font-weight:700 !important;"> La mayor parte
+                de su tiempo la utilizo en:
+            </div>
+            <ul class="list-unstyled position-relative"
+                style="box-sizing:border-box;margin-top:0;margin-bottom:1rem;padding-left:0;list-style:none;position:relative !important;">
+
+                {% for category, percentage in categoriesData %}
+                <div style="box-sizing: border-box;">
+                    <div class="email-report-category-percentage d-inline-block mr-4 bg-danger"
+                         style="box-sizing:border-box;background-color:#dc3545 !important;margin-right:1.5rem !important;display:inline-block !important;right:-95px;top:3px;width:40px;height:22px;text-align:center;color:#ffffff;border-radius:5px;">
+                        {{ percentage }}%
+                    </div>
+                    <li class="position-relative d-inline-block mb-2"
+                        style="box-sizing:border-box;position:relative !important;margin-bottom:0.5rem !important;display:inline-block !important;">
+                        {{ category }}
+                    </li>
+                </div>
+                {% endfor %}
+
+                {#<div style="box-sizing: border-box;">#}
+                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-primary"#}
+                         {#style="box-sizing:border-box;background-color:#007bff !important;margin-right:1.5rem !important;display:inline-block !important;right:-95px;top:3px;width:40px;height:22px;text-align:center;color:#ffffff;border-radius:5px;">#}
+                        {#20%#}
+                    {#</div>#}
+                    {#<li class="position-relative d-inline-block mb-2"#}
+                        {#style="box-sizing:border-box;position:relative !important;margin-bottom:0.5rem !important;display:inline-block !important;">#}
+                        {#Dise&ntilde;o#}
                     {#</li>#}
+                {#</div>#}
 
-                    {#<li class="position-relative mb-2"> Escribir tests de prueba#}
-                        {#<div class="email-report-pomodoro-count bg-danger position-absolute">#}
-                            {#5#}
-                        {#</div>#}
+                {#<div style="box-sizing: border-box;">#}
+                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-info"#}
+                         {#style="box-sizing:border-box;background-color:#17a2b8 !important;margin-right:1.5rem !important;display:inline-block !important;right:-95px;top:3px;width:40px;height:22px;text-align:center;color:#ffffff;border-radius:5px;">#}
+                        {#15%#}
+                    {#</div>#}
+                    {#<li class="position-relative d-inline-block mb-2"#}
+                        {#style="box-sizing:border-box;position:relative !important;margin-bottom:0.5rem !important;display:inline-block !important;">#}
+                        {#Noticias#}
                     {#</li>#}
+                {#</div>#}
 
-                    {#<li class="position-relative mb-2"> Redactar informe#}
-                        {#<div class="email-report-pomodoro-count bg-danger position-absolute">#}
-                            {#3#}
-                        {#</div>#}
+                {#<div style="box-sizing: border-box;">#}
+                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-success"#}
+                         {#style="box-sizing:border-box;background-color:#28a745 !important;margin-right:1.5rem !important;display:inline-block !important;right:-95px;top:3px;width:40px;height:22px;text-align:center;color:#ffffff;border-radius:5px;">#}
+                        {#10%#}
+                    {#</div>#}
+                    {#<li class="position-relative d-inline-block mb-2"#}
+                        {#style="box-sizing:border-box;position:relative !important;margin-bottom:0.5rem !important;display:inline-block !important;">#}
+                        {#Comunicaci&oacute;n y Planificaci&oacute;n#}
                     {#</li>#}
+                {#</div>#}
 
-                    {#<li class="position-relative mb-2"> Analizar requisitos de Sprint#}
-                        {#<div class="email-report-pomodoro-count bg-danger position-absolute">#}
-                            {#1#}
-                        {#</div>#}
+                {#<div style="box-sizing: border-box;">#}
+                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-warning"#}
+                         {#style="box-sizing:border-box;background-color:#ffc107 !important;margin-right:1.5rem !important;display:inline-block !important;right:-95px;top:3px;width:40px;height:22px;text-align:center;color:#ffffff;border-radius:5px;">#}
+                        {#5%#}
+                    {#</div>#}
+                    {#<li class="position-relative d-inline-block mb-2"#}
+                        {#style="box-sizing:border-box;position:relative !important;margin-bottom:0.5rem !important;display:inline-block !important;">#}
+                        {#Entretenimiento#}
                     {#</li>#}
-
-                    {#<li class="position-relative mb-2"> Realizar mockups#}
-                        {#<div class="email-report-pomodoro-count bg-danger position-absolute">#}
-                            {#1#}
-                        {#</div>#}
-                    {#</li>#}
-                {#</ul>#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
-
-    {#<div class="d-flex justify-content-around mt-5">#}
-        {#<div>#}
-            {#<div class="font-weight-bold mb-3"> La mayor parte de su tiempo la utilizo en:</div>#}
-            {#<ul class="list-unstyled position-relative d-flex flex-column">#}
-                {#<div>#}
-                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-danger"> 50%</div>#}
-                    {#<li class="position-relative d-inline-block mb-2"> Desarrollo de Software</li>#}
                 {#</div>#}
+            </ul>
+        </div>
+        <div class="email-report-separator-line"
+             style="box-sizing:border-box;height:200px;border:1px solid #00000029;"></div>
+        <div style="box-sizing: border-box; width: 50%; padding-left: 20%;">
+            <div class="font-weight-bold mb-3"
+                 style="box-sizing:border-box;margin-bottom:1rem !important;font-weight:700 !important;"> Aplicaciones
+                que m&aacute;s utiliz&oacute;:
+            </div>
+            <ul class="list-unstyled position-relative"
+                style="box-sizing:border-box;margin-top:0;margin-bottom:1rem;padding-left:0;list-style:none;!important;position:relative !important;">
+                <div style="box-sizing: border-box;">
+                    <div class="email-report-category-percentage d-inline-block mr-4 bg-danger"
+                         style="box-sizing:border-box;background-color:#dc3545 !important;margin-right:1.5rem !important;display:inline-block !important;right:-95px;top:3px;width:40px;height:22px;text-align:center;color:#ffffff;border-radius:5px;">
+                        5h
+                    </div>
+                    <li class="position-relative d-inline-block mb-2"
+                        style="box-sizing:border-box;position:relative !important;margin-bottom:0.5rem !important;display:inline-block !important;">
+                        Sublime
+                    </li>
+                </div>
 
-                {#<div>#}
-                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-primary"> 20%</div>#}
-                    {#<li class="position-relative d-inline-block mb-2"> Diseño</li>#}
-                {#</div>#}
+                <div style="box-sizing: border-box;">
+                    <div class="email-report-category-percentage d-inline-block mr-4 bg-danger"
+                         style="box-sizing:border-box;background-color:#dc3545 !important;margin-right:1.5rem !important;display:inline-block !important;right:-95px;top:3px;width:40px;height:22px;text-align:center;color:#ffffff;border-radius:5px;">
+                        4h
+                    </div>
+                    <li class="position-relative d-inline-block mb-2"
+                        style="box-sizing:border-box;position:relative !important;margin-bottom:0.5rem !important;display:inline-block !important;">
+                        VSCode
+                    </li>
+                </div>
 
-                {#<div>#}
-                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-info"> 15%</div>#}
-                    {#<li class="position-relative d-inline-block mb-2"> Noticias</li>#}
-                {#</div>#}
+                <div style="box-sizing: border-box;">
+                    <div class="email-report-category-percentage d-inline-block mr-4 bg-info"
+                         style="box-sizing:border-box;background-color:#17a2b8 !important;margin-right:1.5rem !important;display:inline-block !important;right:-95px;top:3px;width:40px;height:22px;text-align:center;color:#ffffff;border-radius:5px;">
+                        3h
+                    </div>
+                    <li class="position-relative d-inline-block mb-2"
+                        style="box-sizing:border-box;position:relative !important;margin-bottom:0.5rem !important;display:inline-block !important;">
+                        Google Chrome
+                    </li>
+                </div>
 
-                {#<div>#}
-                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-success"> 10%</div>#}
-                    {#<li class="position-relative d-inline-block mb-2"> Comunicación y Planificación</li>#}
-                {#</div>#}
+                <div style="box-sizing: border-box;">
+                    <div class="email-report-category-percentage d-inline-block mr-4 bg-warning"
+                         style="box-sizing:border-box;background-color:#ffc107 !important;margin-right:1.5rem !important;display:inline-block !important;right:-95px;top:3px;width:40px;height:22px;text-align:center;color:#ffffff;border-radius:5px;">
+                        2h
+                    </div>
+                    <li class="position-relative d-inline-block mb-2"
+                        style="box-sizing:border-box;position:relative !important;margin-bottom:0.5rem !important;display:inline-block !important;">
+                        Spotify
+                    </li>
+                </div>
 
-                {#<div>#}
-                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-warning"> 5%</div>#}
-                    {#<li class="position-relative d-inline-block mb-2"> Entretenimiento</li>#}
-                {#</div>#}
-            {#</ul>#}
-        {#</div>#}
-        {#<div class="email-report-separator-line"></div>#}
-        {#<div>#}
-            {#<div class="font-weight-bold mb-3"> Aplicaciones que más utilizó:</div>#}
-            {#<ul class="list-unstyled position-relative d-flex flex-column">#}
-                {#<div>#}
-                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-danger"> 5h</div>#}
-                    {#<li class="position-relative d-inline-block mb-2"> Sublime</li>#}
-                {#</div>#}
-
-                {#<div>#}
-                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-danger"> 4h</div>#}
-                    {#<li class="position-relative d-inline-block mb-2"> VSCode</li>#}
-                {#</div>#}
-
-                {#<div>#}
-                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-info"> 3h</div>#}
-                    {#<li class="position-relative d-inline-block mb-2"> Google Chrome</li>#}
-                {#</div>#}
-
-                {#<div>#}
-                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-warning"> 2h</div>#}
-                    {#<li class="position-relative d-inline-block mb-2"> Spotify</li>#}
-                {#</div>#}
-
-                {#<div>#}
-                    {#<div class="email-report-category-percentage d-inline-block mr-4 bg-warning"> 1h</div>#}
-                    {#<li class="position-relative d-inline-block mb-2"> Facebook</li>#}
-                {#</div>#}
-            {#</ul>#}
-        {#</div>#}
-    {#</div>#}
-{#</div>#}
+                <div style="box-sizing: border-box;">
+                    <div class="email-report-category-percentage d-inline-block mr-4 bg-warning"
+                         style="box-sizing:border-box;background-color:#ffc107 !important;margin-right:1.5rem !important;display:inline-block !important;right:-95px;top:3px;width:40px;height:22px;text-align:center;color:#ffffff;border-radius:5px;">
+                        1h
+                    </div>
+                    <li class="position-relative d-inline-block mb-2"
+                        style="box-sizing:border-box;position:relative !important;margin-bottom:0.5rem !important;display:inline-block !important;">
+                        Facebook
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
 </body>
 
 

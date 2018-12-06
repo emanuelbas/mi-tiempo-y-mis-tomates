@@ -50,6 +50,8 @@ class SendEmail extends Command
     {
         $clients = $this->entityManager->getRepository("App\Entity\Client")->findAll();
         foreach ($clients as $client) {
+            $this->sendEmail($client->getEmail());
+
             $config = $client->getReportFrequency();
             $day = getdate();
 
