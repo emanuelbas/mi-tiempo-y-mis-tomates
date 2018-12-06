@@ -147,7 +147,8 @@ class HomeController extends Controller
             FROM App\Entity\ClientUsesApplication c
             INNER JOIN App\Entity\Application a WITH a.id = c.application
             WHERE c.client = :clientId AND c.start_date BETWEEN :periodOfTime AND :today 
-            GROUP BY a.id')
+            GROUP BY a.id
+            ORDER BY c.time_ammount DESC')
             ->setParameter('clientId', $clientId)
             ->setParameter('today', date('Y-m-d H:i:s', time()))
             ->setParameter('periodOfTime', $periodOfTime);

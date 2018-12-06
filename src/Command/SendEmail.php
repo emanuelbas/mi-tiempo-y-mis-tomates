@@ -123,7 +123,9 @@ class SendEmail extends Command
         $query = $this->entityManager->createQuery('SELECT t FROM App\Entity\Task t WHERE t.client = :clientId AND t.creation_date BETWEEN :periodOfTime AND :today')
             ->setParameter('clientId', $clientId)
             ->setParameter('today', date('Y-m-d H:i:s', time()))
-            ->setParameter('periodOfTime', $periodOfTime);
+            ->setParameter('periodOfTime', $periodOfTime)
+            ->setMaxResults(5);
+
         $tasks = $query->getResult();
 
         $tasksData = [];
@@ -200,10 +202,12 @@ class SendEmail extends Command
             FROM App\Entity\ClientUsesApplication c
             INNER JOIN App\Entity\Application a WITH a.id = c.application
             WHERE c.client = :clientId AND c.start_date BETWEEN :periodOfTime AND :today 
-            GROUP BY a.id')
+            GROUP BY a.id
+            ORDER BY c.time_ammount DESC')
             ->setParameter('clientId', $clientId)
             ->setParameter('today', date('Y-m-d H:i:s', time()))
-            ->setParameter('periodOfTime', $periodOfTime);
+            ->setParameter('periodOfTime', $periodOfTime)
+            ->setMaxResults(5);
 
         $applications = $query->getResult();
 
@@ -212,7 +216,7 @@ class SendEmail extends Command
             $appsData[$application['app_name']] = $application[1];
         }
 
-        return $appsData;
+       return $appsData;
     }
 }
 	
